@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Checklist - Liliw Tourism</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        .subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        .checklist {
+            list-style: none;
+        }
+        .checklist-item {
+            background: #f7fafc;
+            border-left: 4px solid #4299e1;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        .checklist-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .filename {
+            font-weight: bold;
+            color: #2d3748;
+            font-size: 18px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .description {
+            color: #4a5568;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .specs {
+            color: #718096;
+            font-size: 12px;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        .priority {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .priority.high {
+            background: #fc8181;
+            color: white;
+        }
+        .priority.medium {
+            background: #f6ad55;
+            color: white;
+        }
+        .note {
+            background: #edf2f7;
+            border-left: 4px solid #48bb78;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        .note h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .note p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+            color: #718096;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📸 Image Checklist</h1>
+        <p class="subtitle">Add these images to the <code>images/</code> folder before the stakeholder presentation</p>
+
+        <ul class="checklist">
+            <li class="checklist-item">
+                <span class="filename">liliw-church.jpg <span class="priority high">HIGH PRIORITY</span></span>
+                <p class="description">Main hero image of St. John the Baptist Church for the landing page</p>
+                <p class="specs">Recommended: High-resolution, vertical orientation, 800x1200px minimum</p>
+            </li>
+
+            <li class="checklist-item">
+                <span class="filename">liliw-logo.png <span class="priority high">HIGH PRIORITY</span></span>
+                <p class="description">Official Liliw municipality logo with transparent background</p>
+                <p class="specs">Recommended: PNG format, circular, 200x200px minimum</p>
+            </li>
+
+            <li class="checklist-item">
+                <span class="filename">liliw-church-card.jpg <span class="priority high">HIGH PRIORITY</span></span>
+                <p class="description">Thumbnail version of the church for the "Popular Places" section</p>
+                <p class="specs">Recommended: Square or landscape, 400x400px minimum</p>
+            </li>
+
+            <li class="checklist-item">
+                <span class="filename">gat-tayaw-tsinelas.jpg <span class="priority medium">MEDIUM</span></span>
+                <p class="description">Photo of the Gat Tayaw Tsinelas monument/statue</p>
+                <p class="specs">Recommended: Clear shot of the monument, 400x400px minimum</p>
+            </li>
+
+            <li class="checklist-item">
+                <span class="filename">other-attraction.jpg <span class="priority medium">MEDIUM</span></span>
+                <p class="description">Any other popular tourist attraction in Liliw (falls, heritage house, etc.)</p>
+                <p class="specs">Recommended: Eye-catching photo, 400x400px minimum</p>
+            </li>
+
+            <li class="checklist-item">
+                <span class="filename">tsinelas-festival.jpg <span class="priority high">HIGH PRIORITY</span></span>
+                <p class="description">Promotional or event photo of the Gat Tayaw Tsinelas Festival</p>
+                <p class="specs">Recommended: Colorful, festive, landscape orientation, 800x400px minimum</p>
+            </li>
+
+            <li class="checklist-item">
+                <span class="filename">nature-scene.jpg <span class="priority medium">MEDIUM</span></span>
+                <p class="description">Scenic nature photo of Liliw (rice fields, mountains, waterfalls)</p>
+                <p class="specs">Recommended: Landscape orientation, 800x500px minimum</p>
+            </li>
+
+            <li class="checklist-item">
+                <span class="filename">map-preview.jpg <span class="priority medium">MEDIUM</span></span>
+                <p class="description">Preview image of Liliw map or aerial view</p>
+                <p class="specs">Recommended: Map screenshot or aerial photo, 600x400px minimum</p>
+            </li>
+
+            <li class="checklist-item">
+                <span class="filename">liliw-logo-small.png <span class="priority medium">MEDIUM</span></span>
+                <p class="description">Small version of the logo for footer</p>
+                <p class="specs">Recommended: PNG format, circular, 100x100px</p>
+            </li>
+        </ul>
+
+        <div class="note">
+            <h3>💡 Pro Tips</h3>
+            <p><strong>Image Format:</strong> Use JPEG for photos, PNG for logos with transparency</p>
+            <p><strong>File Size:</strong> Optimize images to under 500KB each for faster loading</p>
+            <p><strong>Quality:</strong> Use high-resolution images that look sharp on all screens</p>
+            <p><strong>Naming:</strong> Use exact filenames as listed above (case-sensitive)</p>
+            <p><strong>Placeholder:</strong> The website will work without images but show placeholders</p>
+        </div>
+
+        <div class="note">
+            <h3>🎯 Quick Test</h3>
+            <p>After adding images, open <code>index.html</code> in your browser to verify all images load correctly!</p>
+        </div>
+
+        <div class="footer">
+            <p>Liliw Tourism Website Development</p>
+            <p>Ready for stakeholder presentation ✨</p>
+        </div>
+    </div>
+</body>
+</html>
