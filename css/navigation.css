@@ -1,0 +1,466 @@
+/* Navigation Styles - Reusable across all pages */
+
+/* Top Navigation Bar */
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.nav-container {
+    max-width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    gap: 40px;
+}
+
+/* Logo - Far Left */
+.logo {
+    flex-shrink: 0;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #1f2937;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+}
+
+.logo a:hover {
+    opacity: 0.7;
+}
+
+.logo-img {
+    height: 45px;
+    width: 45px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.logo-text {
+    font-size: 19px;
+    font-weight: 700;
+    color: #1f2937;
+    letter-spacing: -0.02em;
+}
+
+/* Main Navigation - Center */
+.main-nav {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-nav a {
+    color: #4b5563;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 24px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.main-nav a:hover {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+.main-nav a.active {
+    background-color: #3b82f6;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+}
+
+/* Remove the underline animation for cleaner look */
+.main-nav a::after {
+    display: none;
+}
+
+/* Navigation Actions - Right Side */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #f3f4f6;
+    border-radius: 24px;
+    padding: 8px 16px;
+    gap: 8px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.search-bar:focus-within {
+    background-color: #ffffff;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.search-bar svg {
+    width: 20px;
+    height: 20px;
+    color: #6b7280;
+    flex-shrink: 0;
+}
+
+.search-bar input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    color: #1f2937;
+    width: 200px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.search-bar input::placeholder {
+    color: #9ca3af;
+}
+
+/* Hide old search button */
+.search-btn {
+    display: none;
+}
+
+/* Menu Toggle (Hamburger) */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.menu-toggle:hover {
+    background-color: #f3f4f6;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: #6b7280;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.menu-toggle:hover span {
+    background-color: #1f2937;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translateY(9px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translateY(-9px);
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 2000;
+    visibility: hidden;
+    opacity: 0;
+    transition: background-color 0.3s ease, visibility 0s linear 0.3s, opacity 0.3s ease;
+}
+
+.mobile-menu-overlay.active {
+    visibility: visible;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.8);
+    transition: background-color 0.3s ease, visibility 0s linear, opacity 0.3s ease;
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    max-width: 80%;
+    background-color: white;
+    padding: 30px;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    overflow-y: auto;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-menu-overlay.active .mobile-menu {
+    transform: translateX(0);
+}
+
+.close-menu {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 40px;
+    color: #2d3748;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    transition: transform 0.2s ease, color 0.2s ease;
+    opacity: 0;
+    transform: rotate(0deg) scale(0.8);
+}
+
+.mobile-menu-overlay.active .close-menu {
+    opacity: 1;
+    transform: rotate(90deg) scale(1);
+    transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s;
+}
+
+.close-menu:hover {
+    color: #4299e1;
+    transform: rotate(90deg) scale(1.1);
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 40px;
+}
+
+.mobile-nav a {
+    color: #2d3748;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 15px 20px;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.3s ease;
+}
+
+/* Staggered animation for menu items */
+.mobile-menu-overlay.active .mobile-nav a {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.mobile-menu-overlay.active .mobile-nav a:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.mobile-menu-overlay.active .mobile-nav a:nth-child(2) {
+    transition-delay: 0.15s;
+}
+
+.mobile-menu-overlay.active .mobile-nav a:nth-child(3) {
+    transition-delay: 0.2s;
+}
+
+.mobile-menu-overlay.active .mobile-nav a:nth-child(4) {
+    transition-delay: 0.25s;
+}
+
+.mobile-menu-overlay.active .mobile-nav a:nth-child(5) {
+    transition-delay: 0.3s;
+}
+
+.mobile-menu-overlay.active .mobile-nav a:nth-child(6) {
+    transition-delay: 0.35s;
+}
+
+.mobile-nav a:hover,
+.mobile-nav a.active {
+    background-color: #4299e1;
+    color: white;
+}
+
+/* Search Modal */
+.search-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 3000;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 100px;
+}
+
+.search-modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.search-content {
+    background-color: white;
+    padding: 40px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close-search {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 40px;
+    color: #718096;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+}
+
+.search-content h2 {
+    color: #2d3748;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.search-input:focus {
+    border-color: #4299e1;
+}
+
+.search-suggestions {
+    margin-top: 30px;
+}
+
+.search-suggestions h3 {
+    color: #2d3748;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.search-suggestions ul {
+    list-style: none;
+}
+
+.search-suggestions ul li {
+    margin-bottom: 8px;
+}
+
+.search-suggestions ul li a {
+    color: #4a5568;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 10px 15px;
+    display: block;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.search-suggestions ul li a:hover {
+    background-color: #f7fafc;
+    color: #4299e1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-nav {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .search-bar {
+        max-width: 150px;
+    }
+
+    .search-bar input {
+        width: 120px;
+    }
+
+    .nav-container {
+        padding: 12px 20px;
+        gap: 20px;
+    }
+
+    .logo-text {
+        display: none;
+    }
+
+    .nav-container {
+        padding: 12px 20px;
+    }
+
+    .search-content {
+        padding: 30px 20px;
+    }
+}
+
+/* Active Page Indicator */
+body[data-page="homepage"] .main-nav a[data-page="homepage"],
+body[data-page="attractions"] .main-nav a[data-page="attractions"],
+body[data-page="events"] .main-nav a[data-page="events"],
+body[data-page="map"] .main-nav a[data-page="map"] {
+    background-color: #3b82f6;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+}
+

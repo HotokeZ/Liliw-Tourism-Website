@@ -7,33 +7,20 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(180deg, #1a365d 0%, #2c5282 100%);
+    background-color: #ffffff;  /* White background for clean navigation */
     color: #ffffff;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
-/* Header */
-.homepage-header {
-    padding: 15px 20px;
-    background-color: rgba(0, 0, 0, 0.3);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.homepage-header h3 {
-    font-size: 14px;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-/* Homepage Content */
+/* Homepage Specific Background - Full width blue gradient */
 .homepage-content {
+    background: linear-gradient(180deg, #1a365d 0%, #2c5282 100%);
+    min-height: calc(100vh - 70px); /* Full height minus navigation */
     padding: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0;
 }
 
 /* Welcome Section */
@@ -58,12 +45,58 @@ body {
     line-height: 1.3;
 }
 
-.logo {
+/* Logo in welcome section only (not navigation logo) */
+.section-header .logo {
     width: 80px;
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Welcome Actions - CTA Buttons */
+.welcome-actions {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-button {
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    display: inline-block;
+}
+
+.see-attractions {
+    background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+    color: white;
+}
+
+.see-attractions:hover {
+    background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(66, 153, 225, 0.4);
+}
+
+.upcoming-event {
+    background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%);
+    color: white;
+}
+
+.upcoming-event:hover {
+    background: linear-gradient(135deg, #6b46c1 0%, #553c9a 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(128, 90, 213, 0.4);
 }
 
 /* Content Sections */

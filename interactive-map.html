@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map - Liliw, Laguna</title>
+    <link rel="stylesheet" href="css/map.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-page="map">
+
+    <!-- Back Button -->
+    <a href="homepage.html" class="back-button">←</a>
+
+    <!-- Main Content -->
+    <main class="map-content">
+        <h1 class="page-title">Learn More About Liliw, Laguna</h1>
+
+        <!-- Map Container -->
+        <div class="map-view">
+            <div id="map-canvas">
+                <!-- This is where Google Maps or interactive map would go -->
+                <img src="images/liliw-map-detailed.jpg" alt="Liliw Map" class="static-map">
+                
+                <!-- Map Markers -->
+                <div class="map-marker" style="top: 45%; left: 50%;" data-location="St. John the Baptist Church">
+                    <div class="marker-pin">📍</div>
+                    <div class="marker-tooltip">St. John the Baptist Church</div>
+                </div>
+                
+                <div class="map-marker" style="top: 30%; left: 60%;" data-location="Kilangin Falls">
+                    <div class="marker-pin">📍</div>
+                    <div class="marker-tooltip">Kilangin Falls</div>
+                </div>
+                
+                <div class="map-marker" style="top: 55%; left: 48%;" data-location="Town Plaza">
+                    <div class="marker-pin">📍</div>
+                    <div class="marker-tooltip">Town Plaza</div>
+                </div>
+                
+                <div class="map-marker" style="top: 40%; left: 45%;" data-location="Gat Tayaw Monument">
+                    <div class="marker-pin">📍</div>
+                    <div class="marker-tooltip">Gat Tayaw Monument</div>
+                </div>
+            </div>
+
+            <!-- Map Controls -->
+            <div class="map-controls">
+                <button class="zoom-btn" id="zoom-in">+</button>
+                <button class="zoom-btn" id="zoom-out">−</button>
+                <button class="locate-btn" id="locate-me">📍</button>
+            </div>
+
+            <!-- Legend -->
+            <div class="map-legend">
+                <h3>Legend</h3>
+                <ul>
+                    <li><span class="legend-icon heritage">📍</span> Heritage Sites</li>
+                    <li><span class="legend-icon nature">📍</span> Natural Attractions</li>
+                    <li><span class="legend-icon food">📍</span> Food & Dining</li>
+                    <li><span class="legend-icon shop">📍</span> Shopping</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Location List -->
+        <section class="location-list">
+            <h2>Popular Destinations</h2>
+            <div class="location-cards">
+                <div class="location-card" onclick="focusLocation('church')">
+                    <img src="images/church-thumb.jpg" alt="Church">
+                    <div class="location-info">
+                        <h3>St. John the Baptist Church</h3>
+                        <p>Historic landmark in the heart of Liliw</p>
+                        <span class="distance">0.5 km from center</span>
+                    </div>
+                </div>
+                
+                <div class="location-card" onclick="focusLocation('falls')">
+                    <img src="images/falls-thumb.jpg" alt="Falls">
+                    <div class="location-info">
+                        <h3>Kilangin Falls</h3>
+                        <p>Beautiful natural waterfall</p>
+                        <span class="distance">3.2 km from center</span>
+                    </div>
+                </div>
+                
+                <div class="location-card" onclick="focusLocation('monument')">
+                    <img src="images/monument-thumb.jpg" alt="Monument">
+                    <div class="location-info">
+                        <h3>Gat Tayaw Monument</h3>
+                        <p>Iconic footwear capital symbol</p>
+                        <span class="distance">0.3 km from center</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About</h3>
+                <ul>
+                    <li><a href="#liliw-office">Liliw Tourism Office</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#cookie">Cookie Policy</a></li>
+                    <li><a href="#terms">Terms of Use</a></li>
+                </ul>
+            </div>
+            <div class="footer-logo">
+                <img src="images/liliw-logo-small.png" alt="Liliw Logo">
+                <p class="copyright">Copyright 2025<br>Liliw Tourism Office</p>
+            </div>
+        </div>
+        <div class="social-links">
+            <a href="#" class="social-icon">📧</a>
+            <a href="#" class="social-icon">📘</a>
+        </div>
+    </footer>
+
+    <script src="js/include-nav.js"></script>
+    <script src="js/map.js"></script>
+</body>
+</html>

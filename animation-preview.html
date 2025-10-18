@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Preview - Liliw Tourism</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 20px;
+            margin-bottom: 50px;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-card h2 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .demo-card p {
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .icon {
+            font-size: 24px;
+        }
+
+        /* Navigation Demo */
+        .nav-demo {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-demo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .nav-demo-links {
+            display: flex;
+            gap: 20px;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .nav-demo-link {
+            color: #2d3748;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-demo-link:hover {
+            color: #3b82f6;
+        }
+
+        .nav-demo-link.active {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .sliding-bar {
+            position: absolute;
+            bottom: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            border-radius: 3px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Animation Demo Boxes */
+        .animation-demo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .demo-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .animate-fade-slide {
+            animation: fadeSlideUp 0.8s ease-out;
+        }
+
+        .animate-slide-down {
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .animate-scale {
+            animation: scaleIn 0.6s ease-out;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-panel h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .demo-button:active {
+            transform: translateY(0);
+        }
+
+        .info-box {
+            background: #e6fffa;
+            border-left: 4px solid #319795;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .info-box h4 {
+            color: #234e52;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #2c7a7b;
+            margin: 0;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-list li::before {
+            content: '✨';
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-demo-links {
+                font-size: 14px;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Animation System Preview</h1>
+        <p class="subtitle">Interactive demo of your new fade + slide animations!</p>
+
+        <!-- Navigation Sliding Indicator Demo -->
+        <div class="demo-card">
+            <h2><span class="icon">🎯</span> Sliding Navigation Indicator</h2>
+            <p>Click the links below to see the blue bar slide smoothly to the active page:</p>
+            
+            <div class="nav-demo">
+                <div class="nav-demo-links" id="navDemo">
+                    <a class="nav-demo-link active" data-index="0">Home</a>
+                    <a class="nav-demo-link" data-index="1">Attractions</a>
+                    <a class="nav-demo-link" data-index="2">Events</a>
+                    <a class="nav-demo-link" data-index="3">Map</a>
+                    <div class="sliding-bar" id="slidingBar" style="width: 50px; left: 0;"></div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>How it works:</h4>
+                <p>The blue bar automatically slides to the active page using smooth CSS transitions. It uses cubic-bezier easing for a professional feel!</p>
+            </div>
+        </div>
+
+        <!-- Animation Demos Grid -->
+        <div class="demo-grid">
+            <div class="demo-card">
+                <h2><span class="icon">📍</span> Slide Down</h2>
+                <p>Navigation bar animation when page loads</p>
+                <div class="animation-demo">
+                    <div class="demo-box animate-slide-down" id="slideDownBox">
+                        Navigation Slides Down
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h2><span class="icon">⬆️</span> Fade + Slide Up</h2>
+                <p>Hero sections and main content</p>
+                <div class="animation-demo">
+                    <div class="demo-box animate-fade-slide" id="fadeSlideBox">
+                        Content Fades & Slides Up
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h2><span class="icon">🎪</span> Scale In</h2>
+                <p>Cards and interactive elements</p>
+                <div class="animation-demo">
+                    <div class="demo-box animate-scale" id="scaleBox">
+                        Cards Scale In
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h2><span class="icon">💫</span> Pulse Effect</h2>
+                <p>Buttons and call-to-action elements</p>
+                <div class="animation-demo">
+                    <div class="demo-box animate-pulse" id="pulseBox">
+                        Buttons Pulse
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features List -->
+        <div class="demo-card">
+            <h2><span class="icon">🎨</span> Complete Feature List</h2>
+            <ul class="feature-list">
+                <li>Smooth fade-in when page loads (0.4s)</li>
+                <li>Navigation slides down from top (0.6s)</li>
+                <li>Hero sections fade + slide up (0.8s)</li>
+                <li>Staggered content sections (0.1s delays)</li>
+                <li>Cards scale in with delays</li>
+                <li>Animated sliding blue bar for active page</li>
+                <li>Smooth page transitions on link clicks</li>
+                <li>Hover effects on cards (lift + scale)</li>
+                <li>Ripple effect on button clicks</li>
+                <li>Parallax effect on scroll</li>
+                <li>Responsive animations (simplified on mobile)</li>
+                <li>Respects user motion preferences</li>
+            </ul>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <h3>🎬 Test the Animations</h3>
+            <div class="button-group">
+                <button class="demo-button" onclick="replaySlideDown()">↓ Replay Slide Down</button>
+                <button class="demo-button" onclick="replayFadeSlide()">↑ Replay Fade + Slide</button>
+                <button class="demo-button" onclick="replayScale()">🎪 Replay Scale In</button>
+                <button class="demo-button" onclick="replayAll()">🔄 Replay All</button>
+            </div>
+
+            <div class="info-box" style="margin-top: 30px;">
+                <h4>🚀 Ready to see it on your site?</h4>
+                <p><strong>Open homepage.html</strong> to see all these animations in action! The navigation bar, content sections, and cards all animate smoothly when you load the page.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sliding Navigation Bar Demo
+        const navLinks = document.querySelectorAll('.nav-demo-link');
+        const slidingBar = document.getElementById('slidingBar');
+
+        // Positions for each link (adjust based on actual widths)
+        const positions = [
+            { width: 50, left: 0 },       // Home
+            { width: 90, left: 80 },      // Attractions
+            { width: 60, left: 190 },     // Events
+            { width: 50, left: 270 }      // Map
+        ];
+
+        navLinks.forEach((link, index) => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Remove active class from all
+                navLinks.forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                link.classList.add('active');
+                
+                // Move sliding bar
+                const pos = positions[index];
+                slidingBar.style.width = pos.width + 'px';
+                slidingBar.style.left = pos.left + 'px';
+            });
+        });
+
+        // Animation Replay Functions
+        function replayAnimation(elementId, animationClass) {
+            const element = document.getElementById(elementId);
+            element.style.animation = 'none';
+            setTimeout(() => {
+                element.style.animation = '';
+            }, 10);
+        }
+
+        function replaySlideDown() {
+            replayAnimation('slideDownBox', 'animate-slide-down');
+        }
+
+        function replayFadeSlide() {
+            replayAnimation('fadeSlideBox', 'animate-fade-slide');
+        }
+
+        function replayScale() {
+            replayAnimation('scaleBox', 'animate-scale');
+        }
+
+        function replayAll() {
+            replaySlideDown();
+            setTimeout(replayFadeSlide, 200);
+            setTimeout(replayScale, 400);
+        }
+    </script>
+</body>
+</html>

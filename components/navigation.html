@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liliw, Laguna Tourism</title>
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="top-nav" id="mainNavigation">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/liliw-logo.png" alt="Liliw Logo" class="logo-img">
+                    <span class="logo-text">Liliw Tourism</span>
+                </a>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="homepage.html" data-page="homepage">Home</a>
+                <a href="attractions.html" data-page="attractions">Attractions</a>
+                <a href="events.html" data-page="events">Events</a>
+                <a href="interactive-map.html" data-page="map">Map</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="search-btn" id="searchBtn" title="Search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+                <button class="menu-toggle" id="menuToggle" title="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <div class="mobile-menu">
+            <button class="close-menu" id="closeMenu">&times;</button>
+            <nav class="mobile-nav">
+                <a href="homepage.html">Home</a>
+                <a href="attractions.html">Attractions</a>
+                <a href="natural-attractions.html">Natural Attractions</a>
+                <a href="heritage-attractions.html">Heritage Sites</a>
+                <a href="events.html">Events</a>
+                <a href="interactive-map.html">Map</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-content">
+            <button class="close-search" id="closeSearch">&times;</button>
+            <h2>Search Liliw Tourism</h2>
+            <input type="text" id="searchInput" placeholder="Search attractions, events, places..." class="search-input">
+            <div class="search-suggestions">
+                <h3>Popular Searches</h3>
+                <ul>
+                    <li><a href="natural-attractions.html">Kilangin Falls</a></li>
+                    <li><a href="heritage-attractions.html">St. John the Baptist Church</a></li>
+                    <li><a href="events.html">Tsinelas Festival</a></li>
+                    <li><a href="attractions.html">Tourist Spots</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/navigation.js"></script>
+</body>
+</html>

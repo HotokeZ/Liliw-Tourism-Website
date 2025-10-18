@@ -1,0 +1,112 @@
+// Include Navigation in Pages
+// Add this script to each page to load the navigation component
+
+(function() {
+    // Check if navigation is already loaded
+    if (document.getElementById('mainNavigation')) {
+        return;
+    }
+
+    // Create navigation HTML
+    const navHTML = `
+    <!-- Top Navigation Bar -->
+    <header class="top-nav" id="mainNavigation">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/liliw-logo.png" alt="Liliw Logo" class="logo-img">
+                    <span class="logo-text">Liliw Tourism</span>
+                </a>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="homepage.html" data-page="homepage">Home</a>
+                <a href="attractions.html" data-page="attractions">Attractions</a>
+                <a href="events.html" data-page="events">Events</a>
+                <a href="interactive-map.html" data-page="map">Map</a>
+            </nav>
+
+            <div class="nav-actions">
+                <div class="search-bar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" placeholder="Search..." id="headerSearchInput">
+                </div>
+                <button class="menu-toggle" id="menuToggle" title="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+        <div class="mobile-menu">
+            <button class="close-menu" id="closeMenu">&times;</button>
+            <nav class="mobile-nav">
+                <a href="homepage.html">Home</a>
+                <a href="attractions.html">Attractions</a>
+                <a href="natural-attractions.html">Natural Attractions</a>
+                <a href="heritage-attractions.html">Heritage Sites</a>
+                <a href="events.html">Events</a>
+                <a href="interactive-map.html">Map</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-content">
+            <button class="close-search" id="closeSearch">&times;</button>
+            <h2>Search Liliw Tourism</h2>
+            <input type="text" id="searchInput" placeholder="Search attractions, events, places..." class="search-input">
+            <div class="search-suggestions">
+                <h3>Popular Searches</h3>
+                <ul>
+                    <li><a href="natural-attractions.html">Kilangin Falls</a></li>
+                    <li><a href="heritage-attractions.html">St. John the Baptist Church</a></li>
+                    <li><a href="events.html">Tsinelas Festival</a></li>
+                    <li><a href="attractions.html">Tourist Spots</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    `;
+
+    // Insert navigation at the beginning of body
+    document.body.insertAdjacentHTML('afterbegin', navHTML);
+
+    // Load navigation CSS if not already loaded
+    if (!document.querySelector('link[href*="navigation.css"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'css/navigation.css';
+        document.head.appendChild(link);
+    }
+
+    // Load animations CSS if not already loaded
+    if (!document.querySelector('link[href*="animations.css"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'css/animations.css';
+        document.head.appendChild(link);
+    }
+
+    // Load navigation JavaScript if not already loaded
+    if (!document.querySelector('script[src*="navigation.js"]')) {
+        const script = document.createElement('script');
+        script.src = 'js/navigation.js';
+        document.body.appendChild(script);
+    }
+
+    // Load animations JavaScript if not already loaded
+    if (!document.querySelector('script[src*="animations.js"]')) {
+        const script = document.createElement('script');
+        script.src = 'js/animations.js';
+        document.body.appendChild(script);
+    }
+})();
