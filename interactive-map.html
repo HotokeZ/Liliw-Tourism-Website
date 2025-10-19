@@ -8,11 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body data-page="map">
 
     <!-- Back Button -->
-    <a href="homepage.html" class="back-button">←</a>
+    <a href="javascript:history.back()" class="back-button">←</a>
 
     <!-- Main Content -->
     <main class="map-content">
@@ -21,36 +24,7 @@
         <!-- Map Container -->
         <div class="map-view">
             <div id="map-canvas">
-                <!-- This is where Google Maps or interactive map would go -->
-                <img src="images/liliw-map-detailed.jpg" alt="Liliw Map" class="static-map">
-                
-                <!-- Map Markers -->
-                <div class="map-marker" style="top: 45%; left: 50%;" data-location="St. John the Baptist Church">
-                    <div class="marker-pin">📍</div>
-                    <div class="marker-tooltip">St. John the Baptist Church</div>
-                </div>
-                
-                <div class="map-marker" style="top: 30%; left: 60%;" data-location="Kilangin Falls">
-                    <div class="marker-pin">📍</div>
-                    <div class="marker-tooltip">Kilangin Falls</div>
-                </div>
-                
-                <div class="map-marker" style="top: 55%; left: 48%;" data-location="Town Plaza">
-                    <div class="marker-pin">📍</div>
-                    <div class="marker-tooltip">Town Plaza</div>
-                </div>
-                
-                <div class="map-marker" style="top: 40%; left: 45%;" data-location="Gat Tayaw Monument">
-                    <div class="marker-pin">📍</div>
-                    <div class="marker-tooltip">Gat Tayaw Monument</div>
-                </div>
-            </div>
-
-            <!-- Map Controls -->
-            <div class="map-controls">
-                <button class="zoom-btn" id="zoom-in">+</button>
-                <button class="zoom-btn" id="zoom-out">−</button>
-                <button class="locate-btn" id="locate-me">📍</button>
+                <!-- Leaflet Map will be initialized here -->
             </div>
 
             <!-- Legend -->
@@ -58,41 +32,55 @@
                 <h3>Legend</h3>
                 <ul>
                     <li><span class="legend-icon heritage">📍</span> Heritage Sites</li>
-                    <li><span class="legend-icon nature">📍</span> Natural Attractions</li>
-                    <li><span class="legend-icon food">📍</span> Food & Dining</li>
-                    <li><span class="legend-icon shop">📍</span> Shopping</li>
+                    <li><span class="legend-icon nature">🌿</span> Natural Attractions</li>
+                    <li><span class="legend-icon landmark">🏛️</span> Landmarks</li>
                 </ul>
             </div>
+        </div>
+        
+        <!-- Map Navigation Tips -->
+        <div class="map-tips">
+            <p><strong>💡 How to Navigate the Map:</strong></p>
+            <p>🖱️ <strong>Drag</strong> to pan • <strong>Ctrl + Scroll</strong> to zoom • <strong>Double-click</strong> to zoom in • <strong>+/−</strong> buttons to zoom • 📍 <strong>Click markers</strong> for details • 📱 <strong>Pinch</strong> to zoom on mobile</p>
         </div>
 
         <!-- Location List -->
         <section class="location-list">
             <h2>Popular Destinations</h2>
             <div class="location-cards">
-                <div class="location-card" onclick="focusLocation('church')">
-                    <img src="images/church-thumb.jpg" alt="Church">
+                <div class="location-card" data-location="church">
+                    <img src="images/liliw-church-card.jpg" alt="Church">
                     <div class="location-info">
                         <h3>St. John the Baptist Church</h3>
                         <p>Historic landmark in the heart of Liliw</p>
-                        <span class="distance">0.5 km from center</span>
+                        <span class="distance">📍 Central Liliw</span>
                     </div>
                 </div>
                 
-                <div class="location-card" onclick="focusLocation('falls')">
-                    <img src="images/falls-thumb.jpg" alt="Falls">
+                <div class="location-card" data-location="falls">
+                    <img src="images/kilangin-falls.jpg" alt="Falls">
                     <div class="location-info">
                         <h3>Kilangin Falls</h3>
                         <p>Beautiful natural waterfall</p>
-                        <span class="distance">3.2 km from center</span>
+                        <span class="distance">🌿 3.2 km from center</span>
                     </div>
                 </div>
                 
-                <div class="location-card" onclick="focusLocation('monument')">
-                    <img src="images/monument-thumb.jpg" alt="Monument">
+                <div class="location-card" data-location="monument">
+                    <img src="images/gat-tayaw-tsinelas.jpg" alt="Monument">
                     <div class="location-info">
                         <h3>Gat Tayaw Monument</h3>
                         <p>Iconic footwear capital symbol</p>
-                        <span class="distance">0.3 km from center</span>
+                        <span class="distance">🏛️ Town Plaza</span>
+                    </div>
+                </div>
+                
+                <div class="location-card" data-location="plaza">
+                    <img src="images/other-attraction.jpg" alt="Plaza">
+                    <div class="location-info">
+                        <h3>Town Plaza</h3>
+                        <p>Central gathering place</p>
+                        <span class="distance">📍 Central Liliw</span>
                     </div>
                 </div>
             </div>
@@ -129,6 +117,10 @@
     </footer>
 
     <script src="js/include-nav.js"></script>
+    
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
     <script src="js/map.js"></script>
 </body>
 </html>

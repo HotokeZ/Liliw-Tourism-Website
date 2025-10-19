@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body data-page="homepage">
     
@@ -17,10 +20,6 @@
             <div class="section-header">
                 <h2>Welcome to<br>LILIW, LAGUNA</h2>
                 <img src="images/liliw-logo.png" alt="Liliw Logo" class="logo">
-            </div>
-            <div class="welcome-actions">
-                <a href="attractions.html" class="cta-button see-attractions">See Attractions</a>
-                <a href="events.html" class="cta-button upcoming-event">Upcoming Event</a>
             </div>
         </div>
 
@@ -70,11 +69,12 @@
         <div class="content-section interactive-map">
             <h3 class="section-title">Interactive Map</h3>
             <div class="map-container">
-                <img src="images/map-preview.jpg" alt="Liliw Map">
-                <div class="map-overlay">
-                    <div class="map-pin">📍</div>
-                </div>
-                <button class="map-button">View Full Map</button>
+                <div id="map" style="height: 600px; width: 100%; border-radius: 12px;"></div>
+                <button class="map-button" onclick="window.location.href='interactive-map.html'">View Full Map</button>
+            </div>
+            <div class="map-tips">
+                <p><strong>💡 Map Navigation:</strong></p>
+                <p>🖱️ <strong>Drag</strong> to pan • <strong>Ctrl + Scroll</strong> to zoom • <strong>Double-click</strong> to zoom in • 📍 <strong>Click markers</strong> for details</p>
             </div>
         </div>
 
@@ -104,6 +104,10 @@
     </div>
 
     <script src="js/include-nav.js"></script>
+    
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
     <script src="js/homepage.js"></script>
 </body>
 </html>

@@ -62,6 +62,20 @@ body {
     position: relative;
     width: 100%;
     height: 600px;
+    z-index: 1;
+}
+
+/* Ensure Leaflet map fills container */
+#map-canvas .leaflet-container {
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+}
+
+/* Custom marker styling */
+.custom-map-marker {
+    background: transparent;
+    border: none;
 }
 
 .static-map {
@@ -191,6 +205,33 @@ body {
 
 .legend-icon {
     font-size: 20px;
+}
+
+/* Map Navigation Tips */
+.map-tips {
+    margin: 20px 0;
+    padding: 20px 25px;
+    background: linear-gradient(135deg, rgba(66, 153, 225, 0.15) 0%, rgba(49, 130, 206, 0.15) 100%);
+    border-radius: 12px;
+    border-left: 4px solid #4299e1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.map-tips p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #2d3748;
+}
+
+.map-tips p:first-child {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.map-tips strong {
+    color: #1a365d;
+    font-weight: 600;
 }
 
 /* Location List */

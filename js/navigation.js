@@ -34,7 +34,88 @@ function initNavigation() {
             menuToggle.classList.remove('active');
         }
         document.body.style.overflow = '';
+        // Close any open submenus
+        document.querySelectorAll('.mobile-nav-item.active').forEach(item => {
+            item.classList.remove('active');
+        });
     }
+
+    // Desktop Dropdown Toggle (Click and Delayed Hover)
+    const desktopDropdowns = document.querySelectorAll('.nav-item-dropdown');
+    let hoverTimeout;
+
+    desktopDropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        
+        // Click handler - immediate toggle
+        if (toggle) {
+            toggle.addEventListener('click', function(e) {
+                const wasOpen = dropdown.classList.contains('show');
+                
+                // Close all other dropdowns
+                document.querySelectorAll('.nav-item-dropdown.show').forEach(item => {
+                    if (item !== dropdown) {
+                        item.classList.remove('show');
+                    }
+                });
+                
+                // Toggle current dropdown
+                if (wasOpen) {
+                    dropdown.classList.remove('show');
+                } else {
+                    dropdown.classList.add('show');
+                }
+            });
+        }
+        
+        // Delayed hover handler (500ms)
+        dropdown.addEventListener('mouseenter', function() {
+            // Don't trigger hover if already open via click
+            if (!dropdown.classList.contains('show')) {
+                hoverTimeout = setTimeout(() => {
+                    dropdown.classList.add('hover-show');
+                }, 500);
+            }
+        });
+        
+        dropdown.addEventListener('mouseleave', function() {
+            clearTimeout(hoverTimeout);
+            dropdown.classList.remove('hover-show');
+        });
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.nav-item-dropdown')) {
+            document.querySelectorAll('.nav-item-dropdown.show').forEach(dropdown => {
+                dropdown.classList.remove('show');
+            });
+        }
+    });
+
+    // Mobile Submenu Toggle
+    const submenuToggles = document.querySelectorAll('.submenu-toggle');
+    submenuToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const parent = this.closest('.mobile-nav-item');
+            const wasActive = parent.classList.contains('active');
+            
+            // Close all other submenus
+            document.querySelectorAll('.mobile-nav-item.active').forEach(item => {
+                if (item !== parent) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle current submenu
+            if (wasActive) {
+                parent.classList.remove('active');
+            } else {
+                parent.classList.add('active');
+            }
+        });
+    });
 
     // Search Modal
     const searchBtn = document.getElementById('searchBtn');

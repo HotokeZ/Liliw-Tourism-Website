@@ -13,52 +13,19 @@ body {
     min-height: 100vh;
 }
 
-/* Top Navigation */
+/* Navigation styles are loaded from navigation.css via include-nav.js */
+/* Ensure navigation has consistent sizing across all pages */
 .top-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-height: 70px; /* Match homepage navigation height */
 }
 
-.logo img {
-    height: 50px;
-    width: auto;
+.nav-container {
+    padding: 12px 20px !important; /* Ensure consistent padding */
 }
 
-.main-nav {
-    display: flex;
-    gap: 30px;
-}
-
-.main-nav a {
-    color: #2d3748;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 8px 16px;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-}
-
-.main-nav a:hover,
-.main-nav a.active {
-    background-color: #4299e1;
-    color: white;
-}
-
-.search-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.search-btn:hover {
-    transform: scale(1.1);
+.logo-img {
+    height: 45px !important; /* Ensure consistent logo size */
+    width: 45px !important;
 }
 
 /* Back Button */

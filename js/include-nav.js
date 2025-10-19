@@ -21,7 +21,17 @@
             
             <nav class="main-nav">
                 <a href="homepage.html" data-page="homepage">Home</a>
-                <a href="attractions.html" data-page="attractions">Attractions</a>
+                <div class="nav-item-dropdown">
+                    <span class="dropdown-toggle" data-page="attractions">
+                        Attractions
+                        <span class="dropdown-arrow">▾</span>
+                    </span>
+                    <div class="dropdown-menu">
+                        <a href="attractions.html" class="dropdown-item">All Attractions</a>
+                        <a href="natural-attractions.html" class="dropdown-item">Natural Attractions</a>
+                        <a href="heritage-attractions.html" class="dropdown-item">Heritage Sites</a>
+                    </div>
+                </div>
                 <a href="events.html" data-page="events">Events</a>
                 <a href="interactive-map.html" data-page="map">Map</a>
             </nav>
@@ -49,9 +59,17 @@
             <button class="close-menu" id="closeMenu">&times;</button>
             <nav class="mobile-nav">
                 <a href="homepage.html">Home</a>
-                <a href="attractions.html">Attractions</a>
-                <a href="natural-attractions.html">Natural Attractions</a>
-                <a href="heritage-attractions.html">Heritage Sites</a>
+                <div class="mobile-nav-item has-submenu">
+                    <div class="submenu-toggle">
+                        <span class="submenu-text">Attractions</span>
+                        <span class="submenu-arrow">›</span>
+                    </div>
+                    <div class="mobile-submenu">
+                        <a href="attractions.html" class="submenu-link">All Attractions</a>
+                        <a href="natural-attractions.html" class="submenu-link">Natural Attractions</a>
+                        <a href="heritage-attractions.html" class="submenu-link">Heritage Sites</a>
+                    </div>
+                </div>
                 <a href="events.html">Events</a>
                 <a href="interactive-map.html">Map</a>
             </nav>
