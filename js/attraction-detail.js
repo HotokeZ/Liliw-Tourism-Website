@@ -37,14 +37,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add parallax effect to hero image
+    // Add scroll-triggered blur effect to hero image and overlay
     const heroCard = document.querySelector('.hero-card');
     if (heroCard) {
         window.addEventListener('scroll', function() {
             const scrolled = window.pageYOffset;
-            const parallax = heroCard.querySelector('img');
-            if (parallax) {
-                parallax.style.transform = `translateY(${scrolled * 0.3}px)`;
+            const heroHeight = heroCard.offsetHeight;
+            
+            // Start blurring after scrolling 100px, fully blurred at 400px
+            const blurStart = 100;
+            const blurEnd = 400;
+            
+            if (scrolled > blurStart) {
+                const blurAmount = Math.min((scrolled - blurStart) / (blurEnd - blurStart), 1);
+                const blurPx = blurAmount * 8; // 0 to 8px blur
+                const scale = 1 + (blurAmount * 0.05); // 1 to 1.05 scale
+                
+                // Blur the image
+                const heroImg = heroCard.querySelector('img');
+                if (heroImg) {
+                    heroImg.style.filter = `blur(${blurPx}px)`;
+                    heroImg.style.transform = `scale(${scale})`;
+                }
+                
+                // Blur the overlay (text and button)
+                const heroOverlay = heroCard.querySelector('.hero-overlay');
+                if (heroOverlay) {
+                    heroOverlay.style.filter = `blur(${blurPx}px)`;
+                }
+            } else {
+                // Reset blur when scrolled back to top
+                const heroImg = heroCard.querySelector('img');
+                if (heroImg) {
+                    heroImg.style.filter = 'blur(0px)';
+                    heroImg.style.transform = 'scale(1)';
+                }
+                
+                const heroOverlay = heroCard.querySelector('.hero-overlay');
+                if (heroOverlay) {
+                    heroOverlay.style.filter = 'blur(0px)';
+                }
             }
         });
     }

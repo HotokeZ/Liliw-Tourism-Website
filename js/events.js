@@ -52,6 +52,49 @@ document.addEventListener('DOMContentLoaded', function() {
         card.style.opacity = '0';
     });
 
+    // Add scroll-triggered blur effect to event hero image and overlay
+    const eventHero = document.querySelector('.event-hero');
+    if (eventHero) {
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            
+            // Start blurring after scrolling 100px, fully blurred at 400px
+            const blurStart = 100;
+            const blurEnd = 400;
+            
+            if (scrolled > blurStart) {
+                const blurAmount = Math.min((scrolled - blurStart) / (blurEnd - blurStart), 1);
+                const blurPx = blurAmount * 8; // 0 to 8px blur
+                const scale = 1 + (blurAmount * 0.05); // 1 to 1.05 scale
+                
+                // Blur the image
+                const heroImg = eventHero.querySelector('img');
+                if (heroImg) {
+                    heroImg.style.filter = `blur(${blurPx}px)`;
+                    heroImg.style.transform = `scale(${scale})`;
+                }
+                
+                // Blur the overlay (text and button)
+                const heroOverlay = eventHero.querySelector('.event-hero-overlay');
+                if (heroOverlay) {
+                    heroOverlay.style.filter = `blur(${blurPx}px)`;
+                }
+            } else {
+                // Reset blur when scrolled back to top
+                const heroImg = eventHero.querySelector('img');
+                if (heroImg) {
+                    heroImg.style.filter = 'blur(0px)';
+                    heroImg.style.transform = 'scale(1)';
+                }
+                
+                const heroOverlay = eventHero.querySelector('.event-hero-overlay');
+                if (heroOverlay) {
+                    heroOverlay.style.filter = 'blur(0px)';
+                }
+            }
+        });
+    }
+
     // Add CSS animation
     const style = document.createElement('style');
     style.textContent = `

@@ -36,6 +36,8 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px 30px 80px;
+    position: relative;
+    z-index: 10; /* Appears above navigation when scrolling */
 }
 
 .page-title {
@@ -49,6 +51,8 @@ body {
 /* Featured Event */
 .featured-event {
     margin-bottom: 50px;
+    position: relative;
+    z-index: 10; /* Appears above navigation when scrolling */
 }
 
 .event-hero {
@@ -63,6 +67,15 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    filter: blur(0px); /* Start with no blur */
+    transform: scale(1); /* No scale initially */
+    transition: filter 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+/* Applied via JavaScript when scrolling */
+.event-hero.scrolled img {
+    filter: blur(8px); /* Full blur when scrolled */
+    transform: scale(1.05); /* Slightly scale up to hide blur edges */
 }
 
 .event-hero-overlay {
@@ -73,6 +86,8 @@ body {
     background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
     padding: 40px;
     color: white;
+    filter: blur(0px); /* Start with no blur */
+    transition: filter 0.3s ease; /* Smooth blur transition */
 }
 
 .event-badge {
@@ -121,29 +136,34 @@ body {
 
 /* Event Description */
 .event-description {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.95); /* Opaque for better readability */
     border-radius: 16px;
     padding: 30px;
     margin-bottom: 50px;
     backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 10; /* Appears above navigation when scrolling */
 }
 
 .event-description h3 {
     font-size: 28px;
     font-weight: 600;
     margin-bottom: 20px;
+    color: #2d3748; /* Dark text for opaque background */
 }
 
 .event-description p {
     font-size: 16px;
     line-height: 1.8;
     margin-bottom: 15px;
-    color: rgba(255, 255, 255, 0.9);
+    color: #4a5568; /* Dark gray for better readability */
 }
 
 /* Other Events */
 .other-events {
     margin-bottom: 50px;
+    position: relative;
+    z-index: 10; /* Appears above navigation when scrolling */
 }
 
 .other-events h2 {
@@ -217,6 +237,8 @@ body {
     padding: 40px;
     text-align: center;
     backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 10; /* Appears above navigation when scrolling */
 }
 
 .calendar-section h2 {
@@ -254,6 +276,8 @@ body {
     background-color: rgba(0, 0, 0, 0.3);
     padding: 40px 30px 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 10; /* Appears above navigation when scrolling */
 }
 
 .footer-content {

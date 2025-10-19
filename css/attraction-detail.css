@@ -85,6 +85,8 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px 30px 80px;
+    position: relative;
+    z-index: 10; /* Appears above navigation when scrolling */
 }
 
 .page-title {
@@ -100,16 +102,27 @@ body {
 .hero-card {
     position: relative;
     border-radius: 20px;
-    overflow: hidden;
+    overflow: hidden; /* Keep hidden for proper rounded corners */
     margin-bottom: 40px;
     height: 500px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10; /* Appears above navigation when scrolling */
+    isolation: isolate; /* Create new stacking context */
 }
 
 .hero-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    filter: blur(0px); /* Start with no blur */
+    transform: scale(1); /* No scale initially */
+    transition: filter 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+/* Applied via JavaScript when scrolling */
+.hero-card.scrolled img {
+    filter: blur(8px); /* Full blur when scrolled */
+    transform: scale(1.05); /* Slightly scale up to hide blur edges */
 }
 
 .hero-overlay {
@@ -121,8 +134,11 @@ body {
     background: linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.7));
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: 40px;
+    color: white;
+    filter: blur(0px); /* Start with no blur */
+    transition: filter 0.3s ease; /* Smooth blur transition */
 }
 
 .hero-text {
@@ -188,6 +204,8 @@ body {
     padding: 30px;
     margin-bottom: 40px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10; /* Appears above navigation when scrolling */
 }
 
 .description-section h3 {
@@ -210,6 +228,8 @@ body {
     border-radius: 16px;
     padding: 30px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10; /* Appears above navigation when scrolling */
 }
 
 .related-attractions h3 {
@@ -258,6 +278,8 @@ body {
     background-color: rgba(0, 0, 0, 0.2);
     padding: 40px 30px 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 10; /* Appears above navigation when scrolling */
 }
 
 .footer-content {
