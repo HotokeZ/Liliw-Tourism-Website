@@ -6,8 +6,12 @@ let markers = {};
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Interactive map page loaded');
 
-    // Initialize Leaflet Map
-    initializeInteractiveMap();
+    // Initialize Leaflet Map with error handling
+    try {
+        initializeInteractiveMap();
+    } catch (error) {
+        console.error('Failed to initialize map:', error);
+    }
 
     // Location card click handlers
     const locationCards = document.querySelectorAll('.location-card');
@@ -23,7 +27,16 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeInteractiveMap() {
     // Check if map container exists
     const mapContainer = document.getElementById('map-canvas');
-    if (!mapContainer) return;
+    if (!mapContainer) {
+        console.warn('Map container not found');
+        return;
+    }
+    
+    // Check if Leaflet is loaded
+    if (typeof L === 'undefined') {
+        console.error('Leaflet library not loaded');
+        return;
+    }
 
     // Coordinates for Liliw, Laguna (approximate center)
     const liliwCenter = [14.1333, 121.4333];
