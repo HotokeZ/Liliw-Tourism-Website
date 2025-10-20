@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Liliw, Laguna - The Footwear Capital of Laguna</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,10 +19,13 @@
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
             color: #ffffff;
-            overflow: hidden;
+            overflow: auto;  /* Changed from hidden to allow pull-to-refresh */
+            min-height: 100vh;
             height: 100vh;
             display: flex;
             flex-direction: column;
+            overscroll-behavior-y: contain;  /* Enable pull-to-refresh */
+            -webkit-overflow-scrolling: touch;  /* Smooth scrolling on iOS */
         }
 
         /* Header */
