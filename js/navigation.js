@@ -234,3 +234,26 @@ if (document.readyState === 'loading') {
 function setActivePage(pageName) {
     document.body.setAttribute('data-page', pageName);
 }
+
+// Fix for Android back button blank page issue
+// Force reload when page is restored from bfcache
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        // Page was restored from bfcache, force reload
+        console.log('Page restored from cache, reloading...');
+        window.location.reload();
+    }
+});
+
+// Also handle visibility change (when user returns to tab)
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        // Page became visible again
+        // Check if body content is empty or not properly loaded
+        if (document.body.children.length === 0 || 
+            !document.querySelector('.homepage-content, .attractions-content, .events-content, .map-content')) {
+            console.log('Page content missing, reloading...');
+            window.location.reload();
+        }
+    }
+});
