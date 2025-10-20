@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Plan Your Trip - Liliw, Laguna</title>
+    <link rel="stylesheet" href="css/plan-your-trip.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-page="plan-trip">
+
+    <!-- Back Button -->
+    <a href="homepage.html" class="back-button" id="backButton">←</a>
+
+    <!-- Main Content -->
+    <main class="plan-content">
+        <h1 class="page-title">Plan your Trip!</h1>
+
+        <!-- Hotels & Accommodations Section -->
+        <section class="category-section" onclick="window.location.href='where-to-stay.html'" style="cursor: pointer;">
+            <h2 class="category-title">🏨 Where to Stay</h2>
+            <p class="category-description">Discover hotels, inns, and accommodations in Liliw</p>
+            <div class="category-preview">
+                <span class="preview-item">🏨 Hotels</span>
+                <span class="preview-item">🏡 Resorts</span>
+                <span class="preview-item">🛏️ Inns</span>
+            </div>
+            <button class="view-more-btn">View All Accommodations →</button>
+        </section>
+
+        <!-- Restaurants & Food Section -->
+        <section class="category-section" onclick="window.location.href='where-to-eat.html'" style="cursor: pointer;">
+            <h2 class="category-title">🍽️ Where to Eat</h2>
+            <p class="category-description">Explore restaurants, cafes, and local cuisine</p>
+            <div class="category-preview">
+                <span class="preview-item">🍽️ Restaurants</span>
+                <span class="preview-item">☕ Cafes</span>
+                <span class="preview-item">🍜 Local Food</span>
+            </div>
+            <button class="view-more-btn">View All Dining Options →</button>
+        </section>
+
+        <!-- Travel Tips Section -->
+        <section class="category-section" onclick="window.location.href='travel-tips.html'" style="cursor: pointer;">
+            <h2 class="category-title">💡 Travel Tips</h2>
+            <p class="category-description">Essential information for your Liliw adventure</p>
+            <div class="category-preview">
+                <span class="preview-item">🚗 Getting There</span>
+                <span class="preview-item">📅 Best Time</span>
+                <span class="preview-item">🎒 What to Bring</span>
+            </div>
+            <button class="view-more-btn">View Travel Guide →</button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About</h3>
+                <ul>
+                    <li><a href="#liliw-office">Liliw Tourism Office</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#cookie">Cookie Policy</a></li>
+                    <li><a href="#terms">Terms of Use</a></li>
+                </ul>
+            </div>
+            <div class="footer-logo">
+                <img src="images/liliw-logo-small.png" alt="Liliw Logo">
+                <p class="copyright">Copyright 2025<br>Liliw Tourism Office</p>
+            </div>
+        </div>
+        <div class="social-links">
+            <a href="#" class="social-icon">📧</a>
+            <a href="#" class="social-icon">📘</a>
+        </div>
+    </footer>
+
+    <script src="js/include-nav.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/plan-your-trip.js"></script>
+</body>
+</html>

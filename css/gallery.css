@@ -1,0 +1,331 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    color: #333;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Back Button */
+.back-button {
+    display: inline-block;
+    margin: 20px 30px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #667eea;
+    text-decoration: none;
+    font-size: 24px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateX(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Main Content */
+.gallery-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 20px 80px 20px;
+}
+
+.page-title {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Gallery Sections */
+.gallery-section {
+    margin-bottom: 50px;
+}
+
+.section-title {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* Photo Grid */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.photo-item {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.photo-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+    max-width: 100%;
+}
+
+.photo-caption {
+    padding: 15px;
+    color: #555;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Upload Section */
+.upload-section {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 30px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+.upload-card {
+    text-align: center;
+}
+
+.upload-card h3 {
+    color: #667eea;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.upload-card p {
+    color: #666;
+    font-size: 1.05rem;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.upload-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.upload-button:not(:disabled):hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.upload-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Footer */
+.page-footer {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px 20px 20px;
+    margin-top: 60px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-section h3 {
+    color: #667eea;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #555;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #667eea;
+}
+
+.footer-logo {
+    text-align: center;
+}
+
+.footer-logo img {
+    width: 60px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.copyright {
+    color: #888;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.social-icon {
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+}
+
+/* Lightbox for Full Image View (Optional Enhancement) */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .photo-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 15px;
+    }
+
+    .photo-item img {
+        height: 200px;
+    }
+
+    .upload-section {
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+        padding-bottom: 70px;
+    }
+
+    .gallery-content {
+        margin-top: 70px;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .back-button {
+        padding: 10px 15px;
+        font-size: 20px;
+    }
+
+    .photo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .photo-item img {
+        height: 220px;
+    }
+
+    .upload-button {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+}

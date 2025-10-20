@@ -62,11 +62,23 @@
         <!-- Plan Your Visit Section -->
         <div class="content-section plan-visit">
             <h3 class="section-title">Plan your Visit</h3>
-            <div class="plan-card">
+            <div class="plan-card" onclick="window.location.href='plan-your-trip.html'" style="cursor: pointer;">
                 <img src="images/nature-scene.jpg" alt="Liliw Nature">
                 <div class="plan-info">
-                    <h4>Discover Liliw</h4>
-                    <p>Explore our beautiful town and heritage sites</p>
+                    <h4>Plan Your Trip</h4>
+                    <p>Hotels, Restaurants, Cafes & Travel Tips</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experiences Section -->
+        <div class="content-section experiences">
+            <h3 class="section-title">Experiences</h3>
+            <div class="experience-card" onclick="window.location.href='experiences.html'" style="cursor: pointer;">
+                <img src="images/tsinelas-festival.jpg" alt="Liliw Experiences">
+                <div class="experience-info">
+                    <h4>Festival Events, Local Products & Gallery</h4>
+                    <p>Discover local culture, traditions, and products</p>
                 </div>
             </div>
         </div>
@@ -89,13 +101,14 @@
             <h3 class="section-title">About</h3>
             <div class="about-links">
                 <div class="about-column">
-                    <a href="#about-liliw">About Liliw</a>
-                    <a href="#contact">Contact Us</a>
-                    <a href="#privacy">Privacy Policy</a>
+                    <a href="about-contact.html">About Liliw</a>
+                    <a href="contact-emergency.html">Contact Us</a>
+                    <a href="business-directory.html">Business Directory</a>
                 </div>
                 <div class="about-column">
-                    <a href="#cookie-policy">Cookie Policy</a>
-                    <a href="#terms">Terms of Use</a>
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="cookie-policy.html">Cookie Policy</a>
+                    <a href="terms-of-use.html">Terms of Use</a>
                 </div>
             </div>
             <div class="about-footer">
@@ -119,6 +132,9 @@
     <script src="js/homepage.js"></script>
     
     <!-- Mobile Debug Script -->
+    <!-- Dynamic Homepage Renderer -->
+    <script src="js/homepage-dynamic.js"></script>
+    
     <script>
         // Log errors to help debug on mobile
         window.addEventListener('error', function(e) {

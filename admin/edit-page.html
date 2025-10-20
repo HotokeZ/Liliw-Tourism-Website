@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Editor - Liliw Tourism Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="css/page-editor-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+</head>
+<body class="dashboard-page">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/liliw-logo-small.png" alt="Logo" class="sidebar-logo" onerror="this.style.display='none'">
+            <h2>Liliw Tourism</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="edit-homepage.html" class="nav-item">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Homepage</span>
+            </a>
+            <a href="edit-page.html?page=attractions" class="nav-item" data-page="attractions">
+                <span class="nav-icon">🏛️</span>
+                <span class="nav-text">Attractions</span>
+            </a>
+            <a href="edit-page.html?page=events" class="nav-item" data-page="events">
+                <span class="nav-icon">🎉</span>
+                <span class="nav-text">Events</span>
+            </a>
+            <a href="edit-page.html?page=experiences" class="nav-item" data-page="experiences">
+                <span class="nav-icon">✨</span>
+                <span class="nav-text">Experiences</span>
+            </a>
+            <a href="edit-page.html?page=plan-trip" class="nav-item" data-page="plan-trip">
+                <span class="nav-icon">🗺️</span>
+                <span class="nav-text">Plan Your Trip</span>
+            </a>
+            <a href="image-manager.html" class="nav-item">
+                <span class="nav-icon">🖼️</span>
+                <span class="nav-text">Image Manager</span>
+            </a>
+            <div class="nav-divider"></div>
+            <a href="#" class="nav-item" onclick="logout(event)">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <h1 class="page-title" id="pageTitle">Page Editor</h1>
+            <div class="topbar-actions">
+                <button class="btn btn-secondary" onclick="previewPage()">
+                    👁️ Preview
+                </button>
+                <button class="btn btn-primary" onclick="savePage()" id="saveBtn">
+                    💾 Save Changes
+                </button>
+            </div>
+        </header>
+
+        <!-- Editor Content -->
+        <div class="content-wrapper">
+            <!-- Page Info Card -->
+            <div class="editor-card" id="pageInfoCard">
+                <h2 class="card-title">Loading page...</h2>
+                <p class="card-description">Please wait...</p>
+            </div>
+
+            <!-- Content Sections -->
+            <div class="editor-card">
+                <div class="card-header">
+                    <h2 class="card-title">📝 Content Sections</h2>
+                    <button class="btn btn-sm btn-primary" onclick="addNewSection()">
+                        ➕ Add Section
+                    </button>
+                </div>
+                
+                <div id="sectionsContainer" class="sections-container">
+                    <!-- Sections will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Section Modal -->
+    <div class="modal" id="editSectionModal">
+        <div class="modal-overlay" onclick="closeModal('editSectionModal')"></div>
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2>Edit Section</h2>
+                <button class="modal-close" onclick="closeModal('editSectionModal')">✕</button>
+            </div>
+            <div class="modal-body" id="sectionEditForm">
+                <!-- Form will be generated dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('editSectionModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveSectionChanges()">Save Section</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Modal -->
+    <div class="modal" id="addItemModal">
+        <div class="modal-overlay" onclick="closeModal('addItemModal')"></div>
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2>Add New Item</h2>
+                <button class="modal-close" onclick="closeModal('addItemModal')">✕</button>
+            </div>
+            <div class="modal-body" id="itemAddForm">
+                <!-- Form will be generated dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addItemModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveNewItem()">Add Item</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Item Modal -->
+    <div class="modal" id="editItemModal">
+        <div class="modal-overlay" onclick="closeModal('editItemModal')"></div>
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2>Edit Item</h2>
+                <button class="modal-close" onclick="closeModal('editItemModal')">✕</button>
+            </div>
+            <div class="modal-body" id="itemEditForm">
+                <!-- Form will be generated dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('editItemModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveItemChanges()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div class="modal" id="previewModal">
+        <div class="modal-overlay" onclick="closeModal('previewModal')"></div>
+        <div class="modal-content" style="max-width: 1200px; height: 90vh;">
+            <div class="modal-header">
+                <h2>🔍 Page Preview</h2>
+                <button class="modal-close" onclick="closeModal('previewModal')">✕</button>
+            </div>
+            <div class="modal-body" style="padding: 0; height: calc(90vh - 140px);">
+                <iframe id="previewFrame" style="width: 100%; height: 100%; border: none; border-radius: 0 0 20px 20px;"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/page-editor.js"></script>
+    
+    <script>
+        // Check authentication
+        if (!checkAuth()) {
+            window.location.href = 'index.html';
+        }
+
+        // Set active nav item based on page parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentPage = urlParams.get('page');
+        if (currentPage) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.dataset.page === currentPage) {
+                    item.classList.add('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

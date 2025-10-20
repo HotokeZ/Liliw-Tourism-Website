@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Liliw Tourism Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-page">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="../images/liliw-logo-small.png" alt="Logo" class="sidebar-logo" onerror="this.style.display='none'">
+            <h2>Liliw Tourism</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="edit-homepage.html" class="nav-item">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Homepage</span>
+            </a>
+            <a href="edit-page.html?page=attractions" class="nav-item">
+                <span class="nav-icon">🏛️</span>
+                <span class="nav-text">Attractions</span>
+            </a>
+            <a href="edit-page.html?page=events" class="nav-item">
+                <span class="nav-icon">🎉</span>
+                <span class="nav-text">Events</span>
+            </a>
+            <a href="edit-page.html?page=experiences" class="nav-item">
+                <span class="nav-icon">✨</span>
+                <span class="nav-text">Experiences</span>
+            </a>
+            <a href="edit-page.html?page=plan-trip" class="nav-item">
+                <span class="nav-icon">🗺️</span>
+                <span class="nav-text">Plan Your Trip</span>
+            </a>
+            <a href="image-manager.html" class="nav-item">
+                <span class="nav-icon">🖼️</span>
+                <span class="nav-text">Image Manager</span>
+            </a>
+            <div class="nav-divider"></div>
+            <a href="#" class="nav-item" onclick="logout(event)">
+                <span class="nav-icon">🚪</span>
+                <span class="nav-text">Logout</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <h1 class="page-title">Dashboard</h1>
+            <div class="user-info">
+                <span class="user-name">👤 Admin</span>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="content-wrapper">
+            <!-- Welcome Card -->
+            <div class="welcome-card">
+                <h2>Welcome back, Admin! 👋</h2>
+                <p>Manage your Liliw Tourism website content from here.</p>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📄</div>
+                    <div class="stat-info">
+                        <h3>Total Pages</h3>
+                        <p class="stat-number">18</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🖼️</div>
+                    <div class="stat-info">
+                        <h3>Images</h3>
+                        <p class="stat-number" id="imageCount">Loading...</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎨</div>
+                    <div class="stat-info">
+                        <h3>Sections</h3>
+                        <p class="stat-number">24</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💾</div>
+                    <div class="stat-info">
+                        <h3>Last Backup</h3>
+                        <p class="stat-number" id="lastBackup">Never</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="section-card">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="action-grid">
+                    <a href="edit-homepage.html" class="action-card">
+                        <div class="action-icon">🏠</div>
+                        <h3>Edit Homepage</h3>
+                        <p>Manage homepage sections and content</p>
+                    </a>
+                    <a href="image-helper.html" class="action-card">
+                        <div class="action-icon">📁</div>
+                        <h3>Image Upload Helper</h3>
+                        <p>Download and save uploaded images</p>
+                    </a>
+                    <a href="image-manager.html" class="action-card">
+                        <div class="action-icon">🖼️</div>
+                        <h3>Manage Images</h3>
+                        <p>Upload, organize, and delete images</p>
+                    </a>
+                    <a href="edit-page.html?page=attractions" class="action-card">
+                        <div class="action-icon">🏛️</div>
+                        <h3>Edit Attractions</h3>
+                        <p>Update attraction listings and details</p>
+                    </a>
+                    <a href="edit-page.html?page=events" class="action-card">
+                        <div class="action-icon">🎉</div>
+                        <h3>Edit Events</h3>
+                        <p>Manage events and festival information</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="section-card">
+                <h2 class="section-title">Recent Activity</h2>
+                <div class="activity-list" id="activityList">
+                    <p class="no-activity">No recent activity</p>
+                </div>
+            </div>
+
+            <!-- System Info -->
+            <div class="section-card">
+                <h2 class="section-title">System Information</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Status:</span>
+                        <span class="info-value status-online">● Online</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Version:</span>
+                        <span class="info-value">1.0.0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Last Update:</span>
+                        <span class="info-value" id="lastUpdate">Just now</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Storage:</span>
+                        <span class="info-value" id="storageUsed">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

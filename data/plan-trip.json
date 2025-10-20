@@ -1,0 +1,67 @@
+{
+  "page": {
+    "title": "Plan Your Trip",
+    "description": "Everything you need to know for visiting Liliw, Laguna"
+  },
+  "sections": [
+    {
+      "id": "getting-there",
+      "title": "Getting There",
+      "description": "How to reach Liliw from Manila and nearby areas",
+      "enabled": true,
+      "items": [
+        {
+          "id": "from-manila",
+          "title": "From Manila",
+          "description": "Take a bus from EDSA Carousel or Buendia to Santa Cruz, Laguna. From Santa Cruz, take a jeepney to Liliw (30-minute ride).",
+          "link": "plan-your-trip.html#from-manila",
+          "enabled": true
+        },
+        {
+          "id": "by-private-vehicle",
+          "title": "By Private Vehicle",
+          "description": "Take SLEX, exit at Calamba or Santa Rosa, then follow signs to Liliw via National Highway. Travel time: approximately 2-3 hours from Manila.",
+          "link": "plan-your-trip.html#by-car",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "where-to-stay",
+      "title": "Where to Stay",
+      "description": "Accommodation options in and around Liliw",
+      "enabled": true,
+      "items": [
+        {
+          "id": "hotels-info",
+          "title": "Hotels & Lodging",
+          "description": "Find comfortable accommodations for your stay in Liliw and nearby areas",
+          "link": "where-to-stay.html",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "best-time-to-visit",
+      "title": "Best Time to Visit",
+      "description": "When to plan your trip to Liliw",
+      "enabled": true,
+      "items": [
+        {
+          "id": "tsinelas-festival-time",
+          "title": "Tsinelas Festival (April)",
+          "description": "Visit during the annual Tsinelas Festival in April to experience the town's biggest celebration with parades, competitions, and cultural shows",
+          "date": "April",
+          "enabled": true
+        },
+        {
+          "id": "dry-season",
+          "title": "Dry Season (November to April)",
+          "description": "The best weather for sightseeing and outdoor activities. Cooler temperatures and less rain make it ideal for exploring",
+          "date": "November - April",
+          "enabled": true
+        }
+      ]
+    }
+  ]
+}

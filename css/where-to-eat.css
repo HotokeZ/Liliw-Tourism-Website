@@ -1,0 +1,290 @@
+/* Where to Eat Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+/* Back Button */
+.back-button {
+    display: inline-block;
+    margin: 20px 30px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #667eea;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 24px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    z-index: 50;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.back-button:hover {
+    background: white;
+    transform: translateX(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Main Content */
+.eat-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 80px 20px;
+}
+
+.page-title {
+    text-align: center;
+    color: white;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* Restaurants Grid */
+.restaurants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.restaurant-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.restaurant-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.restaurant-info {
+    padding: 20px;
+}
+
+.restaurant-info h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.cuisine {
+    font-size: 14px;
+    color: #667eea;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.restaurant-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4CAF50;
+}
+
+.rating {
+    font-size: 14px;
+    color: #FFB800;
+}
+
+/* Recommendations Section */
+.recommendations-section {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.recommendations-section h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #667eea;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.recommendation-item {
+    text-align: center;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.recommendation-item:hover {
+    background: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.dish-emoji {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.recommendation-item h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.recommendation-item p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Footer */
+.page-footer {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    color: white;
+    padding: 40px 20px;
+    margin-top: 60px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: white;
+}
+
+.footer-logo {
+    text-align: center;
+}
+
+.footer-logo img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+}
+
+.copyright {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+.social-links {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.social-icon {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 24px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 28px;
+    }
+
+    .restaurants-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .recommendations-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .back-button {
+        margin: 15px 20px;
+        padding: 8px 16px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 24px;
+    }
+
+    .recommendations-grid {
+        grid-template-columns: 1fr;
+    }
+}

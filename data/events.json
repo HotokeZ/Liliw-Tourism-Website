@@ -1,0 +1,41 @@
+{
+  "page": {
+    "title": "Events & Festivals",
+    "description": "Experience the vibrant culture and celebrations of Liliw"
+  },
+  "sections": [
+    {
+      "id": "annual-festivals",
+      "title": "Annual Festivals",
+      "description": "Traditional celebrations that showcase Liliw's rich culture",
+      "enabled": true,
+      "items": [
+        {
+          "id": "tsinelas-festival",
+          "title": "Tsinelas Festival",
+          "description": "Annual festival celebrating Liliw's famous footwear industry with parades, competitions, and cultural shows",
+          "image": "images/tsinelas-festival.jpg",
+          "date": "April (Town Fiesta)",
+          "link": "festival-events.html#tsinelas",
+          "enabled": true
+        },
+        {
+          "id": "town-fiesta",
+          "title": "Town Fiesta of St. John the Baptist",
+          "description": "Grand celebration honoring the town's patron saint with religious processions and festivities",
+          "image": "images/town-fiesta.jpg",
+          "date": "April 24",
+          "link": "festival-events.html#fiesta",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "cultural-events",
+      "title": "Cultural Events",
+      "description": "Community gatherings and cultural activities",
+      "enabled": true,
+      "items": []
+    }
+  ]
+}

@@ -446,3 +446,86 @@ body {
         height: 200px;
     }
 }
+
+/* ============================================
+   IMAGE CAROUSEL STYLES
+   ============================================ */
+
+.card-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.card-image-container.has-carousel {
+    position: relative;
+}
+
+.card-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    pointer-events: none;
+}
+
+.card-image.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Carousel Indicators */
+.carousel-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.carousel-indicators .indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.carousel-indicators .indicator.active {
+    background: rgba(255, 255, 255, 1);
+    width: 24px;
+    border-radius: 4px;
+}
+
+/* Adjust place-card for carousel */
+.place-card .card-image-container {
+    height: 250px;
+    border-radius: 12px 12px 0 0;
+}
+
+.event-card .card-image-container {
+    height: 100%;
+    border-radius: 12px 0 0 12px;
+}
+
+.plan-card .card-image-container,
+.experience-card .card-image-container {
+    height: 250px;
+}
+
+/* Ensure single images still work */
+.card-image-container:not(.has-carousel) .card-image {
+    position: relative;
+    opacity: 1;
+}
+

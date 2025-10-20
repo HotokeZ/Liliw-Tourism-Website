@@ -1,0 +1,256 @@
+/* Plan Your Trip Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+/* Back Button */
+.back-button {
+    display: inline-block;
+    margin: 20px 30px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #667eea;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 24px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    z-index: 50;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.back-button:hover {
+    background: white;
+    transform: translateX(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Main Content */
+.plan-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px 80px 20px;
+}
+
+.page-title {
+    text-align: center;
+    color: white;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* Category Section */
+.category-section {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.category-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+}
+
+.category-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #667eea;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-description {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.category-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.preview-item {
+    background: #f0f0f0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.view-more-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.view-more-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Items List */
+.items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.list-item {
+    background: #f7f7f7;
+    padding: 20px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.list-item:hover {
+    background: #efefef;
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.list-item h3 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Footer */
+.page-footer {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    color: white;
+    padding: 40px 20px;
+    margin-top: 60px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: white;
+}
+
+.footer-logo {
+    text-align: center;
+}
+
+.footer-logo img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+}
+
+.copyright {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+.social-links {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.social-icon {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 24px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 28px;
+    }
+
+    .category-section {
+        padding: 20px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .back-button {
+        margin: 15px 20px;
+        padding: 8px 16px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 24px;
+    }
+
+    .category-title {
+        font-size: 20px;
+    }
+
+    .list-item h3 {
+        font-size: 16px;
+    }
+}

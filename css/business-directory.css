@@ -1,0 +1,266 @@
+/* Business Directory Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+/* Back Button */
+.back-button {
+    display: inline-block;
+    margin: 20px 30px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #667eea;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 24px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    z-index: 50;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.back-button:hover {
+    background: white;
+    transform: translateX(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Main Content */
+.directory-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 80px 20px;
+}
+
+.page-title {
+    text-align: center;
+    color: white;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* Business Section */
+.business-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.business-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.business-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.business-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.business-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.business-card p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Search Section */
+.search-section {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.search-section h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto 15px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.search-btn {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.search-tip {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Footer */
+.page-footer {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    color: white;
+    padding: 40px 20px;
+    margin-top: 60px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: white;
+}
+
+.footer-logo {
+    text-align: center;
+}
+
+.footer-logo img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+}
+
+.copyright {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+.social-links {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.social-icon {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 24px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 28px;
+    }
+
+    .business-section {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .back-button {
+        margin: 15px 20px;
+        padding: 8px 16px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 24px;
+    }
+
+    .business-section {
+        grid-template-columns: 1fr;
+    }
+
+    .search-box {
+        flex-direction: column;
+    }
+}

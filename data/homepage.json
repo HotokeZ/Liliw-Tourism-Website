@@ -1,0 +1,52 @@
+{
+  "site": {
+    "name": "Liliw Tourism",
+    "tagline": "Welcome to Liliw, Laguna",
+    "description": "Discover the beauty and culture of Liliw"
+  },
+  "sections": [
+    {
+      "id": "welcome",
+      "title": "Welcome",
+      "enabled": true,
+      "order": 1
+    },
+    {
+      "id": "popular-places",
+      "title": "Popular Places",
+      "enabled": true,
+      "order": 2
+    },
+    {
+      "id": "events",
+      "title": "Events",
+      "enabled": true,
+      "order": 3
+    },
+    {
+      "id": "plan-visit",
+      "title": "Plan your Visit",
+      "enabled": true,
+      "order": 4
+    },
+    {
+      "id": "experiences",
+      "title": "Experiences",
+      "enabled": true,
+      "order": 5
+    },
+    {
+      "id": "interactive-map",
+      "title": "Interactive Map",
+      "enabled": true,
+      "order": 6
+    },
+    {
+      "id": "about",
+      "title": "About",
+      "enabled": true,
+      "order": 7
+    }
+  ],
+  "lastUpdated": "2025-10-20T00:00:00.000Z"
+}

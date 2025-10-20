@@ -1,0 +1,48 @@
+{
+  "page": {
+    "title": "Experiences",
+    "description": "Discover unique activities and things to do in Liliw"
+  },
+  "sections": [
+    {
+      "id": "local-crafts",
+      "title": "Local Crafts & Shopping",
+      "description": "Experience Liliw's famous footwear and local products",
+      "enabled": true,
+      "items": [
+        {
+          "id": "tsinelas-shopping",
+          "title": "Tsinelas Shopping",
+          "description": "Browse through numerous shops offering handmade footwear, slippers, and shoes at affordable prices",
+          "image": "images/tsinelas-shopping.jpg",
+          "link": "experiences.html#shopping",
+          "enabled": true
+        },
+        {
+          "id": "local-products",
+          "title": "Local Products",
+          "description": "Discover locally-made products, handicrafts, and souvenirs unique to Liliw",
+          "image": "images/local-products.jpg",
+          "link": "local-products.html",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "food-experiences",
+      "title": "Food & Dining",
+      "description": "Taste the flavors of Liliw and Laguna",
+      "enabled": true,
+      "items": [
+        {
+          "id": "local-cuisine",
+          "title": "Local Cuisine",
+          "description": "Enjoy traditional Filipino dishes and Laguna specialties at local restaurants",
+          "image": "images/local-food.jpg",
+          "link": "where-to-eat.html",
+          "enabled": true
+        }
+      ]
+    }
+  ]
+}

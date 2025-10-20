@@ -1,0 +1,51 @@
+{
+  "page": {
+    "title": "Attractions",
+    "description": "Discover the beauty and heritage of Liliw, Laguna"
+  },
+  "sections": [
+    {
+      "id": "heritage-sites",
+      "title": "Heritage Sites",
+      "description": "Historical landmarks and cultural treasures",
+      "enabled": true,
+      "items": [
+        {
+          "id": "church",
+          "title": "St. John the Baptist Church",
+          "description": "Historic baroque church built in the 1600s, featuring beautiful architecture and religious artifacts",
+          "image": "images/liliw-church-card.jpg",
+          "location": "Town Center, Liliw, Laguna",
+          "link": "heritage-attractions.html#church",
+          "enabled": true
+        },
+        {
+          "id": "gat-tayaw",
+          "title": "Gat Tayaw Tsinelas Monument",
+          "description": "Iconic monument celebrating Liliw's footwear industry and local heritage",
+          "image": "images/gat-tayaw-tsinelas.jpg",
+          "location": "Town Plaza, Liliw, Laguna",
+          "link": "heritage-attractions.html#gat-tayaw",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "natural-attractions",
+      "title": "Natural Attractions",
+      "description": "Explore the natural beauty of Liliw",
+      "enabled": true,
+      "items": [
+        {
+          "id": "nagcarlan-underground",
+          "title": "Nagcarlan Underground Cemetery",
+          "description": "A unique underground burial site with historical significance",
+          "image": "images/underground-cemetery.jpg",
+          "location": "Nagcarlan, Laguna (nearby)",
+          "link": "natural-attractions.html#underground-cemetery",
+          "enabled": true
+        }
+      ]
+    }
+  ]
+}

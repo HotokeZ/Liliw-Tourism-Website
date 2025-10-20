@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload Helper - Liliw Tourism Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <style>
+        .helper-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .helper-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .helper-header h1 {
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .helper-header p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        .instructions {
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .instructions h3 {
+            color: #0284c7;
+            margin-bottom: 15px;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+        }
+
+        .pending-images {
+            margin-top: 30px;
+        }
+
+        .pending-images h2 {
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .image-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .image-info {
+            padding: 10px 0;
+        }
+
+        .image-filename {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .image-path {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        .image-timestamp {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        .download-btn {
+            width: 100%;
+            padding: 10px;
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: all 0.2s;
+        }
+
+        .download-btn:hover {
+            background: #0284c7;
+            transform: translateY(-2px);
+        }
+
+        .clear-all-btn {
+            padding: 12px 24px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 20px;
+            transition: all 0.2s;
+        }
+
+        .clear-all-btn:hover {
+            background: #dc2626;
+        }
+
+        .no-images {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+        }
+
+        .no-images-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #64748b;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body>
+    <div class="helper-container">
+        <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+        
+        <div class="helper-header">
+            <h1>📁 Image Upload Helper</h1>
+            <p>Download and save your uploaded images to the images folder</p>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 How to Save Images:</h3>
+            <ol>
+                <li><strong>Click "Download Image"</strong> on any image below</li>
+                <li><strong>Save the file</strong> to the <code>images/</code> folder in your project</li>
+                <li><strong>Use the exact filename</strong> shown (don't rename it)</li>
+                <li>After saving all images, you can <strong>refresh your website</strong> to see them appear</li>
+                <li>Click <strong>"Clear All"</strong> once you've saved all images</li>
+            </ol>
+        </div>
+
+        <div class="pending-images">
+            <h2>Pending Images to Save</h2>
+            <div id="imageGrid" class="image-grid">
+                <!-- Images will be loaded here -->
+            </div>
+            <button class="clear-all-btn" onclick="clearAllImages()" id="clearBtn" style="display: none;">
+                Clear All Saved Images
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Load and display pending images
+        function loadPendingImages() {
+            const savedImages = JSON.parse(localStorage.getItem('pendingImages') || '[]');
+            const grid = document.getElementById('imageGrid');
+            const clearBtn = document.getElementById('clearBtn');
+
+            if (savedImages.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-images">
+                        <div class="no-images-icon">📷</div>
+                        <h3>No Pending Images</h3>
+                        <p>Upload images through the card editor to see them here</p>
+                    </div>
+                `;
+                clearBtn.style.display = 'none';
+                return;
+            }
+
+            clearBtn.style.display = 'block';
+            grid.innerHTML = '';
+
+            savedImages.forEach((img, index) => {
+                const card = document.createElement('div');
+                card.className = 'image-card';
+                
+                const timestamp = new Date(img.timestamp).toLocaleString();
+                
+                card.innerHTML = `
+                    <img src="${img.dataUrl}" alt="${img.filename}">
+                    <div class="image-info">
+                        <div class="image-filename">${img.filename}</div>
+                        <div class="image-path">Save to: ${img.path}</div>
+                        <div class="image-timestamp">Uploaded: ${timestamp}</div>
+                    </div>
+                    <button class="download-btn" onclick="downloadImage(${index})">
+                        Download Image
+                    </button>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Download individual image
+        function downloadImage(index) {
+            const savedImages = JSON.parse(localStorage.getItem('pendingImages') || '[]');
+            const img = savedImages[index];
+            
+            const link = document.createElement('a');
+            link.href = img.dataUrl;
+            link.download = img.filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Clear all images
+        function clearAllImages() {
+            if (confirm('Are you sure you want to clear all pending images? Only do this after you\'ve saved them all to the images/ folder.')) {
+                localStorage.removeItem('pendingImages');
+                loadPendingImages();
+                alert('All pending images cleared!');
+            }
+        }
+
+        // Load images on page load
+        loadPendingImages();
+    </script>
+</body>
+</html>
