@@ -12,6 +12,8 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
+    overscroll-behavior-y: contain;  /* Enable pull-to-refresh */
+    -webkit-overflow-scrolling: touch;  /* Smooth scrolling on iOS */
 }
 
 /* Homepage Specific Background - Full width blue gradient */

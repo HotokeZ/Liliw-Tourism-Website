@@ -11,6 +11,8 @@ body {
     background: linear-gradient(180deg, #1a2d5a 0%, #2a4080 100%);
     color: #ffffff;
     min-height: 100vh;
+    overscroll-behavior-y: contain;  /* Enable pull-to-refresh */
+    -webkit-overflow-scrolling: touch;  /* Smooth scrolling on iOS */
 }
 
 /* Back Button */
