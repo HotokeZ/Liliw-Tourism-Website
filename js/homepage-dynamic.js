@@ -5,21 +5,45 @@ let homepageData = null;
 
 // Load homepage content on page load
 document.addEventListener('DOMContentLoaded', async function() {
-    console.log('Loading dynamic homepage content...');
+    console.log('🔍 Loading dynamic homepage content...');
+    console.log('🐛 DEBUG MODE: Tracking church card data flow');
     
     try {
-        // Load content data
-        const response = await fetch('data/homepage-content.json');
+        // Load from JSON file (updated by admin panel via server)
+        console.log('📂 Loading from JSON file...');
+        const response = await fetch('data/homepage-content.json?_=' + Date.now()); // Cache bust
+        
         if (!response.ok) throw new Error('Failed to load homepage content');
         
         homepageData = await response.json();
-        console.log('Homepage data loaded:', homepageData);
+        console.log('✅ Homepage data loaded from JSON file:', homepageData);
         
+        // DEBUG: Check for church card specifically
+        const popularPlaces = homepageData.sections?.find(s => s.id === 'popular-places');
+        if (popularPlaces) {
+            console.log('🐛 DEBUG: Popular Places section found:', popularPlaces);
+            const churchCard = popularPlaces.cards?.find(c => c.id === 'church');
+            if (churchCard) {
+                console.log('🐛 DEBUG: Church card data:', {
+                    title: churchCard.title,
+                    description: churchCard.description,
+                    images: churchCard.images,
+                    enabled: churchCard.enabled
+                });
+            } else {
+                console.error('❌ DEBUG: Church card NOT FOUND in popular places!');
+            }
+        } else {
+            console.error('❌ DEBUG: Popular Places section NOT FOUND!');
+        }
+        
+        console.log('🎨 Starting to render homepage...');
         // Render all sections
         renderHomepage();
+        console.log('✅ Homepage rendering complete!');
         
     } catch (error) {
-        console.error('Error loading homepage:', error);
+        console.error('❌ Error loading homepage:', error);
         // Fallback to static content (original HTML)
     }
 });
@@ -115,6 +139,18 @@ function renderCardGridSection(section) {
 function renderCardWithCarousel(card) {
     const images = card.images || [card.image || 'images/placeholder.png'];
     const hasMultipleImages = images.length > 1;
+    
+    // DEBUG: Log church card rendering
+    if (card.id === 'church') {
+        console.log('🐛 DEBUG: Rendering church card with data:', {
+            id: card.id,
+            title: card.title,
+            description: card.description,
+            images: images,
+            link: card.link,
+            imageCount: images.length
+        });
+    }
     
     return `
         <div class="place-card" onclick="window.location.href='${card.link}'">

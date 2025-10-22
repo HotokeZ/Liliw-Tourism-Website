@@ -1,2022 +1,821 @@
-# 📖 Liliw Tourism Website - Updates & Guidelines# 📖 Liliw Tourism Website - Updates & Guidelines
+# 📖 Liliw Tourism Website - Complete Documentation
 
+**Comprehensive Guide: Setup, Features, Admin Panel & Maintenance**
 
+*Last Updated: October 22, 2025*
 
-**Essential Documentation for Setup, Features, and Maintenance****Essential Documentation for Setup, Features, and Maintenance**
+---
 
+## 📚 Table of Contents
 
+- [Part I: Project Overview](#part-i-project-overview)
+- [Part II: Getting Started](#part-ii-getting-started)
+- [Part III: Admin Panel System](#part-iii-admin-panel-system)
+- [Part IV: Dynamic Content System](#part-iv-dynamic-content-system)
+- [Part V: Detail Pages & Carousel](#part-v-detail-pages--carousel)
+- [Part VI: Animation System](#part-vi-animation-system)
+- [Part VII: Navigation System](#part-vii-navigation-system)
+- [Part VIII: Pages Reference](#part-viii-pages-reference)
+- [Part IX: Technical Reference](#part-ix-technical-reference)
+- [Part X: Maintenance](#part-x-maintenance)
 
-*Last Updated: October 19, 2025*---
+---
 
+# Part I: Project Overview
 
+## 🌟 About This Project
 
----## 📚 Table of Contents
+The **Liliw Tourism Website** is a modern, full-featured web application showcasing Liliw, Laguna - The Footwear Capital of Laguna. Built with HTML5, CSS3, and vanilla JavaScript, it features a complete Content Management System, stunning animations, and dynamic content loading.
 
+## ✨ Key Features
 
-
-## 📚 Table of Contents- [Getting Started](#getting-started)
-
-- [Recent Updates](#recent-updates)
-
-- [Getting Started](#getting-started)- [Features](#features)
-
-- [Recent Updates](#recent-updates)- [Bug Fixes](#bug-fixes)
-
-- [Features](#features)- [Technical Reference](#technical-reference)
-
-- [Bug Fixes](#bug-fixes)- [Maintenance](#maintenance)
-
-- [Technical Reference](#technical-reference)
-
-- [Maintenance](#maintenance)---
-
-
-
----# Part I: Project Overview
-
-
-
-## 🚀 Getting Started## 🌟 About This Project
-
-
-
-### Running the Website LocallyThe **Liliw Tourism Website** is a modern, responsive web application showcasing Liliw, Laguna - The Footwear Capital of Laguna. Built with HTML5, CSS3, and vanilla JavaScript, it features stunning animations, interactive elements, and a comprehensive navigation system.
-
-
-
-**Method 1: Python HTTP Server (Recommended)**## ✨ Key Features
-
-```powershell
-
-# Navigate to project directory### Design & User Experience
-
-cd "c:\Users\justz\OneDrive\Desktop\Code\Liliw Tourism"- ✅ **Fully Responsive** - Adapts seamlessly to desktop, tablet, and mobile
-
+### Public Website
+- ✅ **Fully Responsive** - Seamless desktop, tablet, and mobile experience
 - ✅ **Modern UI/UX** - Clean design with professional animations
+- ✅ **Dynamic Content** - All pages load from JSON data files
+- ✅ **Interactive Maps** - Leaflet.js integration with custom controls
+- ✅ **Detail Pages** - Dedicated pages for each attraction with image carousels
+- ✅ **Smart Navigation** - Active page detection and smooth transitions
+- ✅ **Search Functionality** - Integrated search bar
+- ✅ **Mobile Menu** - Touch-friendly hamburger menu
 
-# Start server- ✅ **Smooth Page Transitions** - Fade in/out effects between pages
-
-python -m http.server 8000- ✅ **Interactive Elements** - Hover effects, click animations, scroll triggers
-
-- ✅ **Consistent Navigation** - Unified header across all pages
-
-# Open browser to: http://localhost:8000- ✅ **Search Functionality** - Integrated search bar in navigation
-
-```- ✅ **Mobile Menu** - Hamburger menu for smaller screens
-
-
-
-**Method 2: Direct Open**### Content Sections
-
-- Double-click `index.html` to open in browser- 🏠 **Homepage** - Welcome section with CTA buttons
-
-- Note: Some features may not work due to CORS restrictions- 🏛️ **Attractions** - Natural and heritage sites
-
-- 🎉 **Events** - Tsinelas Festival and local celebrations
-
-**Method 3: VS Code Live Server**- 🗺️ **Interactive Map** - Location finder with clickable pins
-
-- Install "Live Server" extension- 📱 **Mobile Optimized** - Touch-friendly interface
-
-- Right-click `index.html` → "Open with Live Server"
+### Admin Panel (CMS)
+- ✅ **Secure Login** - Authentication system
+- ✅ **Dashboard** - Activity tracking and quick actions
+- ✅ **Homepage Editor** - Multi-image carousel support with drag-drop
+- ✅ **Universal Page Editor** - Single editor for all content pages
+- ✅ **Detail Page Editor** - Create dedicated pages for each item
+- ✅ **Image Management** - Upload and organize images
+- ✅ **Drag & Drop** - Reorder sections and items
+- ✅ **Live Preview** - See changes before publishing
+- ✅ **Auto-backup** - Never lose your work
 
 ## 📁 Project Structure
 
-### Project Structure
-
 ```
-
-```Liliw Tourism/
-
-Liliw Tourism/├── index.html                    # Splash screen entry point
-
-├── index.html                    # Splash screen├── homepage.html                 # Main landing page
-
-├── homepage.html                 # Main landing page├── attractions.html              # Attractions overview
-
-├── attractions.html              # Attractions overview├── natural-attractions.html      # Natural sites detail page
-
-├── natural-attractions.html      # Natural sites├── heritage-attractions.html     # Heritage sites detail page
-
-├── heritage-attractions.html     # Heritage sites├── interactive-map.html          # Interactive map view
-
-├── interactive-map.html          # Interactive map with Leaflet.js├── events.html                   # Events and festivals
-
-├── events.html                   # Events page├── animation-preview.html        # Animation testing page
-
-│├── welcome.html                  # Getting started page
-
-├── css/                          # Stylesheets├── IMAGE_CHECKLIST.html          # Image requirements guide
-
-│   ├── style.css│
-
-│   ├── homepage.css├── css/
-
-│   ├── navigation.css│   ├── style.css                 # Splash screen styles
-
-│   ├── animations.css│   ├── homepage.css              # Homepage-specific styles
-
-│   └── map.css│   ├── attractions.css           # Attractions page styles
-
-││   ├── events.css                # Events page styles
-
-├── js/                           # JavaScript files│   ├── map.css                   # Interactive map styles
-
-│   ├── homepage.js│   ├── navigation.css            # Shared navigation styles
-
-│   ├── map.js│   ├── animations.css            # Animation system styles
-
-│   ├── include-nav.js│   └── attraction-detail.css     # Detail page styles
-
-│   ├── navigation.js│
-
-│   └── animations.js├── js/
-
-││   ├── script.js                 # Main JavaScript
-
-└── images/                       # Image assets│   ├── homepage.js               # Homepage interactions
-
-```│   ├── attractions.js            # Attractions page logic
-
-│   ├── events.js                 # Events page logic
-
----│   ├── map.js                    # Map interactions
-
-│   ├── include-nav.js            # Navigation injection system
-
-## 🆕 Recent Updates│   ├── navigation.js             # Navigation functionality
-
-│   ├── animations.js             # Animation engine
-
-### October 21, 2025 - Complete Admin Panel System│   └── attraction-detail.js      # Detail page logic
-
+Liliw Tourism/
+├── index.html                    # Splash screen entry point
+├── homepage.html                 # Main landing page
+├── attractions.html              # Attractions overview
+├── events.html                   # Events and festivals
+├── experiences.html              # Local experiences
+├── plan-your-trip.html           # Travel planning
+├── interactive-map.html          # Interactive map
+├── attraction-detail.html        # Universal detail page
 │
-
-#### Phase 1-3: Full Content Management System├── images/                       # Image assets folder
-
-│   ├── liliw-logo.png
-
-**NEW: Admin Panel Pages Created**│   ├── liliw-church.jpg
-
-- ✅ **Login System** (`admin/index.html`) - Secure authentication│   ├── kilangin-falls.jpg
-
-- ✅ **Dashboard** (`admin/dashboard.html`) - Central control panel│   └── ... (other images)
-
-- ✅ **Homepage Editor** (`admin/edit-homepage.html`) - Multi-image carousel editor│
-
-- ✅ **Universal Page Editor** (`admin/edit-page.html`) - Edit all content pages├── assets/                       # Additional resources
-
-- ✅ **Image Helper** (`admin/image-helper.html`) - Image upload utility├── server.py                     # Python development server
-
-└── UPDATES_AND_GUIDELINES.md     # This file!
-
-**Features Implemented:**```
+├── admin/                        # Admin Panel (CMS)
+│   ├── index.html                # Login page
+│   ├── dashboard.html            # Admin dashboard
+│   ├── edit-homepage.html        # Homepage editor
+│   ├── edit-page.html            # Universal page editor
+│   ├── image-helper.html         # Image management
+│   ├── css/
+│   │   ├── admin.css             # Admin panel styles
+│   │   ├── editor.css            # Editor interface styles
+│   │   └── page-editor-styles.css # Page editor specific styles
+│   └── js/
+│       ├── auth.js               # Authentication
+│       ├── dashboard.js          # Dashboard functionality
+│       ├── editor.js             # Core editor utilities
+│       ├── homepage-editor-advanced.js      # Homepage CMS (part 1)
+│       ├── homepage-editor-advanced-part2.js # Homepage CMS (part 2)
+│       └── page-editor.js        # Universal page editor
+│
+├── css/                          # Public website styles
+│   ├── style.css                 # Splash screen
+│   ├── homepage.css              # Homepage
+│   ├── attractions.css           # Attractions page
+│   ├── events.css                # Events page
+│   ├── experiences.css           # Experiences page
+│   ├── navigation.css            # Shared navigation
+│   ├── animations.css            # Animation system
+│   ├── map.css                   # Interactive map
+│   └── attraction-detail.css     # Detail pages with carousel
+│
+├── js/                           # Public website scripts
+│   ├── script.js                 # Splash screen
+│   ├── homepage-dynamic.js       # Dynamic homepage
+│   ├── attractions-dynamic.js    # Dynamic attractions
+│   ├── events-dynamic.js         # Dynamic events
+│   ├── experiences-dynamic.js    # Dynamic experiences
+│   ├── plan-trip-dynamic.js      # Dynamic plan trip
+│   ├── attraction-detail-loader.js # Detail page carousel system
+│   ├── include-nav.js            # Navigation injection
+│   ├── navigation.js             # Navigation functionality
+│   ├── animations.js             # Animation engine
+│   └── map.js                    # Map interactions
+│
+├── data/                         # JSON data files
+│   ├── homepage.json             # Homepage content
+│   ├── attractions.json          # Attractions data
+│   ├── events.json               # Events data
+│   ├── experiences.json          # Experiences data
+│   ├── plan-trip.json            # Plan trip data
+│   └── images.json               # Image metadata
+│
+├── images/                       # Image assets
+├── server.py                     # Python development server
+└── netlify/functions/            # Backend API functions
+```
 
 ---
 
-1. **Universal Page Editor System**
+# Part II: Getting Started
 
-   - Single editor for multiple page types (Attractions, Events, Experiences, Plan Your Trip)# Part II: Getting Started
+## 🚀 Quick Start Guide
 
-   - URL parameter routing: `?page=attractions`, `?page=events`, etc.
+### Prerequisites
+- **Web Browser** - Chrome, Firefox, Safari, or Edge
+- **Text Editor** - VS Code (recommended) or any editor
+- **Python 3** - For local development server
 
-   - Dynamic form generation based on page type## 🚀 Quick Start Guide
+### Running the Website Locally
 
-   - Drag-and-drop section reordering with SortableJS
+#### Method 1: Python HTTP Server (Recommended)
+```powershell
+# Navigate to project directory
+cd "c:\Users\justz\OneDrive\Desktop\Code\Liliw Tourism"
 
-   - Add/Edit/Delete sections and items### Prerequisites
+# Start server
+python server.py
 
-   - Toggle enable/disable for sections and items- **Web Browser** - Chrome, Firefox, Safari, or Edge
-
-   - Page-specific fields (e.g., date for events, location for attractions)- **Text Editor** - VS Code (recommended), Sublime Text, or any editor
-
-   - Live preview in modal- **Python** (optional) - For local development server
-
-   - Auto-backup before saving
-
-   - Responsive mobile design with hamburger menu### Running the Website Locally
-
-// Ctrl+Scroll zoom with instant response
-
-mapDiv.addEventListener('wheel', function(e) {#### Method 1: Direct Open (Simplest)
-
-    if (e.ctrlKey) {```
-
-        e.preventDefault();1. Navigate to the project folder
-
-        if (!isZooming) {2. Double-click index.html
-
-            isZooming = true;3. Website opens in your default browser
-
-            // Zoom logic```
-
-            setTimeout(() => { isZooming = false; }, 100);
-
-        }**Pros:** No setup required  
-
-    }**Cons:** Some features may not work (CORS restrictions)
-
-});
-
-#### Method 2: Python HTTP Server (Recommended)
-
-// Shift+Hover pan```powershell
-
-mapDiv.addEventListener('mousemove', function(e) {# Navigate to project directory
-
-    if (e.shiftKey && lastMousePosition) {cd "c:\Users\justz\OneDrive\Desktop\Code\Liliw Tourism"
-
-        const deltaX = e.clientX - lastMousePosition.x;
-
-        const deltaY = e.clientY - lastMousePosition.y;# Start server (Python 3)
-
-        map.panBy([-deltaX, -deltaY], { animate: false });python -m http.server 8000
-
-    }
-
-});# Open browser to:
-
-```http://localhost:8000
-
+# Open browser to:
+http://localhost:8000
 ```
 
-#### 3. **Enhanced Location Interactions**
+**Pros:** Full functionality, no CORS issues  
+**Cons:** Requires Python installed
 
-- **Instant Popup Display**: Information appears immediately when clicking location cards**Pros:** Full functionality, no CORS issues  
+#### Method 2: Direct Open (Quick Test)
+1. Navigate to the project folder
+2. Double-click `index.html`
+3. Website opens in your default browser
 
-- **Fast Animations**: Reduced fly duration from 1.5s → 0.6s**Cons:** Requires Python installed
+**Pros:** No setup required  
+**Cons:** Some features may not work (CORS restrictions)
 
-- **Smooth Transitions**: Map pans while popup stays visible
-
-- **No Delays**: Removed popup delay for better responsiveness#### Method 3: VS Code Live Server
-
-```
-
-**Before:**1. Install "Live Server" extension in VS Code
-
-```javascript2. Right-click index.html
-
-map.flyTo(coords, 17, { duration: 1.5 });3. Select "Open with Live Server"
-
-setTimeout(() => { marker.openPopup(); }, 1500);  // 3 second total wait```
-
-```
+#### Method 3: VS Code Live Server
+1. Install "Live Server" extension in VS Code
+2. Right-click `index.html`
+3. Select "Open with Live Server"
 
 **Pros:** Auto-refresh on save, professional workflow  
+**Cons:** Requires VS Code setup
 
-**After:****Cons:** Requires VS Code setup
+### Server Management
 
-```javascript
-
-marker.openPopup();  // Instant### Server Management
-
-map.flyTo(coords, 17, { duration: 0.6 });  // Fast pan
-
-```**Start Server:**
-
+**Start Server:**
 ```powershell
+python server.py
+```
 
-#### 4. **Map Navigation Tips**python server.py
+**Stop Server:**
+```
+Press Ctrl+C in terminal
+```
 
-Added user-friendly instructions on both map pages:```
+**Access Admin Panel:**
+```
+http://localhost:8000/admin/
+```
 
-- 🖱️ Drag to pan
-
-- Ctrl + Scroll to zoom**Stop Server:**
-
-- Shift + Hover to pan```
-
-- Double-click to zoom inPress Ctrl+C in terminal
-
-- 📍 Click markers for details```
-
-- 📱 Pinch to zoom on mobile
-
-**Access Website:**
-
-#### 5. **Scroll Behavior Improvements**```
-
-- Disabled default scroll zoom to prevent page scroll interferencehttp://localhost:8000
-
-- Normal scrolling over map scrolls the page (not the map)```
-
-- Ctrl+Scroll zooms the map precisely
-
-- 100ms throttle prevents zoom acceleration## 📸 Image Setup
-
-- Respects zoom limits (min/max zoom levels)
-
-Your website needs 9 key images in the `images/` folder:
+**Login Credentials:**
+- Username: `admin`
+- Password: `1234Liliw`
 
 ---
 
-### Required Images
-
-## ✨ Features
-
-1. **liliw-logo.png** - Main logo (circular, 60x60px+)
-
-### Navigation System2. **liliw-church.jpg** - St. John the Baptist Church hero image
-
-3. **liliw-church-card.jpg** - Church thumbnail for cards
-
-#### Desktop Navigation4. **kilangin-falls.jpg** - Waterfall main image
-
-- **Centered Links**: Home, Attractions, Events, Map5. **gat-tayaw-tsinelas.jpg** - Gat Tayaw monument
-
-- **Dropdown Submenu**: Attractions has expandable submenu6. **tsinelas-festival.jpg** - Festival promotional image
-
-  - All Attractions7. **other-attraction.jpg** - Generic attraction placeholder
-
-  - Natural Attractions8. **nature-scene.jpg** - Scenic Liliw landscape
-
-  - Heritage Sites9. **liliw-logo-small.png** - Footer logo (30x30px+)
-
-- **Click + Delayed Hover**: Primary click interaction, 500ms hover delay
-
-- **Functional Search Bar**: 200px width with icon### Image Guidelines
-
-- **Active Page Indicator**: Blue background on current page
-
-- **Smooth Animations**: 0.4s transitions**Format:** JPG for photos, PNG for logos  
-
-**Resolution:** Minimum 1200px width for hero images  
-
-#### Mobile Navigation**Optimization:** Compress images for web (TinyPNG, ImageOptim)  
-
-- **Hamburger Menu**: Responsive menu for screens ≤ 768px**Naming:** Use lowercase, hyphens instead of spaces  
-
-- **Slide-In Animation**: Menu slides from right with backdrop fade
-
-- **Mobile Submenu**: Collapsible Attractions section**Example:**
-
-- **Touch-Friendly**: Large tap targets (44px+)```
-
-- **Staggered Animations**: Links cascade in one by one❌ Liliw Church Photo.JPG
-
-✅ liliw-church.jpg
-
-**Key CSS:**```
-
-```css
-
-.top-nav {### Adding Your Images
-
-    height: 70px;
-
-    padding: 12px 20px;```
-
-    z-index: 100;1. Save images to images/ folder
-
-}2. Ensure exact filename matches (case-sensitive)
-
-3. Refresh browser (Ctrl+F5 for hard refresh)
-
-.dropdown-menu {```
-
-    z-index: 9999;
-
-    opacity/transform: 0.4s transitions;**Pro Tip:** Open `IMAGE_CHECKLIST.html` to see visual guide!
-
-}
-
-```---
-
-
-
-### Animation System# Part III: Animation System
-
-
-
-#### Scroll-Triggered Hero Blur## 🎨 Animation Architecture
-
-- Progressive blur effect on hero images when scrolling
-
-- Blur range: 0-8px over 100-400px scroll distanceThe website features a sophisticated animation system that brings the entire experience to life with smooth, professional transitions.
-
-- Smooth 0.3s transitions
-
-- Applies to hero images and overlays## Core Animation Features
-
-
-
-**Implementation:**### 1. Page Load Animations
-
-```javascript
-
-window.addEventListener('scroll', function() {When a page loads, elements animate in sequence:
-
-    const scrollPosition = window.scrollY;
-
-    let blurAmount = 0;```
-
-    0.0s → Body fades in (opacity 0 → 1)
-
-    if (scrollPosition > 100 && scrollPosition < 400) {0.1s → Navigation slides down from top
-
-        blurAmount = ((scrollPosition - 100) / 300) * 8;0.2s → Hero section fades + slides up
-
-    } else if (scrollPosition >= 400) {0.3s → First content section appears
-
-        blurAmount = 8;0.4s → Second content section appears
-
-    }0.5s → Third content section appears
-
-    ```
-
-    heroImg.style.filter = `blur(${blurAmount}px)`;
-
-});**CSS Classes Used:**
-
-```- `.fade-in` - Simple fade effect
-
-- `.fade-in-up` - Fade + slide up combo
-
-#### Page Transitions- `.slide-down` - Slide down from top
-
-- Fade out on navigation (0.3s)- `.scale-in` - Zoom in effect
-
-- Fade in on page load (0.4s)- `.stagger-*` - Delayed animations
-
-- Staggered element animations
-
-- Active page indicator slides smoothly### 2. Navigation Active Indicator
-
-
-
-### Interactive Map Features**The Star Feature!** A blue animated bar that slides smoothly under the active page:
-
-
-
-#### Leaflet.js Integration```
-
-- **Version**: 1.9.4 from unpkg CDNHome  Attractions  Events  Map
-
-- **Tile Provider**: OpenStreetMap (free)━━━━              ← Bar slides here!
-
-- **Map Center**: Liliw, Laguna [14.1333, 121.4333]```
-
-- **Zoom Levels**: Homepage (14), Interactive Map (15)
+# Part III: Admin Panel System
+
+## 🎛️ Admin Panel Overview
+
+The admin panel is a **full-featured Content Management System (CMS)** that allows non-technical users to manage all website content through an intuitive interface.
+
+## 🔐 Authentication System
+
+### Login Page (`admin/index.html`)
+- Beautiful gradient design
+- Username/password authentication
+- "Remember me" functionality
+- Session management
+- Error handling with user feedback
+- Mobile responsive
+
+### Security Features
+- Session-based authentication
+- Auto-logout on session expire
+- Protected admin routes
+- Password validation
+
+## 📊 Dashboard (`admin/dashboard.html`)
+
+### Features:
+- **Quick Stats Cards**
+  - Total Pages
+  - Active Sections
+  - Total Images
+  - Last Updated
+
+- **Quick Actions**
+  - Edit Homepage
+  - Edit Attractions
+  - Edit Events
+  - Manage Images
+
+- **Recent Activity Log**
+  - Tracks all admin actions
+  - Timestamps for each activity
+  - Clear activity history
+
+- **System Information**
+  - Current logged-in user
+  - Session duration
+  - System status
+
+### Navigation
+- **Sidebar Menu**
+  - Dashboard
+  - Homepage Editor
+  - Attractions
+  - Events
+  - Experiences
+  - Plan Your Trip
+  - Image Manager
+  - Logout
+
+- **Mobile Menu**
+  - Hamburger icon
+  - Slide-in overlay
+  - Touch-friendly
+
+## 🏠 Homepage Editor (`admin/edit-homepage.html`)
+
+### ✨ Advanced Features
+
+#### 1. Multi-Image Carousel System
+- **Upload Multiple Images** per card
+- **Drag to Reorder** images
+- **Primary Image Selection** - Choose which shows first
+- **Image Preview** - See all images before saving
+- **Delete Images** - Remove unwanted images
+- **Image Counter Badge** - Shows number of images
+
+#### 2. Drag & Drop Functionality
+- **Reorder Sections** - Drag sections up/down
+- **Reorder Cards** - Drag cards within sections
+- **Reorder Images** - Drag images within card editor
+- **Visual Feedback** - Drag handles and hover effects
+
+#### 3. Card-Level Editing
+- **Edit Individual Cards** - Click ✏️ button
+- **Rich Form Editor**:
+  - Title
+  - Description
+  - Multiple images with preview
+  - Link/URL
+  - Date (for events)
+  - Icon (for info sections)
+  - Enable/disable toggle
+
+#### 4. Section Management
+- **Add Section** - Create new content sections
+- **Edit Section** - Modify section properties
+- **Delete Section** - Remove entire sections
+- **Toggle Section** - Enable/disable visibility
+- **Reorder Sections** - Drag to rearrange
+
+#### 5. Card Management
+- **Add Card** - Create new cards in any section
+- **Edit Card** - Modify card content
+- **Delete Card** - Remove cards
+- **Toggle Card** - Enable/disable individual cards
+- **Reorder Cards** - Drag within section
+
+#### 6. Smart Features
+- **Live Preview** - See changes in iframe before saving
+- **Auto-Save** - Periodic auto-save to prevent data loss
+- **Auto-Backup** - Before each save operation
+- **Unsaved Changes Warning** - Alert before leaving page
+- **Visual Indicators** - Shows sections/cards with changes
+
+### Image Upload System
+
+**Drag & Drop:**
+1. Click **Edit Card**
+2. Drag image file from computer
+3. Drop into upload area (highlights when ready)
+4. Preview appears instantly
+5. Add more images as needed
+6. Drag to reorder
+7. Click **Save Card**
+
+**Choose File Button:**
+1. Click **Edit Card**
+2. Click **"Choose File"**
+3. Select image (JPG, PNG, GIF)
+4. Preview appears
+5. Click **Save Card**
+
+**Image Requirements:**
+- Format: JPG, PNG, GIF
+- Max Size: 5MB per image
+- Recommended: 800×600px for cards, 1920×1080px for heroes
+
+## 📄 Universal Page Editor (`admin/edit-page.html`)
+
+### 🎯 One Editor for All Pages
+
+Single editor handles all content pages through URL parameters:
+- `?page=attractions` - Attractions
+- `?page=events` - Events
+- `?page=experiences` - Experiences
+- `?page=plan-trip` - Plan Your Trip
+
+### Features:
+
+#### 1. Dynamic Form Generation
+Forms adapt based on page type:
+- **All Pages**: Title, Description, Images, Link, Enable/Disable
+- **Events**: Additional Date field
+- **Attractions/Restaurants/Hotels**: Additional Location field
+
+#### 2. Section & Item Management
+- **Add/Edit/Delete** sections
+- **Add/Edit/Delete** items
+- **Drag & Drop** reordering
+- **Toggle** visibility
+- **Duplicate** items
+
+#### 3. Multi-Image Support
+- **Multiple images** per item
+- **Drag to reorder** images
+- **Primary image** selection
+- **Image preview** grid
+- **Delete** individual images
+
+#### 4. Detail Page System (NEW!)
+**Major Feature:** Each item can have its own dedicated detail page!
 
 **How It Works:**
+1. Create/Edit an item in admin
+2. Click **"📄 Edit Details"** button on the card
+3. Detail editor modal opens
+4. **Enable/Disable** detail page
+5. Set **Hero Image** (from uploaded images)
+6. Add **Multiple Paragraphs** of description
+7. Add **Related Items** (auto-populated)
+8. **Save Details**
+9. **"See More"** button automatically appears on public website
 
-#### Custom Markers- Detects current page via `data-page` attribute
+**Detail Editor Features:**
+- ✅ **Enable/Disable Toggle** - Control if detail page is active
+- ✅ **Hero Image Selector** - Choose from item's images
+- ✅ **Multi-Paragraph Editor**:
+  - Add unlimited paragraphs
+  - Remove paragraphs
+  - Numbered paragraph system
+  - Large text areas for content
+- ✅ **Auto-Link Generation** - Links created automatically
+- ✅ **Visual Indicator** - 📄 badge shows which items have detail pages
+- ✅ **Conditional "See More" Button** - Only shows if detail.enabled = true
 
-```javascript- Calculates navigation link position
+**Detail Page Structure:**
+```json
+{
+  "id": "item-123",
+  "title": "Attraction Name",
+  "images": ["image1.jpg", "image2.jpg"],
+  "details": {
+    "enabled": true,
+    "title": "Custom Detail Title",
+    "subtitle": "Tagline for detail page",
+    "heroImage": "image1.jpg",
+    "description": [
+      "First paragraph...",
+      "Second paragraph...",
+      "Third paragraph..."
+    ],
+    "relatedItems": ["item-456", "item-789"]
+  }
+}
+```
 
-const attractions = [- Smoothly transitions bar (0.4s cubic-bezier)
+#### 5. Save & Preview
+- **Save Changes** - Commits to JSON file
+- **Preview** - See changes in modal iframe
+- **Auto-Backup** - Before each save
+- **Activity Log** - Tracks all changes
 
-    {- Glowing blue gradient effect
+## 📸 Image Helper (`admin/image-helper.html`)
 
-        name: 'St. John the Baptist Church',
+### Purpose
+Helps manage uploaded images that are temporarily stored in browser.
 
-        coords: [14.1340, 121.4350],**Implementation:**
+### Features:
+- **View Pending Uploads** - See all uploaded but not saved images
+- **Download Images** - Save to project folder
+- **Clear Storage** - Remove from browser cache
+- **Instructions** - Step-by-step guide
 
-        type: 'heritage',```html
-
-        icon: '⛪',<body data-page="homepage">
-
-        description: 'Historic Spanish colonial church',<!-- Navigation automatically highlights "Home" -->
-
-        link: 'heritage-attractions.html'```
-
-    },
-
-    // ... more attractions### 3. Page Transitions
-
-];
-
-```Smooth fade out/in when navigating:
-
-
-
-#### Location Cards```javascript
-
-- Click card → Map flies to location// Click any link
-
-- Popup opens immediately↓
-
-- Smooth 0.6s pan animationPage fades out (0.3s)
-
-- "Learn More" links to attraction pages↓
-
-Navigate to new page
-
-### Back Button Functionality↓
-
-All pages use browser history for back buttons:New page fades in (0.4s)
-
-```html```
-
-<a href="javascript:history.back()" class="back-button">←</a>
-
-```### 4. Scroll Animations
-
-
-
-**Benefits:**Elements animate as you scroll:
-
-- Respects user's navigation path
-
-- Works from any page- **Hero Parallax** - Background moves slower than content
-
-- No hardcoded redirects- **Fade-In On Scroll** - Elements appear when visible
-
-- **Navigation Opacity** - Header becomes more solid on scroll
+### Workflow:
+1. Upload images in editor
+2. Save changes
+3. Go to Image Helper
+4. Download each image
+5. Save to `images/` folder with exact filename
+6. Clear storage
+7. Refresh website
 
 ---
 
-### 5. Interactive Hover Effects
+# Part IV: Dynamic Content System
 
-## 🐛 Bug Fixes
+## 🔄 How Dynamic Content Works
 
-- **Cards:** Lift up + scale (1.03×)
+### Architecture Overview
 
-### Navigation Fixes- **Buttons:** Ripple effect on click
+```
+Admin Panel → JSON Files → Dynamic Loaders → Public Website
+```
 
-- **Links:** Color transition (0.3s)
+### Data Flow:
 
-#### 1. **Inconsistent Header Size** ✅ FIXED- **Images:** Zoom effect on hover
+1. **Admin Panel**
+   - User edits content in admin interface
+   - Clicks "Save Changes"
+   - Data sent to server via POST request
 
-**Problem:** Navigation header different sizes across pages
+2. **JSON Storage**
+   - Server saves data to `data/[page].json`
+   - JSON structure preserved
+   - Backup created before overwrite
 
-- Homepage: 45px logo, 12px 20px padding### 6. Special Animations
+3. **Public Website**
+   - User visits page (e.g., `attractions.html`)
+   - Page loads dynamic loader script
+   - Loader fetches JSON: `fetch('data/attractions.json')`
+   - Content rendered dynamically
 
-- Other pages: 50px logo, 15px 30px padding (from duplicate CSS)
+4. **User Sees Content**
+   - Fully rendered page
+   - All updates reflected
+   - No page refresh needed (after initial load)
 
-**Homepage CTA Buttons:**
+### Dynamic Loaders
 
-**Solution:**- "See Attractions" - Blue glow pulse
+#### `homepage-dynamic.js`
+- Loads `data/homepage.json`
+- Renders all homepage sections
+- Handles carousel images
+- Filters enabled/disabled content
 
-- Removed duplicate `.top-nav` styles from attraction-detail.css (lines 16-60)- "Upcoming Event" - Purple glow pulse
+#### `attractions-dynamic.js`
+- Loads `data/attractions.json`
+- Renders attraction sections
+- Shows "See More" buttons conditionally
+- Links to detail pages
 
-- Added explicit constraints with !important- Both scale on hover with smooth transition
+#### `events-dynamic.js`
+- Loads `data/events.json`
+- Renders event cards with dates
+- Formats date badges
+- Event-specific styling
 
-- All pages now use unified navigation.css
+#### `experiences-dynamic.js`
+- Loads `data/experiences.json`
+- Renders experience cards
+- "Explore" buttons
+- Clean card layout
 
-**Event Cards:**
+#### `plan-trip-dynamic.js`
+- Loads `data/plan-trip.json`
+- Travel information cards
+- Optional date badges
+- "Learn More" buttons
 
-```css- Hover: Lift + shadow increase
+### JSON Structure
 
-.top-nav {- Image: Subtle zoom
+All data files follow consistent structure:
 
-    min-height: 70px !important;- Text: Color shift
+```json
+{
+  "page": {
+    "title": "Page Title",
+    "description": "Page description"
+  },
+  "sections": [
+    {
+      "id": "section-1",
+      "title": "Section Title",
+      "description": "Section description",
+      "enabled": true,
+      "items": [
+        {
+          "id": "item-1",
+          "title": "Item Title",
+          "description": "Item description",
+          "images": ["image1.jpg", "image2.jpg"],
+          "image": "image1.jpg",
+          "link": "#",
+          "enabled": true,
+          "details": {
+            "enabled": false
+          }
+        }
+      ]
+    }
+  ]
+}
+```
 
-    padding: 12px 20px !important;
+### Enable/Disable System
 
-}## Animation Files
+**Section Level:**
+```json
+{
+  "enabled": true  // Section appears on website
+}
+```
 
+**Item Level:**
+```json
+{
+  "enabled": false  // Item hidden from website
+}
+```
 
-
-.logo-img {### css/animations.css
-
-    width: 45px !important;Complete animation styles including:
-
-    height: 45px !important;- Keyframe definitions
-
-}- Transition effects
-
-```- Hover states
-
-- Scroll-triggered animations
-
-#### 2. **Dropdown Redirect Issue** ✅ FIXED
-
-**Problem:** Clicking "Attractions" immediately redirected to page### js/animations.js
-
-Animation engine with:
-
-**Solution:** Changed dropdown toggle from `<a href>` to `<span>`- Scroll detection
-
-```html- Active page indicator positioning
-
-<!-- Before -->- Page transition handling
-
-<a href="attractions.html" class="dropdown-toggle">Attractions</a>- Preloading optimization
-
-
-
-<!-- After -->## Animation Guidelines
-
-<span class="dropdown-toggle">Attractions</span>
-
-```### Adding Animations to New Elements
-
-
-
-#### 3. **Z-Index Stacking Context** ✅ FIXED**Fade In:**
-
-**Problem:** Dropdown menu covered by page content when scrolling```html
-
-<div class="fade-in">Content</div>
-
-**Solution:** Established proper z-index hierarchy```
-
-```css
-
-.top-nav { z-index: 100; }**Fade + Slide Up:**
-
-.dropdown-menu { z-index: 9999; }```html
-
-/* Page content: z-index: 10 */<section class="fade-in-up">Section Content</section>
-
-``````
-
-
-
-### Map Improvements**Staggered Appearance:**
-
-```html
-
-#### 1. **Scroll Zoom Interference** ✅ FIXED<div class="fade-in stagger-1">First</div>
-
-**Problem:** Scrolling over map zoomed the map instead of page<div class="fade-in stagger-2">Second</div>
-
-<div class="fade-in stagger-3">Third</div>
-
-**Solution:**```
-
+**Filtering Logic:**
 ```javascript
-
-// Disabled default scroll zoom### Performance Tips
-
-const map = L.map('map', {
-
-    scrollWheelZoom: false,✅ **Do:**
-
-    doubleClickZoom: true,- Use CSS transforms (translateX, translateY, scale)
-
-    touchZoom: true- Apply will-change for frequently animated elements
-
-});- Keep animation durations under 1 second
-
-- Use cubic-bezier for natural motion
-
-// Custom Ctrl+Scroll implementation
-
-mapDiv.addEventListener('wheel', function(e) {❌ **Don't:**
-
-    if (e.ctrlKey) {- Animate width/height directly (use scale)
-
-        e.preventDefault();- Use too many simultaneous animations
-
-        // Custom zoom logic- Forget to test on slower devices
-
-    }- Ignore user's motion preferences
-
-    // Otherwise, page scrolls normally
-
-});### Accessibility
-
+const enabledSections = data.sections.filter(s => s.enabled !== false);
+const enabledItems = section.items.filter(i => i.enabled !== false);
 ```
 
-Respects user preferences:
+---
 
-#### 2. **Zoom Acceleration** ✅ FIXED```css
+# Part V: Detail Pages & Carousel
 
-**Problem:** Fast scrolling caused multiple zoom levels (acceleration effect)@media (prefers-reduced-motion: reduce) {
+## 📄 Detail Page System (NEW Feature!)
 
-    * {
+### Overview
+Each attraction, event, or experience can now have its own dedicated detail page with a beautiful image carousel!
 
-**Solution:** Added throttle with `isZooming` flag        animation-duration: 0.01ms !important;
+### Universal Detail Page (`attraction-detail.html`)
 
-```javascript        transition-duration: 0.01ms !important;
+**Single Template for All:**
+- Works for attractions, events, experiences, etc.
+- Loads content based on URL parameters
+- Example: `attraction-detail.html?id=item-123&page=attractions`
 
-let isZooming = false;    }
+### Features:
 
-}
+#### 1. **Automatic Image Carousel** 🎠
 
-if (e.ctrlKey && !isZooming) {```
+**When to Show:**
+- Automatically activates when item has **2+ images**
+- Single image shows static hero (no carousel)
 
-    isZooming = true;
+**Carousel Features:**
+- ✅ **Auto-Transition** - Changes every 5 seconds
+- ✅ **Pause on Hover** - Stops when mouse hovers
+- ✅ **Navigation Arrows** - Left/Right inside card
+- ✅ **Dot Indicators** - Shows current image position
+- ✅ **Touch/Swipe Support** - Mobile-friendly
+- ✅ **Smooth Transitions** - Cross-fade effect
+- ✅ **Responsive Design** - Works on all devices
 
-    // Zoom exactly one level---
-
-    setTimeout(() => { isZooming = false; }, 100);
-
-}# Part IV: Navigation Redesign
-
+**Carousel Controls:**
+```
+← (Previous)     [Image with smooth fade]     → (Next)
+                 ⚫⚪⚪ (Dot indicators)
 ```
 
-## 🎯 Navigation System Overview
-
-#### 3. **Unintuitive Zoom Direction** ✅ FIXED
-
-**Problem:** Scroll up zoomed in (counter-intuitive)A complete redesign ensuring consistent, professional navigation across all pages.
-
-
-
-**Solution:** Inverted scroll direction## The Problem
-
+**Animation System:**
 ```javascript
-
-// Scroll down (positive delta) = Zoom IN**Initial Issue:**
-
-if (delta > 0) { map.setZoom(currentZoom + 1); }- Homepage navigation looked different from other pages
-
-// Scroll up (negative delta) = Zoom OUT- Each page (attractions, events, map) had duplicate `.top-nav` CSS
-
-else if (delta < 0) { map.setZoom(currentZoom - 1); }- Logo spacing was inconsistent
-
-```- No functional search bar
-
-
-
-#### 4. **Slow Location Transitions** ✅ FIXED**Root Cause:**
-
-**Problem:** ```
-
-- Map took 1.5s to fly to locationattractions.css had .top-nav styles (lines 16-60)
-
-- Popup appeared after additional 1.5s delayevents.css had .top-nav styles (lines 16-60)
-
-- Total: 3 seconds wait timemap.css had .top-nav styles (lines 16-60)
-
-↓
-
-**Solution:**These overrode navigation.css from include-nav.js
-
-```javascript```
-
-// Open popup immediately
-
-marker.openPopup();## The Solution
-
-
-
-// Fast fly animation (2.5x faster)### 1. Removed Duplicate CSS
-
-map.flyTo(coords, 17, { duration: 0.6 });Deleted old navigation styles from:
-
-```- ✅ `css/attractions.css`
-
-- ✅ `css/events.css`
-
-**Result:** Information appears instantly, map pans smoothly- ✅ `css/map.css`
-
-
-
----**Result:** All pages now use unified `navigation.css`
-
-
-
-## 🔧 Technical Reference### 2. Redesigned Layout
-
-
-
-### Required Files for Each Page**New Structure:**
-
-```
-
-**Every HTML page needs:**┌─────────────────────────────────────────────────┐
-
-```html│ [Logo] Liliw Tourism  Home|Attractions|Events|Map  🔍 Search...  ☰ │
-
-<!-- In <head> -->└─────────────────────────────────────────────────┘
-
-<link rel="stylesheet" href="css/navigation.css">  ↑ Far Left           ↑ Center           ↑ Right
-
-```
-
-<!-- Before </body> -->
-
-<script src="js/include-nav.js"></script>**CSS Implementation:**
-
-<script src="js/navigation.js"></script>```css
-
-.nav-container {
-
-<!-- Page-specific CSS/JS -->    display: flex;
-
-<link rel="stylesheet" href="css/[page-name].css">    justify-content: space-between;
-
-<script src="js/[page-name].js"></script>    gap: 40px;
-
-```}
-
-
-
-**For pages with maps:**.logo {
-
-```html    flex-shrink: 0;  /* Stay on left */
-
-<!-- Leaflet CSS in <head> -->}
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
-.main-nav {
-
-<!-- Leaflet JS before map.js -->    justify-content: center;  /* Center links */
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>}
-
-<script src="js/map.js"></script>
-
-```.nav-actions {
-
-    flex-shrink: 0;  /* Stay on right */
-
-### Active Page Detection}
-
-```
-
-**Set data-page attribute:**
-
-```html### 3. Added Search Bar
-
-<body data-page="homepage">
-
-```**Replaced:** Icon button  
-
-**With:** Full search input field
-
-**Matches navigation link:**
-
-```html**Features:**
-
-<a href="homepage.html" data-page="homepage">Home</a>- 200px width (desktop)
-
-```- 150px width (mobile)
-
-- Gray background (#f3f4f6)
-
-**Auto-highlights active page with blue background**- Blue focus state (#3b82f6)
-
-- Smooth transitions
-
-### Map Configuration- Icon + input combo
-
-
-
-**Homepage Map:****HTML:**
-
-```javascript```html
-
-const map = L.map('map', {<div class="search-bar">
-
-    scrollWheelZoom: false,    <svg><!-- Search icon --></svg>
-
-    doubleClickZoom: true,    <input type="text" placeholder="Search..." id="headerSearchInput">
-
-    touchZoom: true</div>
-
-}).setView([14.1333, 121.4333], 14);```
-
-```
-
-**CSS:**
-
-**Interactive Map:**```css
-
-```javascript.search-bar {
-
-const map = L.map('map-canvas', {    display: flex;
-
-    scrollWheelZoom: false,    background-color: #f3f4f6;
-
-    doubleClickZoom: true,    border-radius: 24px;
-
-    touchZoom: true    padding: 8px 16px;
-
-}).setView([14.1333, 121.4333], 15);}
-
-```
-
-.search-bar:focus-within {
-
-### Color Scheme    background-color: #ffffff;
-
-    border-color: #3b82f6;
-
-**Primary Colors:**    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-
-- `#3b82f6` - Primary blue (buttons, active states)}
-
-- `#4299e1` - Light blue (accents)```
-
-- `#1a365d` - Dark blue (backgrounds)
-
-### 4. Fixed Logo Position
-
-**Map Marker Colors:**
-
-- `#dc2626` - Red (heritage sites)**Issue:** Logo was centered (max-width: 1400px + margin: auto)
-
-- `#16a34a` - Green (natural attractions)
-
-- `#2563eb` - Blue (landmarks)**Fix:**
-
-```css
-
-### Animation Timing.nav-container {
-
-    max-width: 100%;      /* Full width */
-
-- Page transitions: 0.3s - 0.4s    margin: 0;            /* No centering */
-
-- Navigation dropdown: 0.4s    padding: 12px 20px;   /* Edge spacing */
-
-- Hover effects: 0.3s}
-
-- Map fly animation: 0.6s```
-
-- Zoom throttle: 100ms
-
-- Hover delay (dropdown): 500ms**Result:** Logo now aligns with browser's back button
-
-
-
----## Navigation Components
-
-
-
-## 📝 Maintenance### Logo Section
-
-```html
-
-### Adding New Attractions to Map<div class="logo">
-
-    <a href="index.html">
-
-**1. Update attraction array in js/homepage.js and js/map.js:**        <img src="images/liliw-logo.png" class="logo-img">
-
-```javascript        <span class="logo-text">Liliw Tourism</span>
-
-{    </a>
-
-    id: 'your-attraction',</div>
-
-    name: 'Attraction Name',```
-
-    coords: [latitude, longitude],  // Get from Google Maps
-
-    type: 'heritage', // or 'nature' or 'landmark'**Styling:**
-
-    description: 'Short description',- Logo: 45×45px, 8px border-radius
-
-    link: 'attraction-page.html',- Text: 19px, bold, dark gray
-
-    icon: '📍'  // Choose appropriate emoji- Gap: 12px between image and text
-
-}
-
-```### Navigation Links
-
-```html
-
-**2. Add location card to interactive-map.html:**<nav class="main-nav">
-
-```html    <a href="homepage.html" data-page="homepage">Home</a>
-
-<div class="location-card" data-location="your-attraction">    <a href="attractions.html" data-page="attractions">Attractions</a>
-
-    <img src="images/your-image.jpg" alt="Attraction">    <a href="events.html" data-page="events">Events</a>
-
-    <div class="location-info">    <a href="interactive-map.html" data-page="map">Map</a>
-
-        <h3>Attraction Name</h3></nav>
-
-        <p>Description</p>```
-
-        <span class="distance">📍 Location</span>
-
-    </div>**Styling:**
-
-</div>- Font: 16px, medium weight
-
-```- Padding: 10px 24px
-
-- Border-radius: 8px
-
-### Adding New Pages- Active: Blue (#3b82f6) with shadow
-
-
-
-**1. Create HTML file**### Search Bar
-
-```html```html
-
-<!DOCTYPE html><div class="nav-actions">
-
-<html lang="en">    <div class="search-bar">
-
-<head>        <svg>...</svg>
-
-    <meta charset="UTF-8">        <input type="text" placeholder="Search..." id="headerSearchInput">
-
-    <title>Page Name - Liliw</title>    </div>
-
-    <link rel="stylesheet" href="css/navigation.css">    <button class="menu-toggle">
-
-    <link rel="stylesheet" href="css/your-page.css">        <span></span>
-
-</head>        <span></span>
-
-<body data-page="your-page">        <span></span>
-
-    <!-- Content -->    </button>
-
-    </div>
-
-    <script src="js/include-nav.js"></script>```
-
-    <script src="js/navigation.js"></script>
-
-    <script src="js/your-page.js"></script>**Functionality:**
-
-</body>- Type to search (future: live results)
-
-</html>- Enter to submit search
-
-```- Icon provides visual cue
-
-
-
-**2. Add to navigation in js/include-nav.js:**## Active Page Detection
-
-```javascript
-
-// Desktop navThe system automatically highlights the current page:
-
-<a href="your-page.html" data-page="your-page">Your Page</a>
-
-```html
-
-// Mobile nav<!-- In homepage.html -->
-
-<a href="your-page.html">Your Page</a><body data-page="homepage">
-
-```
-
-<!-- Navigation.js reads this and adds .active class -->
-
-### Image Requirements```
-
-
-
-**Format:** JPG for photos, PNG for logos  **CSS Selector:**
-
-**Resolution:** Minimum 1200px width for hero images  ```css
-
-**Optimization:** Compress for web (use TinyPNG)  body[data-page="homepage"] .main-nav a[data-page="homepage"],
-
-**Naming:** lowercase with hyphens (e.g., `liliw-church.jpg`)body[data-page="attractions"] .main-nav a[data-page="attractions"],
-
-body[data-page="events"] .main-nav a[data-page="events"],
-
-### Testing Checklistbody[data-page="map"] .main-nav a[data-page="map"] {
-
-    background-color: #3b82f6;
-
-Before deploying changes:    color: #ffffff;
-
-- [ ] All pages load without errors    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
-
-- [ ] Navigation works on all pages}
-
-- [ ] Active page highlights correctly```
-
-- [ ] Search bar appears properly
-
-- [ ] Maps load and are interactive## Mobile Navigation
-
-- [ ] All images display
-
-- [ ] Mobile menu works### Responsive Breakpoint: 768px
-
-- [ ] Animations are smooth
-
-- [ ] No console errors**Desktop (> 768px):**
-
-- [ ] Test on mobile device- All nav links visible horizontally
-
-- Search bar: 200px
-
-### Git Workflow- Hamburger menu hidden
-
-
-
-```powershell**Mobile (≤ 768px):**
-
-# Check status- Nav links hidden
-
-git status- Search bar: 150px
-
-- Hamburger menu visible
-
-# Stage changes- Tap menu → Slide-in overlay
-
-git add .
-
-### Mobile Menu Structure
-
-# Commit with message```html
-
-git commit -m "Description of changes"<div class="mobile-menu-overlay" id="mobileMenuOverlay">
-
-    <div class="mobile-menu">
-
-# Push to GitHub        <button class="close-menu">&times;</button>
-
-git push origin main        <nav class="mobile-nav">
-
-```            <a href="homepage.html">Home</a>
-
-            <a href="attractions.html">Attractions</a>
-
----            <a href="events.html">Events</a>
-
-            <a href="interactive-map.html">Map</a>
-
-## 🎯 Quick Reference        </nav>
-
-    </div>
-
-### Common Tasks</div>
-
-```
-
-**Start Development Server:**
-
-```powershell**Animation:**
-
-python -m http.server 8000- Overlay fades in (0.3s)
-
-```- Menu slides from right (0.3s)
-
-- Backdrop click closes menu
-
-**Hard Refresh Browser:**
-
-```## Integration Guide
-
-Ctrl + F5
-
-```### Adding Navigation to New Pages
-
-
-
-**Open DevTools:****Step 1:** Add data-page attribute
-
-``````html
-
-F12 or Ctrl + Shift + I<body data-page="your-page-name">
-
-``````
-
-
-
-**Check Console for Errors:****Step 2:** Include navigation script
-
-``````html
-
-F12 → Console tab<script src="js/include-nav.js"></script>
-
-``````
-
-
-
-### File Locations**Step 3:** Update navigation links (if needed)
-
-Edit `js/include-nav.js`:
-
-- **Navigation HTML**: Generated by `js/include-nav.js````javascript
-
-- **Navigation Styles**: `css/navigation.css`<nav class="main-nav">
-
-- **Map Configuration**: `js/map.js` and `js/homepage.js`    <!-- Add your new page link here -->
-
-- **Animation Engine**: `js/animations.js`    <a href="your-page.html" data-page="your-page-name">Your Page</a>
-
-- **Page-Specific JS**: `js/[page-name].js`</nav>
-
-```
-
-### Key Features Summary
-
-**Step 4:** Add to mobile menu
-
-✅ Responsive navigation with mobile menu  ```javascript
-
-✅ Dropdown submenu for Attractions  <nav class="mobile-nav">
-
-✅ Scroll-triggered hero blur effect      <!-- Add mobile link -->
-
-✅ Interactive maps with Leaflet.js      <a href="your-page.html">Your Page</a>
-
-✅ Custom map controls (Ctrl+Scroll, Shift+Hover)  </nav>
-
-✅ Fast location transitions (0.6s)  ```
-
-✅ Instant popup display  
-
-✅ Browser history back buttons  That's it! Navigation auto-loads with animations.
-
-✅ Smooth page transitions  
-
-✅ Active page highlighting  ---
-
-
-
----## 📱 Mobile Menu Animations
-
-
-
-## 📞 Support### Complete Animation System
-
-
-
-### TroubleshootingThe mobile menu features a sophisticated multi-layer animation system that creates a smooth, professional user experience.
-
-
-
-**Navigation not showing:**### Animation Sequence
-
-- Check if `include-nav.js` is loaded
-
-- Verify script is after body content**Opening (Click Hamburger ☰):**
-
-- Check browser console for errors
-
-```
-
-**Map not loading:**0.0s → Overlay fades in (transparent → black 80%)
-
-- Verify internet connection (needs CDN access)0.0s → Menu panel slides in from right edge
-
-- Check Leaflet CSS/JS links0.2s → Close button (X) fades in and rotates 90°
-
-- Ensure `#map` or `#map-canvas` div exists0.1s → First link slides in
-
-0.15s → Second link slides in
-
-**Images not displaying:**0.2s → Third link slides in
-
-- Check file paths (case-sensitive)0.25s → Fourth link slides in
-
-- Verify images are in `images/` folder0.3s → Fifth link slides in
-
-- Hard refresh (Ctrl+F5)0.35s → Sixth link slides in
-
-```
-
-**Animations not working:**
-
-- Check if animations.css is loaded**Total Opening Time:** ~0.4 seconds
-
-- Verify animations.js is loaded
-
-- Check user's motion preferences### CSS Implementation
-
-
-
-### Resources**Overlay Background:**
-
-```css
-
-- **Leaflet.js Documentation**: https://leafletjs.com/reference.html.mobile-menu-overlay {
-
-- **OpenStreetMap**: https://www.openstreetmap.org    background-color: rgba(0, 0, 0, 0);
-
-- **MDN Web Docs**: https://developer.mozilla.org    visibility: hidden;
-
-- **Repository**: https://github.com/HotokeZ/Liliw-Tourism-Website    opacity: 0;
-
-    transition: background-color 0.3s ease, 
-
----                visibility 0s linear 0.3s, 
-
-                opacity 0.3s ease;
-
-**Version:** 3.0  }
-
-**Last Updated:** October 19, 2025  
-
-**Status:** Production Ready ✨.mobile-menu-overlay.active {
-
-    visibility: visible;
-
-*Built for the Municipality of Liliw, Laguna*    opacity: 1;
-
-    background-color: rgba(0, 0, 0, 0.8);
-    transition: background-color 0.3s ease, 
-                visibility 0s linear, 
-                opacity 0.3s ease;
-}
-```
-
-**Menu Panel Slide:**
-```css
-.mobile-menu {
-    transform: translateX(100%);  /* Off-screen right */
-    transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
-}
-
-.mobile-menu-overlay.active .mobile-menu {
-    transform: translateX(0);  /* Slide to position */
-}
-```
-
-**Close Button Animation:**
-```css
-.close-menu {
-    opacity: 0;
-    transform: rotate(0deg) scale(0.8);
-    transition: transform 0.2s ease, color 0.2s ease;
-}
-
-.mobile-menu-overlay.active .close-menu {
-    opacity: 1;
-    transform: rotate(90deg) scale(1);
-    transition: opacity 0.3s ease 0.2s, 
-                transform 0.3s ease 0.2s;
-}
-
-.close-menu:hover {
-    color: #4299e1;
-    transform: rotate(90deg) scale(1.1);
-}
-```
-
-**Staggered Link Animation:**
-```css
-.mobile-nav a {
-    opacity: 0;
-    transform: translateX(30px);
-    transition: all 0.3s ease;
-}
-
-.mobile-menu-overlay.active .mobile-nav a {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Individual delays for cascade effect */
-.mobile-menu-overlay.active .mobile-nav a:nth-child(1) {
-    transition-delay: 0.1s;
-}
-.mobile-menu-overlay.active .mobile-nav a:nth-child(2) {
-    transition-delay: 0.15s;
-}
-.mobile-menu-overlay.active .mobile-nav a:nth-child(3) {
-    transition-delay: 0.2s;
-}
-/* ... continues for all links */
-```
-
-### Animation Features
-
-**1. Overlay Fade**
-- Duration: 0.3s
-- Easing: ease
-- Effect: Background darkens smoothly
-- Uses `visibility` + `opacity` for proper transition support
-
-**2. Menu Panel Slide**
-- Duration: 0.4s
-- Easing: cubic-bezier(0.4, 0.0, 0.2, 1) - Material Design deceleration
-- Effect: Slides from right with smooth deceleration
-- Shadow: Adds depth with left-side shadow
-
-**3. Close Button**
-- Duration: 0.3s
-- Delay: 0.2s (appears after menu starts sliding)
-- Effect: Fades in while rotating 90° and scaling up
-- Hover: Scales to 1.1× and turns blue
-
-**4. Navigation Links**
-- Duration: 0.3s each
-- Delay: Staggered 50ms apart
-- Effect: Fade + slide from right (30px → 0)
-- Creates: Cascading waterfall effect
-
-### JavaScript Control
-
-**Opening Menu:**
-```javascript
-menuToggle.addEventListener('click', function() {
-    mobileMenuOverlay.classList.add('active');
-    menuToggle.classList.add('active');
-    document.body.style.overflow = 'hidden';
+// Auto-advance every 5 seconds
+carouselInterval = setInterval(() => {
+    navigateCarousel(1);
+}, 5000);
+
+// Pause on hover
+heroCard.addEventListener('mouseenter', () => {
+    stopCarousel();
+});
+
+// Resume on mouse leave
+heroCard.addEventListener('mouseleave', () => {
+    startCarousel();
 });
 ```
 
-**Closing Menu:**
+**Touch/Swipe:**
+- Swipe left → Next image
+- Swipe right → Previous image
+- Pause during swipe
+- Resume after swipe
+
+#### 2. **Hero Section**
+- Large hero image (or carousel)
+- Title overlay
+- Location badge
+- Subtitle
+- "Learn More" button
+
+#### 3. **Description Section**
+- Multiple paragraphs
+- Formatted text
+- Rich content support
+
+#### 4. **Related Items**
+- Shows 3 related items from same section
+- Clickable cards
+- Links to other detail pages
+- Automatic filtering
+
+### Image Loading Strategy
+
+**Priority Order:**
+1. `details.heroImage` - Primary hero image
+2. `item.images[]` - All uploaded images
+3. `item.image` - Legacy single image
+4. Placeholder - If no images available
+
+**Implementation:**
 ```javascript
-function closeMobileMenu() {
-    mobileMenuOverlay.classList.remove('active');
-    menuToggle.classList.remove('active');
-    document.body.style.overflow = '';
+carouselImages = [];
+if (details.heroImage) {
+    carouselImages.push(details.heroImage);
+}
+if (item.images && Array.isArray(item.images)) {
+    item.images.forEach(img => {
+        if (img && !carouselImages.includes(img)) {
+            carouselImages.push(img);
+        }
+    });
 }
 ```
 
-**Key Features:**
-- Uses CSS classes for animation (hardware-accelerated)
-- Prevents body scroll when menu is open
-- Closes on overlay click, X button, or Escape key
-- Smooth reverse animation on close
+### Carousel CSS
 
-### Performance Optimization
-
-**GPU-Accelerated Properties:**
-- `transform` - For slide animations
-- `opacity` - For fade effects
-- `visibility` - For display management
-
-**Avoided Properties:**
-- No `width`, `height`, or `left` animations (CPU-intensive)
-- No `display` toggling during transition (breaks animations)
-
-### Browser Compatibility
-
-**Technique Used:**
+**Navigation Arrows:**
 ```css
-/* visibility + opacity instead of display */
-visibility: hidden;  /* Removes from accessibility tree */
-opacity: 0;          /* Makes transparent */
-transition: visibility 0s linear 0.3s;  /* Delayed hide */
-```
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    opacity: 0;  /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
 
-**Why This Works:**
-- `display: none` → `display: flex` doesn't animate
-- `visibility: hidden` → `visible` can transition
-- Delayed visibility ensures smooth fade out
-
-### Testing Checklist
-
-- [ ] Overlay fades in smoothly (no pop)
-- [ ] Menu slides from right edge (not instant)
-- [ ] Close button spins and fades in
-- [ ] Links cascade one by one
-- [ ] Hamburger animates to X
-- [ ] Close animation is smooth reverse
-- [ ] No visual glitches or jumps
-- [ ] Works on mobile devices
-- [ ] Touch-friendly (44px+ tap targets)
-
-### Customization Options
-
-**Faster Animation:**
-```css
-.mobile-menu {
-    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+.hero-card:hover .carousel-nav {
+    opacity: 1;  /* Show on hover */
 }
 ```
 
-**Slower (More Dramatic):**
+**Dot Indicators:**
 ```css
-.mobile-menu {
-    transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+.carousel-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.carousel-indicator.active {
+    background-color: white;
+    transform: scale(1.2);
 }
 ```
 
-**Bounce Effect:**
+**Mobile Responsive:**
 ```css
-.mobile-menu {
-    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-```
-
-**Different Direction (From Left):**
-```css
-.mobile-menu {
-    left: 0;
-    right: auto;
-    transform: translateX(-100%);
-    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.2);
-}
-```
-
-### Accessibility
-
-**Respects User Preferences:**
-```css
-@media (prefers-reduced-motion: reduce) {
-    .mobile-menu-overlay,
-    .mobile-menu,
-    .close-menu,
-    .mobile-nav a {
-        transition-duration: 0.01ms !important;
+@media (max-width: 768px) {
+    .carousel-nav {
+        opacity: 0.7;  /* Always visible on mobile */
+        width: 40px;
+        height: 40px;
+    }
+    
+    .carousel-indicators {
+        opacity: 1;  /* Always show dots on mobile */
     }
 }
 ```
 
-**Keyboard Navigation:**
-- Escape key closes menu
-- Focus trap within menu when open
-- Tab navigation works correctly
+### Creating Detail Pages
 
-### Files Modified
+**Step 1: Enable in Admin**
+1. Edit item in page editor
+2. Click **"📄 Edit Details"** button
+3. Toggle **"Enable Detail Page"** to ON
+4. Select hero image from dropdown
+5. Add description paragraphs
+6. Click **"Save Details"**
 
-**CSS:** `css/navigation.css`
-- Updated `.mobile-menu-overlay` (visibility + opacity)
-- Enhanced `.mobile-menu` (cubic-bezier easing)
-- Added `.close-menu` animation
-- Staggered `.mobile-nav a` transitions
+**Step 2: Automatic Features**
+- "See More" button automatically appears on cards
+- Link generated: `attraction-detail.html?id=ITEM_ID&page=PAGE_NAME`
+- 📄 badge appears on admin card
+- Detail page becomes accessible
 
-**JavaScript:** `js/navigation.js`
-- Simplified menu toggle (no display manipulation)
-- Clean class-based animation control
-
----
-
-# Part V: Pages Created
-
-## 🏠 Homepage (homepage.html)
-
-**Purpose:** Main landing page after splash screen
-
-**Sections:**
-1. **Welcome Section**
-   - Large "Welcome to LILIW, LAGUNA" header
-   - Liliw logo (circular)
-   - Two CTA buttons:
-     - "See Attractions" (blue)
-     - "Upcoming Event" (purple)
-
-2. **Popular Places**
-   - Grid of 3 attraction cards
-   - St. John the Baptist Church
-   - Gat Tayaw Tsinelas Monument
-   - Local Attraction placeholder
-
-3. **Events**
-   - Featured: Tsinelas Festival
-   - Large banner with golden text
-
-4. **Plan Your Visit**
-   - Nature scene background
-   - Call-to-action button
-
-5. **About Section**
-   - Footer with logo
-   - Social icons
-   - Copyright info
-
-**Color Scheme:** Dark blue gradient (#1a365d → #2c5282)
-
-**Key Files:**
-- HTML: `homepage.html`
-- CSS: `css/homepage.css`
-- JS: `js/homepage.js`
+**Step 3: Test Detail Page**
+1. Save changes in admin
+2. Go to public website
+3. Click "See More" on the card
+4. Detail page opens with carousel (if 2+ images)
+5. Test carousel navigation
+6. Test mobile swipe
 
 ---
 
-## 🏛️ Attractions (attractions.html)
+# Part VI: Animation System
 
-**Purpose:** Main attractions overview with categories
+## 🎨 Animation Architecture
 
-**Layout:**
-- Navigation header
-- Page title: "What's Popular?"
-- Two large category cards:
-  1. **Natural Attractions** → links to natural-attractions.html
-  2. **Heritage Attractions** → links to heritage-attractions.html
-- Footer
+The website features a sophisticated animation system with scroll-triggered effects, page transitions, and interactive elements.
 
-**Features:**
-- Hover effects on cards
-- Large imagery
-- Clear category distinction
-- Click entire card to navigate
+## Core Animation Features
 
-**Color Scheme:** Dark blue gradient (#1a2d5a → #2a4080)
+### 1. Page Load Animations
 
-**Key Files:**
-- HTML: `attractions.html`
-- CSS: `css/attractions.css`
-- JS: `js/attractions.js`
+**Sequence:**
+```
+0.0s → Body fades in (opacity 0 → 1)
+0.1s → Navigation slides down from top
+0.2s → Hero section fades + slides up
+0.3s → First content section appears
+0.4s → Second content section appears
+0.5s → Third content section appears
+```
 
----
+**CSS Classes:**
+- `.fade-in` - Simple fade effect
+- `.fade-in-up` - Fade + slide up combo
+- `.slide-down` - Slide down from top
+- `.scale-in` - Zoom in effect
+- `.stagger-*` - Delayed animations
 
-## 🌊 Natural Attractions (natural-attractions.html)
+**Implementation:**
+```css
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+}
 
-**Purpose:** Showcase natural attractions (waterfalls, mountains, etc.)
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+```
 
-**Featured Attraction:** Kilangin Falls
+### 2. Navigation Active Indicator
 
-**Sections:**
-1. **Hero Card**
-   - Large falls image
-   - Title: "A JOURNEY TO DISCOVERING KILANGIN FALLS"
-   - "Learn More" button
+**The Star Feature!** Animated blue bar that slides under active page:
 
-2. **Description**
-   - Detailed information about the falls
-   - Visitor information
+```
+Home  Attractions  Events  Map
+━━━━              ← Bar slides here!
+```
 
-3. **Related Attractions Grid**
-   - Mt. Kalisungan
-   - Buruwisan Falls
-   - Rice Terraces
-   - Each with thumbnail + description
-
-**Color Scheme:** Light blue gradient (#63b3ed → #a0d8ef)
-
-**Key Files:**
-- HTML: `natural-attractions.html`
-- CSS: `css/attraction-detail.css`
-- JS: `js/attraction-detail.js`
-
----
-
-## 🏰 Heritage Attractions (heritage-attractions.html)
-
-**Purpose:** Showcase historical and cultural sites
-
-**Featured Attraction:** St. John the Baptist Church
-
-**Sections:**
-1. **Hero Card**
-   - Church tower image
-   - Historical site information
-   - "Learn More" button
-
-2. **Description**
-   - Church history
-   - Architectural details
-   - Cultural significance
-
-3. **Related Heritage Sites**
-   - Gat Tayaw Monument
-   - Old Spanish Houses
-   - Town Plaza
-   - Each with thumbnail + info
-
-**Color Scheme:** Light blue/cyan gradient (matching natural)
-
-**Key Files:**
-- HTML: `heritage-attractions.html`
-- CSS: `css/attraction-detail.css`
-- JS: `js/attraction-detail.js`
-
----
-
-## 🗺️ Interactive Map (interactive-map.html)
-
-**Purpose:** Show locations of attractions with interactive elements
-
-**Features:**
-
-1. **Map Canvas**
-   - Static map image (placeholder for Google Maps)
-   - Clickable location pins (📍)
-   - Hover tooltips showing place names
-   - Pan/drag functionality (future)
-
-2. **Map Controls**
-   - Zoom In button (+)
-   - Zoom Out button (−)
-   - Locate Me button (📍)
-
-3. **Map Legend**
-   - Heritage Sites (📍)
-   - Natural Attractions (📍)
-   - Food & Dining (📍)
-   - Shopping (📍)
-
-4. **Location Cards**
-   - St. John the Baptist Church (0.5km)
-   - Kilangin Falls (3.2km)
-   - Gat Tayaw Monument (0.3km)
-   - Click card → Focus map on location
-
-**Color Scheme:** Teal gradient (#a8dadc → #457b9d)
-
-**Interactive Elements:**
+**How It Works:**
 ```javascript
-// Click marker
-<div class="map-marker" data-location="Church">
-    <div class="marker-pin">📍</div>
-    <div class="marker-tooltip">St. John the Baptist Church</div>
-</div>
+// Detect current page
+const currentPage = document.body.getAttribute('data-page');
 
-// Click location card
-<div class="location-card" onclick="focusLocation('church')">
+// Calculate position
+const link = document.querySelector(`[data-page="${currentPage}"]`);
+const indicator = document.querySelector('.active-indicator');
+indicator.style.left = link.offsetLeft + 'px';
+indicator.style.width = link.offsetWidth + 'px';
 ```
 
-**Key Files:**
-- HTML: `interactive-map.html`
-- CSS: `css/map.css`
-- JS: `js/map.js`
-
-**Future Enhancements:**
-- Integrate Google Maps API
-- Real-time location tracking
-- Directions from current location
-- Filter by category
-
----
-
-## 🎉 Events (events.html)
-
-**Purpose:** Display upcoming events and festivals
-
-**Sections:**
-
-1. **Featured Event Hero**
-   - Large banner image
-   - Event badge: "FEATURED EVENT"
-   - Title: "THE 17TH LILIW GAT TAYAW TSINELAS FESTIVAL"
-   - Date: September 24-29, 2025
-   - Location: Liliw Town Plaza
-   - "View Details" button
-
-2. **Event Description**
-   - About the festival
-   - What to expect
-   - Cultural significance
-
-3. **Other Events Grid**
-   - **Feast of St. John the Baptist** (Religious, June 24)
-   - **Weekly Town Market** (Market, Every Sunday)
-   - **Heritage Month Celebration** (Cultural, May 2025)
-
-4. **Calendar Teaser**
-   - "Full Event Calendar" heading
-   - "View Full Calendar" button
-
-**Features:**
-- Event cards with badges (Religious, Market, Cultural)
-- Date and description for each event
-- Hover effects
-- Click to view details
-
-**Color Scheme:** Purple gradient (#805ad5 → #553c9a)
-
-**Key Files:**
-- HTML: `events.html`
-- CSS: `css/events.css`
-- JS: `js/events.js`
-
----
-
-# Part VI: Technical Reference
-
-## 🛠️ Technology Stack
-
-### Frontend
-- **HTML5** - Semantic markup
-- **CSS3** - Modern styling with Flexbox, Grid, Animations
-- **JavaScript (ES6+)** - Vanilla JS, no frameworks
-- **SVG** - Icons and graphics
-
-### Development Tools
-- **VS Code** - Code editor
-- **Python HTTP Server** - Local development
-- **Git** - Version control
-- **GitHub** - Repository hosting
-
-## 📐 Design System
-
-### Colors
-
-**Primary Blues:**
-- `#3b82f6` - Primary blue (buttons, active states)
-- `#4299e1` - Light blue (accents)
-- `#1a365d` - Dark blue (backgrounds)
-- `#2c5282` - Medium blue (gradients)
-
-**Grays:**
-- `#1f2937` - Dark gray (text)
-- `#4b5563` - Medium gray (secondary text)
-- `#6b7280` - Light gray (icons)
-- `#9ca3af` - Very light gray (placeholders)
-- `#f3f4f6` - Background gray
-- `#e5e7eb` - Border gray
-
-**Accent Colors:**
-- `#805ad5` - Purple (events)
-- `#ffd700` - Gold (festival text)
-- `#63b3ed` - Cyan (attractions)
-
-### Typography
-
-**Font Family:**
+**Smooth Transition:**
 ```css
-font-family: 'Poppins', sans-serif;
-```
-
-**Font Weights:**
-- 300 - Light
-- 400 - Regular
-- 500 - Medium
-- 600 - Semi-bold
-- 700 - Bold
-
-**Font Sizes:**
-- Headings: 42px, 32px, 24px, 19px
-- Body: 16px
-- Small: 14px
-- Button: 16px
-
-### Spacing System
-
-**Base Unit:** 4px
-
-**Scale:**
-- 4px (1×)
-- 8px (2×)
-- 12px (3×)
-- 16px (4×)
-- 20px (5×)
-- 24px (6×)
-- 30px (7.5×)
-- 40px (10×)
-
-**Container Padding:**
-- Desktop: 40px
-- Tablet: 30px
-- Mobile: 20px
-
-### Border Radius
-
-- Small: 6px (buttons, small cards)
-- Medium: 8px (nav links, inputs)
-- Large: 12px (cards, sections)
-- Round: 24px (search bar)
-- Circle: 50% (avatars, logos)
-
-### Shadows
-
-**Levels:**
-
-1. **Subtle** (navigation, cards at rest)
-```css
-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-```
-
-2. **Medium** (cards on hover)
-```css
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-```
-
-3. **Heavy** (modals, dropdowns)
-```css
-box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-```
-
-4. **Glow** (active buttons)
-```css
-box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
-```
-
-## 🔧 Component Library
-
-### Buttons
-
-**Primary Button:**
-```html
-<button class="cta-button see-attractions">See Attractions</button>
-```
-```css
-.cta-button {
-    padding: 15px 40px;
-    font-size: 16px;
-    font-weight: 600;
-    border-radius: 30px;
-    transition: all 0.3s ease;
+.active-indicator {
+    transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
 }
 ```
 
-**Secondary Button:**
-```html
-<button class="event-details-btn">View Details</button>
+### 3. Page Transitions
+
+**Navigation Flow:**
+```javascript
+// Click link
+↓
+Page fades out (0.3s)
+↓
+Navigate to new page
+↓
+New page fades in (0.4s)
 ```
 
-### Cards
-
-**Basic Card:**
-```html
-<div class="place-card">
-    <img src="image.jpg" alt="Place">
-    <p>Place Name</p>
-</div>
-```
-
-**Large Card (Clickable):**
-```html
-<div class="attraction-card large-card" onclick="navigate()">
-    <img src="image.jpg" alt="Attraction">
-    <div class="card-overlay">
-        <p class="card-label">Explore Nature</p>
-    </div>
-</div>
-```
-
-### Navigation
-
-**Include Navigation:**
-```html
-<body data-page="homepage">
-    <!-- Content -->
-    <script src="js/include-nav.js"></script>
-</body>
-```
-
-**Custom Navigation Link:**
-```html
-<a href="page.html" data-page="page-name" class="active">Page</a>
-```
-
-### Forms
-
-**Search Input:**
-```html
-<div class="search-bar">
-    <svg><!-- Icon --></svg>
-    <input type="text" placeholder="Search...">
-</div>
-```
-
-**Text Input:**
-```html
-<input type="text" class="search-input" placeholder="Search...">
-```
-
-## 🎨 CSS Architecture
-
-### File Organization
-
-**Global Styles:**
-- `style.css` - Base styles, reset, splash screen
-
-**Page-Specific:**
-- `homepage.css` - Homepage only
-- `attractions.css` - Attractions page only
-- `events.css` - Events page only
-- `map.css` - Map page only
-- `attraction-detail.css` - Detail pages
-
-**Shared Components:**
-- `navigation.css` - Navigation system
-- `animations.css` - Animation system
-
-### CSS Methodology
-
-**BEM-Inspired Naming:**
-```css
-/* Block */
-.card { }
-
-/* Element */
-.card-title { }
-.card-image { }
-
-/* Modifier */
-.card--large { }
-.card--featured { }
-```
-
-**State Classes:**
-```css
-.active { }
-.hidden { }
-.visible { }
-.loading { }
-```
-
-### Responsive Design
-
-**Breakpoints:**
-```css
-/* Mobile First */
-@media (min-width: 480px) { /* Small phones */ }
-@media (min-width: 768px) { /* Tablets */ }
-@media (min-width: 1024px) { /* Small desktops */ }
-@media (min-width: 1280px) { /* Large desktops */ }
-```
-
-**Mobile Overrides:**
-```css
-@media (max-width: 768px) {
-    .main-nav { display: none; }
-    .menu-toggle { display: flex; }
-}
-```
-
-## 🎭 JavaScript Guide
-
-### File Structure
-
-**Global:**
-- `script.js` - Splash screen logic
-
-**Page-Specific:**
-- `homepage.js` - Homepage interactions
-- `attractions.js` - Attractions logic
-- `events.js` - Events functionality
-- `map.js` - Map interactions
-
-**System:**
-- `include-nav.js` - Navigation injection
-- `navigation.js` - Navigation functionality
-- `animations.js` - Animation engine
-
-### Common Patterns
-
-**Page Navigation:**
+**Implementation:**
 ```javascript
 function navigateToPage(url) {
     document.body.classList.add('fade-out');
@@ -2026,7 +825,25 @@ function navigateToPage(url) {
 }
 ```
 
-**Scroll Detection:**
+### 4. Scroll Animations
+
+**Hero Parallax:**
+- Background moves slower than content
+- Creates depth effect
+- Smooth scrolling
+
+**Fade-In On Scroll:**
+```javascript
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+});
+```
+
+**Navigation Opacity:**
 ```javascript
 window.addEventListener('scroll', () => {
     if (window.scrollY > 100) {
@@ -2035,7 +852,257 @@ window.addEventListener('scroll', () => {
 });
 ```
 
-**Active Page Detection:**
+### 5. Interactive Hover Effects
+
+**Cards:**
+- Lift up + scale (1.03×)
+- Shadow increase
+- Smooth 0.3s transition
+
+**Buttons:**
+- Ripple effect on click
+- Color transition
+- Scale on hover
+
+**Links:**
+- Color fade (0.3s)
+- Underline animation
+
+### 6. Homepage CTA Buttons
+
+**"See Attractions":**
+- Blue glow pulse
+- Scale on hover
+
+**"Upcoming Event":**
+- Purple glow pulse
+- Scale on hover
+
+**Animation:**
+```css
+@keyframes pulse-blue {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(66, 153, 225, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(66, 153, 225, 0.8);
+    }
+}
+
+.cta-button:hover {
+    transform: scale(1.05);
+}
+```
+
+### 7. Event Cards
+
+**On Hover:**
+- Lift + shadow increase
+- Image subtle zoom
+- Text color shift
+
+### 8. Mobile Menu Animations
+
+**Opening:**
+```
+0.0s → Overlay fades in
+0.0s → Menu slides from right
+0.2s → Close button rotates + fades
+0.1s → First link slides in
+0.15s → Second link slides in
+0.2s → Third link slides in
+...
+```
+
+**Implementation:**
+```css
+.mobile-menu {
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.mobile-menu-overlay.active .mobile-menu {
+    transform: translateX(0);
+}
+
+.mobile-nav a:nth-child(1) {
+    transition-delay: 0.1s;
+}
+```
+
+## Animation Files
+
+### `css/animations.css`
+Complete animation styles:
+- Keyframe definitions
+- Transition effects
+- Hover states
+- Scroll-triggered animations
+
+### `js/animations.js`
+Animation engine:
+- Scroll detection
+- Active page indicator positioning
+- Page transition handling
+- Preloading optimization
+
+## Animation Guidelines
+
+### Adding Animations to New Elements
+
+**Fade In:**
+```html
+<div class="fade-in">Content</div>
+```
+
+**Fade + Slide Up:**
+```html
+<section class="fade-in-up">Section Content</section>
+```
+
+**Staggered Appearance:**
+```html
+<div class="fade-in stagger-1">First</div>
+<div class="fade-in stagger-2">Second</div>
+<div class="fade-in stagger-3">Third</div>
+```
+
+### Performance Tips
+
+✅ **Do:**
+- Use CSS transforms (translateX, translateY, scale)
+- Apply will-change for frequently animated elements
+- Keep durations under 1 second
+- Use cubic-bezier for natural motion
+
+❌ **Don't:**
+- Animate width/height directly (use scale)
+- Use too many simultaneous animations
+- Forget to test on slower devices
+- Ignore user's motion preferences
+
+### Accessibility
+
+Respects user preferences:
+```css
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+```
+
+---
+
+# Part VII: Navigation System
+
+## 🎯 Navigation Overview
+
+Unified navigation system ensuring consistent experience across all pages.
+
+## Desktop Navigation
+
+**Layout:**
+```
+┌─────────────────────────────────────────────────┐
+│ [Logo] Liliw Tourism  Home|Attractions|Events|Map  🔍 Search...  ☰ │
+└─────────────────────────────────────────────────┘
+  ↑ Far Left           ↑ Center           ↑ Right
+```
+
+**Features:**
+- **Centered Links**: Home, Attractions, Events, Map
+- **Dropdown Submenu**: Attractions expandable
+- **Click + Delayed Hover**: Primary click, 500ms hover delay
+- **Functional Search Bar**: 200px width with icon
+- **Active Page Indicator**: Blue background + animated bar
+- **Smooth Animations**: 0.4s transitions
+
+## Mobile Navigation
+
+**Breakpoint:** 768px
+
+**Features:**
+- **Hamburger Menu**: Responsive ≤ 768px
+- **Slide-In Animation**: From right with backdrop
+- **Mobile Submenu**: Collapsible attractions
+- **Touch-Friendly**: 44px+ tap targets
+- **Staggered Links**: Cascade animation
+
+**Structure:**
+```html
+<div class="mobile-menu-overlay">
+    <div class="mobile-menu">
+        <button class="close-menu">&times;</button>
+        <nav class="mobile-nav">
+            <a href="homepage.html">Home</a>
+            <a href="attractions.html">Attractions</a>
+            <a href="events.html">Events</a>
+            <a href="interactive-map.html">Map</a>
+        </nav>
+    </div>
+</div>
+```
+
+## Navigation Components
+
+### Logo Section
+```html
+<div class="logo">
+    <a href="index.html">
+        <img src="images/liliw-logo.png" class="logo-img">
+        <span class="logo-text">Liliw Tourism</span>
+    </a>
+</div>
+```
+
+**Styling:**
+- Logo: 45×45px, 8px border-radius
+- Text: 19px, bold, dark gray
+- Gap: 12px between image and text
+
+### Navigation Links
+```html
+<nav class="main-nav">
+    <a href="homepage.html" data-page="homepage">Home</a>
+    <a href="attractions.html" data-page="attractions">Attractions</a>
+    <a href="events.html" data-page="events">Events</a>
+    <a href="interactive-map.html" data-page="map">Map</a>
+</nav>
+```
+
+**Styling:**
+- Font: 16px, medium weight
+- Padding: 10px 24px
+- Border-radius: 8px
+- Active: Blue (#3b82f6) with shadow
+
+### Search Bar
+```html
+<div class="nav-actions">
+    <div class="search-bar">
+        <svg>...</svg>
+        <input type="text" placeholder="Search..." id="headerSearchInput">
+    </div>
+    <button class="menu-toggle">☰</button>
+</div>
+```
+
+**Features:**
+- 200px width (desktop), 150px (mobile)
+- Gray background (#f3f4f6)
+- Blue focus state (#3b82f6)
+- Icon + input combo
+
+## Active Page Detection
+
+**HTML:**
+```html
+<body data-page="homepage">
+```
+
+**JavaScript:**
 ```javascript
 const currentPage = document.body.getAttribute('data-page');
 document.querySelectorAll('.main-nav a').forEach(link => {
@@ -2045,232 +1112,346 @@ document.querySelectorAll('.main-nav a').forEach(link => {
 });
 ```
 
-## 🐛 Debugging Guide
+**CSS:**
+```css
+body[data-page="homepage"] .main-nav a[data-page="homepage"],
+body[data-page="attractions"] .main-nav a[data-page="attractions"] {
+    background-color: #3b82f6;
+    color: #ffffff;
+}
+```
 
-### Common Issues
+## Integration Guide
 
-**1. Navigation Not Showing**
+### Adding Navigation to New Page
 
-**Problem:** Navigation doesn't appear on page
-
-**Check:**
-- Is `<script src="js/include-nav.js"></script>` present?
-- Is script loaded AFTER body content?
-- Check browser console for errors
-
-**Solution:**
+**Step 1:** Add data-page attribute
 ```html
-<!-- Add before closing </body> tag -->
+<body data-page="your-page-name">
+```
+
+**Step 2:** Include navigation script
+```html
 <script src="js/include-nav.js"></script>
 ```
 
-**2. Active Page Not Highlighted**
-
-**Problem:** Current page not blue in navigation
-
-**Check:**
-- Does `<body>` have `data-page` attribute?
-- Does it match navigation link's `data-page`?
-- Is navigation.js loaded?
-
-**Solution:**
-```html
-<body data-page="homepage">
-<!-- Make sure matches: -->
-<a href="homepage.html" data-page="homepage">Home</a>
-```
-
-**3. Animations Not Working**
-
-**Problem:** No fade/slide effects
-
-**Check:**
-- Is animations.css loaded?
-- Is animations.js loaded?
-- Check `prefers-reduced-motion` setting
-
-**Solution:**
-Open browser DevTools → Network tab → Verify files loaded
-
-**4. Images Not Loading**
-
-**Problem:** Broken image icons
-
-**Check:**
-- Are images in `images/` folder?
-- Exact filename match (case-sensitive)?
-- Correct file extension?
-
-**Solution:**
-```
-images/liliw-logo.png  ✅
-images/Liliw-Logo.PNG  ❌ (wrong case)
-```
-
-**5. Search Bar Not Styled**
-
-**Problem:** Search bar looks plain
-
-**Check:**
-- Is navigation.css loaded?
-- Hard refresh (Ctrl+F5)?
-- Check CSS cascade
-
-**Solution:**
-```powershell
-# Clear cache
-Ctrl+F5
-
-# Or use incognito mode
-Ctrl+Shift+N
-```
-
-### Browser Developer Tools
-
-**Open DevTools:**
-- Chrome/Edge: `F12` or `Ctrl+Shift+I`
-- Firefox: `F12` or `Ctrl+Shift+I`
-- Safari: `Cmd+Option+I`
-
-**Useful Panels:**
-- **Console** - See JavaScript errors
-- **Network** - Check file loading
-- **Elements** - Inspect HTML/CSS
-- **Sources** - Debug JavaScript
-
-**Console Commands:**
+**Step 3:** Update navigation links (if needed)
 ```javascript
-// Check if navigation loaded
-document.getElementById('mainNavigation')
-
-// Check current page
-document.body.getAttribute('data-page')
-
-// List loaded stylesheets
-Array.from(document.styleSheets).map(s => s.href)
+// Edit js/include-nav.js
+<a href="your-page.html" data-page="your-page-name">Your Page</a>
 ```
 
-## 🚀 Deployment Guide
+---
 
-### Preparing for Production
+# Part VIII: Pages Reference
 
-**1. Optimize Images**
-```bash
-# Use tools like:
-- TinyPNG (tinypng.com)
-- ImageOptim (imageoptim.com)
-- Squoosh (squoosh.app)
+## 🏠 Homepage (`homepage.html`)
+
+**Purpose:** Main landing page after splash
+
+**Sections:**
+1. Welcome Section - Hero with logo and CTAs
+2. Popular Places - 3 attraction cards
+3. Events - Tsinelas Festival banner
+4. Plan Your Visit - Nature scene CTA
+5. About - Footer with social links
+
+**Dynamic:** Loads from `data/homepage.json`
+
+## 🏛️ Attractions (`attractions.html`)
+
+**Purpose:** Attractions overview with categories
+
+**Dynamic:** Loads from `data/attractions.json`
+
+**Sections:**
+- Heritage Sites
+- Natural Attractions
+- Each card has:
+  - Image
+  - Title
+  - Description
+  - Location
+  - "See More" button (if detail page enabled)
+
+## 🎉 Events (`events.html`)
+
+**Purpose:** Events and festivals
+
+**Dynamic:** Loads from `data/events.json`
+
+**Sections:**
+- Annual Festivals
+- Cultural Events
+- Each card has:
+  - Date badge
+  - Image
+  - Title
+  - Description
+  - "View Details" button
+
+## ✨ Experiences (`experiences.html`)
+
+**Purpose:** Local experiences
+
+**Dynamic:** Loads from `data/experiences.json`
+
+**Sections:**
+- Local Crafts & Shopping
+- Food & Dining
+- Each card has:
+  - Image
+  - Title
+  - Description
+  - "Explore" button
+
+## 🗺️ Plan Your Trip (`plan-your-trip.html`)
+
+**Purpose:** Travel planning information
+
+**Dynamic:** Loads from `data/plan-trip.json`
+
+**Sections:**
+- Getting There
+- Where to Stay
+- Best Time to Visit
+
+## 📄 Detail Page (`attraction-detail.html`)
+
+**Purpose:** Universal detail page for all items
+
+**URL Pattern:** `?id=ITEM_ID&page=PAGE_NAME`
+
+**Features:**
+- Hero carousel (2+ images)
+- Static hero (1 image)
+- Description paragraphs
+- Related items (3 max)
+- Back button
+
+---
+
+# Part IX: Technical Reference
+
+## 🛠️ Technology Stack
+
+### Frontend
+- **HTML5** - Semantic markup
+- **CSS3** - Flexbox, Grid, Animations
+- **JavaScript (ES6+)** - Vanilla JS, no frameworks
+- **Leaflet.js** - Interactive maps
+- **SortableJS** - Drag & drop
+
+### Development
+- **Python HTTP Server** - Local development
+- **VS Code** - Code editor
+- **Git** - Version control
+- **GitHub** - Repository hosting
+
+## 📐 Design System
+
+### Colors
+
+**Primary:**
+- `#3b82f6` - Primary blue
+- `#4299e1` - Light blue
+- `#1a365d` - Dark blue
+
+**Grays:**
+- `#1f2937` - Dark gray
+- `#4b5563` - Medium gray
+- `#9ca3af` - Light gray
+- `#f3f4f6` - Background gray
+
+**Accents:**
+- `#805ad5` - Purple (events)
+- `#ffd700` - Gold (festival)
+- `#63b3ed` - Cyan (attractions)
+
+### Typography
+
+**Font Family:**
+```css
+font-family: 'Poppins', sans-serif;
 ```
 
-**2. Minify CSS/JS**
-```bash
-# Use online tools or:
-npm install -g csso-cli uglify-js
+**Font Weights:** 300, 400, 500, 600, 700
 
-csso css/style.css --output css/style.min.css
-uglifyjs js/script.js --compress --mangle -o js/script.min.js
+**Font Sizes:**
+- Headings: 42px, 32px, 24px, 19px
+- Body: 16px
+- Small: 14px
+
+### Spacing
+
+**Base Unit:** 4px
+
+**Scale:** 4, 8, 12, 16, 20, 24, 30, 40px
+
+**Container Padding:**
+- Desktop: 40px
+- Tablet: 30px
+- Mobile: 20px
+
+### Border Radius
+
+- Small: 6px (buttons)
+- Medium: 8px (inputs)
+- Large: 12px (cards)
+- Round: 24px (search)
+- Circle: 50% (logos)
+
+### Shadows
+
+**Levels:**
+```css
+/* Subtle */
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+/* Medium */
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+/* Heavy */
+box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+
+/* Glow */
+box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
 ```
 
-**3. Test All Pages**
-- [ ] Homepage loads correctly
-- [ ] All navigation links work
-- [ ] Images appear properly
-- [ ] Animations smooth
-- [ ] Mobile responsive
-- [ ] Search bar functional
-- [ ] No console errors
+## 🔧 Common Patterns
 
-### Hosting Options
-
-**1. GitHub Pages (Free)**
-```bash
-# In repository settings, enable GitHub Pages
-# Your site: https://username.github.io/Liliw-Tourism-Website
+### Page Navigation
+```javascript
+function navigateToPage(url) {
+    document.body.classList.add('fade-out');
+    setTimeout(() => {
+        window.location.href = url;
+    }, 300);
+}
 ```
 
-**2. Netlify (Free)**
-```bash
-# Drag and drop your folder to netlify.com
-# Automatic deployment
+### Scroll Detection
+```javascript
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+        nav.classList.add('scrolled');
+    }
+});
 ```
 
-**3. Traditional Web Hosting**
+### Fetch JSON
+```javascript
+async function loadData() {
+    const response = await fetch('data/page.json');
+    const data = await response.json();
+    render(data);
+}
 ```
-Upload via FTP:
-- All HTML files
-- css/ folder
-- js/ folder
-- images/ folder
-- assets/ folder
-```
+
+---
+
+# Part X: Maintenance
+
+## 🐛 Troubleshooting
+
+### Navigation Not Showing
+**Check:**
+- Is `include-nav.js` loaded?
+- Script after body content?
+- Browser console errors?
+
+### Images Not Loading
+**Check:**
+- Files in `images/` folder?
+- Exact filename match (case-sensitive)?
+- Hard refresh (Ctrl+F5)?
+
+### Admin Can't Save
+**Check:**
+- Server running?
+- Network tab in DevTools
+- Console errors?
+
+### Carousel Not Working
+**Check:**
+- Item has 2+ images?
+- `details.enabled = true`?
+- JavaScript errors in console?
 
 ## 📝 Maintenance Checklist
 
-### Monthly Tasks
-- [ ] Check all links (no 404s)
+### Monthly
+- [ ] Check all links
 - [ ] Update event dates
-- [ ] Add new attractions if needed
-- [ ] Review analytics (if implemented)
+- [ ] Add new attractions
+- [ ] Review analytics
 - [ ] Test on latest browsers
 
-### Quarterly Tasks
-- [ ] Refresh images (seasonal photos)
-- [ ] Update festival information
-- [ ] Review and update content
-- [ ] Check mobile responsiveness
+### Quarterly
+- [ ] Refresh seasonal images
+- [ ] Update festival info
+- [ ] Content review
+- [ ] Mobile responsiveness
 - [ ] Performance audit
 
-### Annual Tasks
+### Annual
 - [ ] Complete content review
 - [ ] Update copyright year
-- [ ] Security updates (if using backend)
+- [ ] Security updates
 - [ ] Redesign evaluation
 
-## 🎓 Learning Resources
+## 📞 Support
 
-### HTML/CSS
-- MDN Web Docs: developer.mozilla.org
-- CSS-Tricks: css-tricks.com
-- W3Schools: w3schools.com
+### Resources
+- **Leaflet.js**: https://leafletjs.com
+- **MDN Web Docs**: https://developer.mozilla.org
+- **GitHub Repo**: https://github.com/HotokeZ/Liliw-Tourism-Website
 
-### JavaScript
-- JavaScript.info: javascript.info
-- MDN JavaScript Guide: developer.mozilla.org/JavaScript
-- Eloquent JavaScript: eloquentjavascript.net
-
-### Design
-- Dribbble: dribbble.com (inspiration)
-- Behance: behance.net (case studies)
-- Awwwards: awwwards.com (best websites)
+### Tools
+- **Image Optimization**: TinyPNG.com
+- **Browser DevTools**: F12
+- **VS Code Extensions**: Live Server, Prettier
 
 ---
 
-## 🎉 Conclusion
+## 🎉 Summary
 
-This comprehensive guide covers everything built for the Liliw Tourism Website. From initial setup to advanced animations, from consistent navigation to interactive maps - every component is documented for future reference and maintenance.
+### What's Been Built
 
-**Key Achievements:**
-- ✅ Modern, responsive design
-- ✅ Consistent navigation system
-- ✅ Smooth animations throughout
-- ✅ Multiple functional pages
-- ✅ Mobile-optimized
-- ✅ Professional code structure
-- ✅ Complete documentation
+#### Public Website
+✅ Responsive design across all devices  
+✅ Dynamic content loading from JSON  
+✅ Interactive maps with Leaflet.js  
+✅ Detail pages with image carousels  
+✅ Smooth animations and transitions  
+✅ Mobile-optimized navigation  
 
-**For Questions or Support:**
-- Review this guide
-- Check browser DevTools
-- Test in incognito mode
-- Verify file paths and names
+#### Admin Panel (CMS)
+✅ Secure authentication system  
+✅ Intuitive dashboard  
+✅ Homepage editor with multi-image support  
+✅ Universal page editor for all content  
+✅ Detail page editor with carousel  
+✅ Drag & drop reordering  
+✅ Image upload and management  
+✅ Live preview before publishing  
+✅ Auto-save and backup system  
 
----
+#### Recent Additions (October 22, 2025)
+🆕 **Detail Page System** - Dedicated pages for each item  
+🆕 **Automatic Image Carousel** - 5-second auto-advance, pause on hover  
+🆕 **Touch/Swipe Support** - Mobile-friendly carousel navigation  
+🆕 **Dot Indicators** - Visual current image indicator  
+🆕 **Conditional "See More"** - Only shows when detail page enabled  
+🆕 **📄 Visual Badges** - Shows which items have detail pages  
 
-**Last Updated:** October 19, 2025  
-**Version:** 2.0  
-**Project:** Liliw Tourism Website  
-**Status:** Production Ready ✨
+### Project Status: Production Ready ✨
+
+**Version:** 4.0  
+**Last Updated:** October 22, 2025  
+**Status:** Fully Functional CMS with Dynamic Content
 
 ---
 
 *Built with ❤️ for the Municipality of Liliw, Laguna*
+*The Footwear Capital of the Philippines*

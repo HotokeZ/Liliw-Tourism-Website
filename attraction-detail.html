@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Loading... - Liliw, Laguna</title>
+    <link rel="stylesheet" href="css/attraction-detail.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-page="attractions">
+
+    <!-- Back Button -->
+    <a href="#" class="back-button" id="backButton">←</a>
+
+    <!-- Loading State -->
+    <div id="loadingState" style="text-align: center; padding: 100px 20px;">
+        <div class="spinner" style="margin: 0 auto 20px;"></div>
+        <p>Loading details...</p>
+    </div>
+
+    <!-- Main Content (Hidden until loaded) -->
+    <main class="detail-content" id="detailContent" style="display: none;">
+        <h1 class="page-title" id="pageTitle">Learn More About Liliw, Laguna</h1>
+
+        <!-- Hero Image Card -->
+        <div class="hero-card" id="heroCard">
+            <div class="hero-carousel-container" id="heroCarousel">
+                <img id="heroImage" src="images/placeholder.png" alt="Loading">
+            </div>
+            <button class="carousel-nav carousel-prev" id="carouselPrev" style="display: none;">
+                <span>‹</span>
+            </button>
+            <button class="carousel-nav carousel-next" id="carouselNext" style="display: none;">
+                <span>›</span>
+            </button>
+            <div class="carousel-indicators" id="carouselIndicators"></div>
+            <div class="hero-overlay">
+                <div class="hero-text heritage-text">
+                    <h2 class="hero-title" id="heroTitle">Loading...</h2>
+                    <p class="hero-location" id="heroLocation">LILIW, LAGUNA, PHILIPPINES</p>
+                    <p class="hero-subtitle" id="heroSubtitle">Please wait...</p>
+                </div>
+                <button class="learn-more-btn">👁 Learn More</button>
+            </div>
+        </div>
+
+        <!-- Description Section -->
+        <section class="description-section" id="descriptionSection">
+            <h3 id="aboutTitle">About This Place</h3>
+            <div id="descriptionContent">
+                <!-- Paragraphs will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Related Attractions -->
+        <section class="related-attractions" id="relatedSection">
+            <h3 id="relatedTitle">Related Attractions</h3>
+            <div class="attraction-grid" id="relatedGrid">
+                <!-- Related items will be loaded here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Error State -->
+    <div id="errorState" style="display: none; text-align: center; padding: 100px 20px;">
+        <h2 style="color: #dc2626;">⚠️ Content Not Found</h2>
+        <p>The requested attraction details could not be loaded.</p>
+        <button class="btn btn-primary" onclick="window.history.back()">← Go Back</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About</h3>
+                <ul>
+                    <li><a href="about-contact.html">Liliw Tourism Office</a></li>
+                    <li><a href="contact-emergency.html">Contact Us</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="cookie-policy.html">Cookie Policy</a></li>
+                    <li><a href="terms-of-use.html">Terms of Use</a></li>
+                </ul>
+            </div>
+            <div class="footer-logo">
+                <img src="images/liliw-logo-small.png" alt="Liliw Logo">
+                <p class="copyright">Copyright 2025<br>Liliw Tourism Office</p>
+            </div>
+        </div>
+        <div class="social-links">
+            <a href="#" class="social-icon">📧</a>
+            <a href="#" class="social-icon">📘</a>
+            <a href="#" class="social-icon">📷</a>
+        </div>
+    </footer>
+
+    <script src="js/attraction-detail-loader.js"></script>
+</body>
+</html>

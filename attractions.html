@@ -22,27 +22,11 @@
     <main class="attractions-content">
         <h1 class="page-title">What's Popular?</h1>
 
-        <!-- Natural Attractions Section -->
-        <section class="attraction-category">
-            <h2 class="category-title">Natural Attractions</h2>
-            <div class="attraction-card large-card" onclick="window.location.href='natural-attractions.html'">
-                <img src="images/kilangin-falls.jpg" alt="Kilangin Falls">
-                <div class="card-overlay">
-                    <p class="card-label">Explore Nature</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Heritage Attractions Section -->
-        <section class="attraction-category">
-            <h2 class="category-title">Heritage Attractions</h2>
-            <div class="attraction-card large-card" onclick="window.location.href='heritage-attractions.html'">
-                <img src="images/liliw-church-heritage.jpg" alt="St. John the Baptist Church">
-                <div class="card-overlay">
-                    <p class="card-label">Discover Heritage</p>
-                </div>
-            </div>
-        </section>
+        <!-- Dynamic Content Container -->
+        <div class="attractions-container">
+            <!-- Content loaded from data/attractions.json -->
+            <!-- Loading... -->
+        </div>
     </main>
 
     <!-- Footer -->
@@ -76,5 +60,6 @@
 
     <script src="js/include-nav.js"></script>
     <script src="js/attractions.js"></script>
+    <script src="js/attractions-dynamic.js"></script>
 </body>
 </html>

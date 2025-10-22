@@ -128,31 +128,98 @@ function renderSections() {
     sectionList.innerHTML = sections.map((section, index) => {
         const isEnabled = section.enabled !== false;
         const cardCount = section.cards ? section.cards.length : 0;
-        const enabledCardCount = section.cards ? section.cards.filter(c => c.enabled).length : 0;
+        const enabledCardCount = section.cards ? section.cards.filter(c => c.enabled !== false).length : 0;
         
         return `
-            <div class="section-item ${!isEnabled ? 'disabled' : ''}" data-section-id="${section.id}">
-                <div class="section-item-header">
-                    <span class="drag-handle" title="Drag to reorder">☰</span>
-                    <div class="section-order">${index + 1}</div>
+            <div class="section-item ${!isEnabled ? 'section-disabled' : ''}" data-section-id="${section.id}">
+                <div class="section-header">
+                    <div class="drag-handle">☰</div>
                     <div class="section-info">
-                        <div class="section-name">${section.title}</div>
-                        <div class="section-id">${section.id} • ${section.type}${cardCount > 0 ? ` • ${enabledCardCount}/${cardCount} cards` : ''}</div>
+                        <h3 class="section-title">${section.title}</h3>
+                        <p class="section-meta">${section.id} • ${section.type}${cardCount > 0 ? ` • ${enabledCardCount}/${cardCount} cards` : ''}</p>
                     </div>
-                    <div class="section-controls">
-                        <div class="toggle-switch ${isEnabled ? 'active' : ''}" 
-                             onclick="toggleSection('${section.id}')"
-                             title="${isEnabled ? 'Enabled - Click to disable' : 'Disabled - Click to enable'}">
-                            <div class="toggle-slider"></div>
-                        </div>
-                        <button class="edit-btn" onclick="editSection('${section.id}')">
-                            <i class="fas fa-edit"></i> Edit
+                    <div class="section-actions">
+                        <label class="toggle-switch" title="Enable/Disable Section">
+                            <input type="checkbox" ${isEnabled ? 'checked' : ''} 
+                                   onchange="toggleSection('${section.id}')">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <button class="btn-icon" onclick="editSection('${section.id}')" title="Edit Section">
+                            ✏️
+                        </button>
+                        <button class="btn-icon btn-danger" onclick="deleteSection('${section.id}')" title="Delete Section">
+                            🗑️
                         </button>
                     </div>
                 </div>
+                
+                ${section.cards && section.cards.length > 0 ? `
+                    <div class="items-list">
+                        ${section.cards.map((card, cardIndex) => renderCard(card, section.id, cardIndex)).join('')}
+                    </div>
+                ` : '<div class="no-items">No cards in this section</div>'}
+                
+                <button class="btn btn-sm btn-outline" onclick="addCard('${section.id}')">
+                    ➕ Add Card
+                </button>
             </div>
         `;
     }).join('');
+    
+    initializeSortable();
+}
+
+// Render individual card
+function renderCard(card, sectionId, cardIndex) {
+    // Get primary image (first in array or fallback to single image property)
+    let primaryImage = '';
+    if (card.images && Array.isArray(card.images) && card.images.length > 0) {
+        primaryImage = card.images[0];
+    } else if (card.image) {
+        primaryImage = card.image;
+    }
+    
+    // Count images
+    const imageCount = card.images && Array.isArray(card.images) ? card.images.length : (card.image ? 1 : 0);
+    const isEnabled = card.enabled !== false;
+    
+    return `
+        <div class="item-card ${!isEnabled ? 'card-disabled' : ''}" data-section-id="${sectionId}" data-card-index="${cardIndex}">
+            <div class="item-drag-handle">⋮⋮</div>
+            ${primaryImage ? `
+                <div class="item-image-container">
+                    <img src="../${primaryImage}" alt="${card.title}" class="item-image" 
+                         onerror="this.src='../images/placeholder.png'">
+                    ${imageCount > 1 ? `<span class="image-count-badge">🖼️ ${imageCount}</span>` : ''}
+                </div>
+            ` : ''}
+            <div class="item-content">
+                <h4 class="item-title">${card.title || 'Untitled Card'}</h4>
+                ${card.description ? `<p class="item-description">${truncate(card.description, 100)}</p>` : ''}
+                ${card.date ? `<span class="item-badge">📅 ${card.date}</span>` : ''}
+                ${card.icon ? `<span class="item-badge">${card.icon}</span>` : ''}
+            </div>
+            <div class="item-actions">
+                <label class="toggle-switch-sm" title="Enable/Disable">
+                    <input type="checkbox" ${isEnabled ? 'checked' : ''} 
+                           onchange="toggleCard('${sectionId}', '${card.id}')">
+                    <span class="toggle-slider-sm"></span>
+                </label>
+                <button class="btn-icon-sm" onclick="editCard('${sectionId}', '${card.id}')" title="Edit">
+                    ✏️
+                </button>
+                <button class="btn-icon-sm btn-danger" onclick="deleteCard('${sectionId}', '${card.id}')" title="Delete">
+                    🗑️
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+// Utility function to truncate text
+function truncate(text, length) {
+    if (!text) return '';
+    return text.length > length ? text.substring(0, length) + '...' : text;
 }
 
 // ============================================
@@ -337,5 +404,82 @@ function renderSectionDataEditor(section) {
     `;
 }
 
+// ============================================
+// ADD/DELETE FUNCTIONS
+// ============================================
+
+window.addCard = function(sectionId) {
+    // Find section and open edit modal to add card
+    const section = currentContent.sections.find(s => s.id === sectionId);
+    if (!section) return;
+    
+    currentEditingSection = JSON.parse(JSON.stringify(section));
+    
+    // Generate new card ID
+    const newCard = {
+        id: 'card-' + Date.now(),
+        title: 'New Card',
+        description: '',
+        images: ['images/placeholder.png'],
+        link: '',
+        enabled: true,
+        order: section.cards ? section.cards.length + 1 : 1
+    };
+    
+    // Add to section
+    if (!currentEditingSection.cards) {
+        currentEditingSection.cards = [];
+    }
+    currentEditingSection.cards.push(newCard);
+    
+    // Update in main content
+    const mainSection = currentContent.sections.find(s => s.id === sectionId);
+    if (mainSection) {
+        if (!mainSection.cards) mainSection.cards = [];
+        mainSection.cards.push(newCard);
+    }
+    
+    hasUnsavedChanges = true;
+    renderSections();
+    saveDraft();
+    
+    // Open edit modal for the new card
+    setTimeout(() => {
+        editCard(sectionId, newCard.id);
+    }, 100);
+};
+
+window.deleteCard = function(sectionId, cardId) {
+    const section = currentContent.sections.find(s => s.id === sectionId);
+    if (!section || !section.cards) return;
+    
+    const card = section.cards.find(c => c.id === cardId);
+    if (!card) return;
+    
+    if (!confirm(`Delete card "${card.title}"? This cannot be undone.`)) return;
+    
+    section.cards = section.cards.filter(c => c.id !== cardId);
+    hasUnsavedChanges = true;
+    
+    renderSections();
+    saveDraft();
+    showNotification('Card deleted', 'success');
+};
+
+window.deleteSection = function(sectionId) {
+    const section = currentContent.sections.find(s => s.id === sectionId);
+    if (!section) return;
+    
+    if (!confirm(`Delete section "${section.title}"? This cannot be undone.`)) return;
+    
+    currentContent.sections = currentContent.sections.filter(s => s.id !== sectionId);
+    hasUnsavedChanges = true;
+    
+    renderSections();
+    saveDraft();
+    showNotification('Section deleted', 'success');
+};
+
 // Continued in next file...
 console.log('Advanced homepage editor (part 1) loaded');
+

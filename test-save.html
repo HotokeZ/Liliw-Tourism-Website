@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Save Functionality</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Admin Panel Save Functionality</h1>
+    <p>This page tests if the Python backend can save JSON files.</p>
+    
+    <h2>Test 1: Save to Attractions</h2>
+    <button onclick="testSave('attractions')">Test Attractions Save</button>
+    
+    <h2>Test 2: Save to Homepage</h2>
+    <button onclick="testSave('homepage')">Test Homepage Save</button>
+    
+    <h2>Test 3: Read Attractions JSON</h2>
+    <button onclick="testRead('attractions')">Read Attractions File</button>
+    
+    <div id="result"></div>
+
+    <script>
+        async function testSave(page) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Testing...';
+            resultDiv.className = '';
+            
+            try {
+                // Create test data
+                const testData = {
+                    title: `Test ${page} - ${new Date().toLocaleTimeString()}`,
+                    description: 'This is a test save from test-save.html',
+                    testField: 'If you see this, the save worked!'
+                };
+                
+                console.log('🧪 Sending POST request to:', `/api/save?page=${page}`);
+                console.log('📦 Data:', testData);
+                
+                const response = await fetch(`/api/save?page=${page}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testData)
+                });
+                
+                console.log('📡 Response status:', response.status);
+                
+                const result = await response.json();
+                console.log('✅ Response:', result);
+                
+                if (result.success) {
+                    resultDiv.className = 'success';
+                    resultDiv.textContent = `✅ SUCCESS!\n\nFile saved to: ${result.file}\n\nResponse: ${JSON.stringify(result, null, 2)}`;
+                } else {
+                    resultDiv.className = 'error';
+                    resultDiv.textContent = `❌ FAILED\n\nError: ${result.error || result.message}\n\nResponse: ${JSON.stringify(result, null, 2)}`;
+                }
+                
+            } catch (error) {
+                console.error('❌ Error:', error);
+                resultDiv.className = 'error';
+                resultDiv.textContent = `❌ ERROR\n\n${error.message}\n\nCheck the console for details.`;
+            }
+        }
+        
+        async function testRead(page) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Reading...';
+            resultDiv.className = '';
+            
+            try {
+                const filename = page === 'homepage' ? 'homepage-content.json' : `${page}.json`;
+                const response = await fetch(`/data/${filename}?_=${Date.now()}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                resultDiv.className = 'success';
+                resultDiv.textContent = `✅ File Contents:\n\n${JSON.stringify(data, null, 2)}`;
+                
+            } catch (error) {
+                console.error('❌ Error:', error);
+                resultDiv.className = 'error';
+                resultDiv.textContent = `❌ ERROR\n\n${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -11,13 +11,26 @@
       "enabled": true,
       "items": [
         {
-          "id": "church",
-          "title": "St. John the Baptist Church",
+          "id": "item-1761134060484",
+          "title": "St. John the Baptist Church ",
           "description": "Historic baroque church built in the 1600s, featuring beautiful architecture and religious artifacts",
+          "images": [
+            "images/liliw-church-card.jpg"
+          ],
+          "link": "attraction-detail.html?id=item-1761134060484&page=attractions",
+          "enabled": true,
           "image": "images/liliw-church-card.jpg",
           "location": "Town Center, Liliw, Laguna",
-          "link": "heritage-attractions.html#church",
-          "enabled": true
+          "details": {
+            "enabled": true,
+            "title": "St. John the Baptist Church ",
+            "subtitle": "Town Center, Liliw, Laguna",
+            "heroImage": "images/liliw-church-card.jpg",
+            "description": [
+              "Historic baroque church built in the 1600s, featuring beautiful architecture and religious artifacts"
+            ],
+            "relatedItems": []
+          }
         },
         {
           "id": "gat-tayaw",
@@ -25,8 +38,41 @@
           "description": "Iconic monument celebrating Liliw's footwear industry and local heritage",
           "image": "images/gat-tayaw-tsinelas.jpg",
           "location": "Town Plaza, Liliw, Laguna",
-          "link": "heritage-attractions.html#gat-tayaw",
-          "enabled": true
+          "link": "attraction-detail.html?id=gat-tayaw&page=attractions",
+          "enabled": true,
+          "details": {
+            "enabled": true,
+            "title": "Gat Tayaw Tsinelas Monument",
+            "subtitle": "Town Plaza, Liliw, Laguna",
+            "heroImage": "images/gat-tayaw-tsinelas.jpg",
+            "description": [
+              "Iconic monument celebrating Liliw's footwear industry and local heritage"
+            ],
+            "relatedItems": []
+          }
+        },
+        {
+          "id": "item-1761136933269",
+          "title": "kdlkjdlas",
+          "description": "lkajsdlkasjldas",
+          "images": [
+            "images/4d48ef0d-162f-4a26-ba84-e4514301b048.jpg",
+            "images/placeholder.png"
+          ],
+          "link": "attraction-detail.html?id=item-1761136933269&page=attractions",
+          "enabled": true,
+          "image": "images/4d48ef0d-162f-4a26-ba84-e4514301b048.jpg",
+          "location": "jjsdaidadwwajlw",
+          "details": {
+            "enabled": true,
+            "title": "kdlkjdlas",
+            "subtitle": "jjsdaidadwwajlw",
+            "heroImage": "images/4d48ef0d-162f-4a26-ba84-e4514301b048.jpg",
+            "description": [
+              "lkajsdlkasjldas"
+            ],
+            "relatedItems": []
+          }
         }
       ]
     },

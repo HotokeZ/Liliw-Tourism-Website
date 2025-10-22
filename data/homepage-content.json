@@ -27,18 +27,25 @@
       "cards": [
         {
           "id": "church",
-          "title": "St. John the Baptist Church",
+          "title": "St. John the Baptist Church ",
           "description": "Historic baroque church built in the 1600s",
-          "images": ["images/liliw-church-card.jpg"],
           "link": "attractions.html#church",
           "enabled": true,
-          "order": 1
+          "order": 1,
+          "images": [
+            "images/liliw-church-card.jpg",
+            "images/CloseUp Field of View R. Ramos, Dela Paz, Borce.png",
+            "images/Side Field of View R. Ramos, Dela Paz, Borce.png",
+            "images/Distance Field of View R. Ramos, Dela Paz, Borce.png"
+          ],
+          "date": "",
+          "icon": ""
         },
         {
           "id": "gat-tayaw-monument",
           "title": "Gat Tayaw Tsinelas Monument",
           "description": "Iconic monument celebrating Liliw's tsinelas industry",
-          "images": ["images/gat-tayaw-tsinelas.jpg"],
+          "image": "images/gat-tayaw-tsinelas.jpg",
           "link": "attractions.html#gat-tayaw",
           "enabled": true,
           "order": 2
@@ -47,7 +54,7 @@
           "id": "local-attraction",
           "title": "Local Attraction",
           "description": "Explore more beautiful places in Liliw",
-          "images": ["images/other-attraction.jpg"],
+          "image": "images/other-attraction.jpg",
           "link": "attractions.html",
           "enabled": true,
           "order": 3
@@ -65,7 +72,7 @@
           "id": "tsinelas-festival",
           "title": "THE 17TH LILIW GAT TAYAW TSINELAS FESTIVAL",
           "description": "Annual festival celebrating Liliw's famous footwear industry",
-          "images": ["images/tsinelas-festival.jpg"],
+          "image": "images/tsinelas-festival.jpg",
           "link": "events.html#tsinelas-festival",
           "date": "April 2026",
           "enabled": true,
@@ -84,7 +91,7 @@
           "id": "plan-trip",
           "title": "Plan Your Trip",
           "description": "Hotels, Restaurants, Cafes & Travel Tips",
-          "images": ["images/nature-scene.jpg"],
+          "image": "images/nature-scene.jpg",
           "link": "plan-your-trip.html",
           "enabled": true,
           "order": 1
@@ -102,7 +109,7 @@
           "id": "experiences-overview",
           "title": "Festival Events, Local Products & Gallery",
           "description": "Discover local culture, traditions, and products",
-          "images": ["images/tsinelas-festival.jpg"],
+          "image": "images/tsinelas-festival.jpg",
           "link": "experiences.html",
           "enabled": true,
           "order": 1
@@ -163,5 +170,6 @@
       ]
     }
   ],
-  "lastUpdated": "2025-10-20T00:00:00.000Z"
+  "lastUpdated": "2025-10-22T11:43:39.541Z",
+  "timestamp": "2025-10-22T09:05:57.433Z"
 }

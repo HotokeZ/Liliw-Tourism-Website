@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homepage Editor Diagnostic</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+        }
+        h1 { color: #4ec9b0; }
+        h2 { color: #569cd6; margin-top: 30px; }
+        .section {
+            background: #252526;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #007acc;
+            border-radius: 4px;
+        }
+        .pass { color: #4ec9b0; }
+        .fail { color: #f48771; }
+        .warn { color: #dcdcaa; }
+        pre {
+            background: #1e1e1e;
+            padding: 10px;
+            overflow-x: auto;
+            border: 1px solid #3c3c3c;
+        }
+        button {
+            background: #0e639c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        button:hover {
+            background: #1177bb;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Homepage Editor Diagnostic Tool</h1>
+    <p>This tool checks all functions, variables, and data flow for the homepage editor</p>
+    
+    <button onclick="runDiagnostic()">🧪 Run Full Diagnostic</button>
+    <button onclick="testSaveFlow()">💾 Test Save Flow</button>
+    <button onclick="testLoadFlow()">📂 Test Load Flow</button>
+    
+    <div id="results"></div>
+
+    <script>
+        async function runDiagnostic() {
+            const results = document.getElementById('results');
+            let html = '<h2>📊 Diagnostic Results</h2>';
+            
+            // Test 1: Check if files exist
+            html += '<div class="section"><h3>1. File Structure Check</h3>';
+            try {
+                const fileTests = [
+                    { path: 'data/homepage-content.json', name: 'Homepage Content JSON' },
+                    { path: 'js/homepage-dynamic.js', name: 'Homepage Dynamic Loader' },
+                    { path: 'admin/js/homepage-editor-advanced.js', name: 'Homepage Editor (Part 1)' },
+                    { path: 'admin/js/homepage-editor-advanced-part2.js', name: 'Homepage Editor (Part 2)' }
+                ];
+                
+                for (const file of fileTests) {
+                    const resp = await fetch(file.path, { method: 'HEAD' });
+                    html += `<div class="${resp.ok ? 'pass' : 'fail'}">
+                        ${resp.ok ? '✅' : '❌'} ${file.name}: ${resp.ok ? 'EXISTS' : 'MISSING'}
+                    </div>`;
+                }
+            } catch (error) {
+                html += `<div class="fail">❌ Error checking files: ${error.message}</div>`;
+            }
+            html += '</div>';
+            
+            // Test 2: Check JSON structure
+            html += '<div class="section"><h3>2. JSON Data Structure</h3>';
+            try {
+                const resp = await fetch('data/homepage-content.json?_=' + Date.now());
+                const data = await resp.json();
+                
+                html += `<div class="${data.sections ? 'pass' : 'fail'}">
+                    ${data.sections ? '✅' : '❌'} Has 'sections' array: ${data.sections ? 'YES' : 'NO'}
+                </div>`;
+                
+                if (data.sections) {
+                    html += `<div class="pass">✅ Section count: ${data.sections.length}</div>`;
+                    html += `<div class="pass">✅ Sections: ${data.sections.map(s => s.id).join(', ')}</div>`;
+                    
+                    // Check each section structure
+                    data.sections.forEach(section => {
+                        const hasRequired = section.id && section.type && section.title && typeof section.enabled !== 'undefined';
+                        html += `<div class="${hasRequired ? 'pass' : 'fail'}">
+                            ${hasRequired ? '✅' : '❌'} Section "${section.id}": ${hasRequired ? 'VALID' : 'INVALID'}
+                        </div>`;
+                    });
+                }
+                
+                html += '<h4>Current JSON Structure:</h4>';
+                html += `<pre>${JSON.stringify(data, null, 2).substring(0, 1000)}...</pre>`;
+            } catch (error) {
+                html += `<div class="fail">❌ Error loading JSON: ${error.message}</div>`;
+            }
+            html += '</div>';
+            
+            // Test 3: Check API endpoint
+            html += '<div class="section"><h3>3. Server API Check</h3>';
+            try {
+                const testData = { test: true, timestamp: new Date().toISOString() };
+                const resp = await fetch('/api/save?page=test', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testData)
+                });
+                
+                if (resp.ok) {
+                    const result = await resp.json();
+                    html += `<div class="${result.success ? 'pass' : 'fail'}">
+                        ${result.success ? '✅' : '❌'} API Endpoint: ${result.success ? 'WORKING' : 'FAILED'}
+                    </div>`;
+                    html += `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+                } else {
+                    html += `<div class="fail">❌ API returned ${resp.status}</div>`;
+                }
+            } catch (error) {
+                html += `<div class="fail">❌ API Error: ${error.message}</div>`;
+            }
+            html += '</div>';
+            
+            // Test 4: Check Dynamic Loader Logic
+            html += '<div class="section"><h3>4. Dynamic Loader Analysis</h3>';
+            try {
+                const loaderResp = await fetch('js/homepage-dynamic.js');
+                const loaderCode = await loaderResp.text();
+                
+                html += `<div class="${loaderCode.includes('homepageData.sections') ? 'pass' : 'fail'}">
+                    ${loaderCode.includes('homepageData.sections') ? '✅' : '❌'} Checks for 'sections' array
+                </div>`;
+                
+                html += `<div class="${loaderCode.includes('fetch(') ? 'pass' : 'fail'}">
+                    ${loaderCode.includes('fetch(') ? '✅' : '❌'} Uses fetch() to load data
+                </div>`;
+                
+                html += `<div class="${loaderCode.includes('data/homepage-content.json') ? 'pass' : 'fail'}">
+                    ${loaderCode.includes('data/homepage-content.json') ? '✅' : '❌'} Loads from correct file
+                </div>`;
+            } catch (error) {
+                html += `<div class="fail">❌ Error analyzing loader: ${error.message}</div>`;
+            }
+            html += '</div>';
+            
+            results.innerHTML = html;
+        }
+        
+        async function testSaveFlow() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<h2>💾 Testing Save Flow...</h2>';
+            
+            try {
+                // Load current data
+                const loadResp = await fetch('data/homepage-content.json?_=' + Date.now());
+                const currentData = await loadResp.json();
+                
+                // Modify it slightly
+                currentData.testSave = {
+                    timestamp: new Date().toISOString(),
+                    test: 'Diagnostic save test'
+                };
+                
+                // Save it
+                const saveResp = await fetch('/api/save?page=homepage', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(currentData)
+                });
+                
+                const saveResult = await saveResp.json();
+                
+                if (saveResult.success) {
+                    // Verify it was saved
+                    const verifyResp = await fetch('data/homepage-content.json?_=' + Date.now());
+                    const verifyData = await verifyResp.json();
+                    
+                    const saved = verifyData.testSave && verifyData.testSave.test === 'Diagnostic save test';
+                    
+                    results.innerHTML = `
+                        <div class="section">
+                            <h3>${saved ? '✅ Save Flow: SUCCESS' : '❌ Save Flow: FAILED'}</h3>
+                            <p>1. Loaded current data: ✅</p>
+                            <p>2. Modified data: ✅</p>
+                            <p>3. Sent to server: ✅</p>
+                            <p>4. Verified save: ${saved ? '✅' : '❌'}</p>
+                            <pre>${JSON.stringify(verifyData, null, 2).substring(0, 500)}...</pre>
+                        </div>
+                    `;
+                } else {
+                    results.innerHTML = `<div class="section fail"><h3>❌ Save failed: ${saveResult.error}</h3></div>`;
+                }
+            } catch (error) {
+                results.innerHTML = `<div class="section fail"><h3>❌ Error: ${error.message}</h3></div>`;
+            }
+        }
+        
+        async function testLoadFlow() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<h2>📂 Testing Load Flow...</h2>';
+            
+            try {
+                const resp = await fetch('data/homepage-content.json?_=' + Date.now());
+                const data = await resp.json();
+                
+                results.innerHTML = `
+                    <div class="section">
+                        <h3>✅ Load Flow: SUCCESS</h3>
+                        <p>File loaded successfully from server</p>
+                        <h4>Data Structure:</h4>
+                        <ul>
+                            <li>Has 'site' object: ${data.site ? '✅' : '❌'}</li>
+                            <li>Has 'sections' array: ${data.sections ? '✅' : '❌'}</li>
+                            <li>Section count: ${data.sections ? data.sections.length : 0}</li>
+                            <li>Enabled sections: ${data.sections ? data.sections.filter(s => s.enabled).length : 0}</li>
+                        </ul>
+                        <h4>Full Data:</h4>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                results.innerHTML = `<div class="section fail"><h3>❌ Load failed: ${error.message}</h3></div>`;
+            }
+        }
+        
+        // Auto-run on load
+        window.addEventListener('load', () => {
+            setTimeout(runDiagnostic, 500);
+        });
+    </script>
+</body>
+</html>

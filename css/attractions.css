@@ -96,6 +96,115 @@ body {
     color: white;
 }
 
+/* Dynamic Attractions Styles */
+.attractions-container {
+    width: 100%;
+}
+
+.attraction-section {
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.attractions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.attraction-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.attraction-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.attraction-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.attraction-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.attraction-card:hover .attraction-image img {
+    transform: scale(1.05);
+}
+
+.attraction-content {
+    padding: 20px;
+}
+
+.attraction-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.attraction-location {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 12px;
+}
+
+.location-icon {
+    font-size: 16px;
+}
+
+.attraction-description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.btn-learn-more {
+    display: inline-block;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-learn-more:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
 /* Footer */
 .page-footer {
     background-color: rgba(0, 0, 0, 0.3);
@@ -186,12 +295,18 @@ body {
         font-size: 36px;
     }
 
-    .category-title {
+    .category-title,
+    .section-title {
         font-size: 24px;
     }
 
     .large-card {
         height: 300px;
+    }
+
+    .attractions-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
 
     .footer-content {
@@ -206,5 +321,9 @@ body {
     .main-nav a {
         font-size: 12px;
         padding: 6px 12px;
+    }
+
+    .attractions-content {
+        padding: 20px 15px 80px;
     }
 }

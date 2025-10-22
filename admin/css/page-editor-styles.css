@@ -1,5 +1,186 @@
 /* Additional Page Editor Styles - Complete */
 
+/* Rich Card Editor Grid Layout */
+.card-edit-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 30px;
+    min-height: 500px;
+}
+
+.card-edit-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-edit-images {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px dashed #cbd5e1;
+}
+
+/* Images Section */
+.images-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.section-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 5px;
+}
+
+.label-hint {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-light);
+}
+
+/* Images List (Sortable) */
+.images-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+}
+
+.images-list .no-images {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+.image-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.image-item:hover {
+    background: #f1f5f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.drag-handle-image {
+    font-size: 16px;
+    color: var(--text-light);
+    cursor: grab;
+    user-select: none;
+}
+
+.drag-handle-image:active {
+    cursor: grabbing;
+}
+
+.image-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.image-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.image-order {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--primary);
+}
+
+.image-filename {
+    font-size: 13px;
+    color: var(--dark);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.btn-remove-image-item {
+    background: #fee2e2;
+    color: #dc2626;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-remove-image-item:hover {
+    background: #fca5a5;
+    transform: scale(1.05);
+}
+
+/* Image Upload Section */
+.image-upload-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-upload {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Image Preview Info */
+.image-preview-info {
+    padding: 12px;
+    background: #e0f2fe;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #0c4a6e;
+}
+
+.image-preview-info.warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.image-preview-info strong {
+    font-weight: 600;
+}
+
+/* Modal Large Size for Rich Editor */
+.modal-large .modal-content {
+    max-width: 1200px;
+    width: 90vw;
+}
+
+/* Responsive Design for Card Editor */
+@media (max-width: 968px) {
+    .card-edit-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-edit-images {
+        order: -1; /* Show images section first on mobile */
+    }
+}
+
 /* Section Item */
 .section-item {
     background: white;
@@ -86,12 +267,41 @@
     cursor: grabbing;
 }
 
+.item-image-container {
+    position: relative;
+    flex-shrink: 0;
+}
+
 .item-image {
     width: 80px;
     height: 60px;
     object-fit: cover;
     border-radius: 6px;
-    flex-shrink: 0;
+}
+
+.image-count-badge {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.details-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .item-content {
@@ -277,6 +487,66 @@
 .checkbox-label span {
     font-size: 14px;
     color: var(--dark);
+}
+
+/* Detail Editor Styles */
+.detail-editor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.detail-editor-header {
+    background: #f0f9ff;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #3b82f6;
+}
+
+.detail-editor-header h3 {
+    margin: 0 0 10px 0;
+    color: #1e40af;
+}
+
+.paragraph-group {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.btn-remove-para {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #fee2e2;
+    color: #dc2626;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-remove-para:hover {
+    background: #fca5a5;
+}
+
+.description-para {
+    width: 100%;
+    padding-right: 40px;
+}
+
+/* Drag Over State */
+.card-edit-images.drag-over {
+    background: #eff6ff;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Primary Image Badge */
+.primary-badge {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
+    color: white !important;
+    font-weight: 600;
 }
 
 /* Responsive */

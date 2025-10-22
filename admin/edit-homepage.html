@@ -6,6 +6,7 @@
     <title>Edit Homepage - Liliw Tourism Admin</title>
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="css/page-editor-styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -162,24 +163,88 @@
     </div>
 
     <!-- Card Edit Modal -->
+    <!-- Card Edit Modal - Unified Rich Design -->
     <div class="modal" id="cardEditModal">
         <div class="modal-overlay" onclick="closeModal('cardEditModal')"></div>
-        <div class="modal-content">
+        <div class="modal-content modal-large">
             <div class="modal-header">
-                <h2>Edit Card</h2>
+                <h2>✏️ Edit Card</h2>
                 <button class="modal-close" onclick="closeModal('cardEditModal')">×</button>
             </div>
             <div class="modal-body">
-                <!-- Dynamic content loaded here -->
+                <div class="card-edit-container">
+                    <!-- Left Column: Form Fields -->
+                    <div class="card-edit-form">
+                        <div class="form-group">
+                            <label for="cardTitle">Title *</label>
+                            <input type="text" id="cardTitle" class="form-control" placeholder="Enter card title" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cardDescription">Description</label>
+                            <textarea id="cardDescription" class="form-control" rows="4" placeholder="Enter description"></textarea>
+                        </div>
+                        
+                        <div class="form-group" id="cardDateGroup" style="display: none;">
+                            <label for="cardDate">📅 Date</label>
+                            <input type="text" id="cardDate" class="form-control" placeholder="e.g., April 2026">
+                        </div>
+                        
+                        <div class="form-group" id="cardIconGroup" style="display: none;">
+                            <label for="cardIcon">Icon (Emoji)</label>
+                            <input type="text" id="cardIcon" class="form-control" placeholder="e.g., 🎉">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cardLink">🔗 Link/URL (Optional)</label>
+                            <input type="text" id="cardLink" class="form-control" placeholder="https://example.com or #section">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="cardEnabled" checked>
+                                <span>✅ Card Enabled (visible on website)</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Image Management -->
+                    <div class="card-edit-images">
+                        <div class="images-section">
+                            <div class="images-header">
+                                <label>🖼️ Images</label>
+                                <span class="images-hint">Drag to reorder • First image is primary</span>
+                            </div>
+                            
+                            <div id="cardImagesList" class="images-list">
+                                <!-- Images will be added here dynamically -->
+                            </div>
+                            
+                            <button type="button" class="btn btn-outline btn-upload" onclick="document.getElementById('cardImageUpload').click()">
+                                📤 Upload Images
+                            </button>
+                            <input type="file" id="cardImageUpload" accept="image/*" multiple style="display: none;">
+                            
+                            <div class="upload-hint">
+                                Max 5MB per image • JPG, PNG, WebP
+                            </div>
+                            
+                            <div id="cardPrimaryImageInfo" class="primary-image-info">
+                                <strong>Primary Image:</strong> <span id="cardPrimaryImageName">None</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeModal('cardEditModal')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveCardChanges()">Save Card</button>
+                <button class="btn btn-primary" onclick="saveCardChanges()">💾 Save Card</button>
             </div>
         </div>
     </div>
 
     <!-- Scripts -->
+    <script src="js/mobile-menu.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="js/auth.js"></script>

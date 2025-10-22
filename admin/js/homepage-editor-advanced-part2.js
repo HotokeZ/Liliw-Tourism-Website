@@ -123,18 +123,24 @@ window.handleMultipleImageUpload = function(event) {
 
 // Render card images list with drag-drop reordering
 window.renderCardImages = function() {
-    const imagesList = document.getElementById('imagesList');
+    const imagesList = document.getElementById('cardImagesList');
     if (!imagesList) {
         console.warn('Images list element not found');
         return;
     }
     
+    // Update primary image info
+    const primaryImageInfo = document.getElementById('cardPrimaryImageName');
+    if (primaryImageInfo && currentEditingCard && currentEditingCard.images && currentEditingCard.images.length > 0) {
+        const primaryImage = currentEditingCard.images[0].split('/').pop();
+        primaryImageInfo.textContent = primaryImage;
+    }
+    
     if (!currentEditingCard || !currentEditingCard.images || currentEditingCard.images.length === 0) {
-        imagesList.style.display = 'none';
+        imagesList.innerHTML = '<div class="no-images">No images yet</div>';
         return;
     }
     
-    imagesList.style.display = 'flex';
     const images = currentEditingCard.images;
     
     imagesList.innerHTML = images.map((img, index) => {
@@ -156,10 +162,10 @@ window.renderCardImages = function() {
             <div class="drag-handle-image">⋮⋮</div>
             <img src="${imageSrc}" alt="Image ${index + 1}" onerror="this.src='../images/placeholder.png'">
             <div class="image-item-info">
-                <span class="image-order">#${index + 1}</span>
+                ${index === 0 ? '<span class="image-badge primary-badge">#1</span>' : `<span class="image-badge">#${index + 1}</span>`}
                 <span class="image-filename">${img.split('/').pop()}</span>
             </div>
-            <button type="button" class="btn-remove-image-item" onclick="removeCardImage(${index})">
+            <button type="button" class="btn-remove-image-item" onclick="removeCardImage(${index})" title="Remove image">
                 🗑️
             </button>
         </div>
@@ -190,7 +196,7 @@ window.removeCardImage = function(index) {
 
 // Initialize drag-drop for images
 function initializeImagesSortable() {
-    const imagesList = document.getElementById('imagesList');
+    const imagesList = document.getElementById('cardImagesList');
     if (!imagesList || typeof Sortable === 'undefined') return;
     
     new Sortable(imagesList, {
@@ -234,30 +240,32 @@ window.removeImage = function() {
 
 // Setup drag and drop for image upload
 window.setupImageDragDrop = function() {
-    const uploadArea = document.getElementById('imageUploadArea');
-    if (!uploadArea) return;
+    const imagesSection = document.querySelector('.card-edit-images');
+    if (!imagesSection) {
+        console.warn('Images section not found for drag drop setup');
+        return;
+    }
     
     // Prevent default drag behaviors
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        uploadArea.addEventListener(eventName, preventDefaults, false);
-        document.body.addEventListener(eventName, preventDefaults, false);
+        imagesSection.addEventListener(eventName, preventDefaults, false);
     });
     
     // Highlight drop area when dragging over it
     ['dragenter', 'dragover'].forEach(eventName => {
-        uploadArea.addEventListener(eventName, () => {
-            uploadArea.classList.add('drag-over');
+        imagesSection.addEventListener(eventName, () => {
+            imagesSection.classList.add('drag-over');
         }, false);
     });
     
     ['dragleave', 'drop'].forEach(eventName => {
-        uploadArea.addEventListener(eventName, () => {
-            uploadArea.classList.remove('drag-over');
+        imagesSection.addEventListener(eventName, () => {
+            imagesSection.classList.remove('drag-over');
         }, false);
     });
     
     // Handle dropped files
-    uploadArea.addEventListener('drop', handleDrop, false);
+    imagesSection.addEventListener('drop', handleDrop, false);
     
     function preventDefaults(e) {
         e.preventDefault();
@@ -269,9 +277,11 @@ window.setupImageDragDrop = function() {
         const files = dt.files;
         
         if (files.length > 0) {
-            const fileInput = document.getElementById('cardImageFile');
-            fileInput.files = files;
-            handleMultipleImageUpload({ target: fileInput });
+            const fileInput = document.getElementById('cardImageUpload');
+            if (fileInput) {
+                fileInput.files = files;
+                handleMultipleImageUpload({ target: fileInput });
+            }
         }
     }
 };
@@ -298,39 +308,34 @@ window.initializeImagePreview = function(imagePath) {
 
 // Upload image to server
 async function uploadImageToServer(imageData) {
-    // For now, we'll use a simple approach: save the file locally
-    // In production with Netlify, this would use a serverless function
+    console.log('📤 Uploading image to server:', imageData.file.name);
     
-    return new Promise((resolve, reject) => {
-        // Create a temporary link to download the file
-        // This simulates saving to the images folder
-        const link = document.createElement('a');
-        link.href = imageData.dataUrl;
-        link.download = imageData.file.name;
-        
-        // For local development, we'll just resolve
-        // The user will need to manually save images to the images/ folder
-        // Or we can implement a proper upload endpoint later
-        
-        console.log('Image ready to save:', imageData.path);
-        console.log('File:', imageData.file.name);
-        
-        // Save to localStorage for now as a backup
-        try {
-            const savedImages = JSON.parse(localStorage.getItem('pendingImages') || '[]');
-            savedImages.push({
+    try {
+        const response = await fetch('/api/upload-image', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
                 filename: imageData.file.name,
-                path: imageData.path,
-                dataUrl: imageData.dataUrl,
-                timestamp: new Date().toISOString()
-            });
-            localStorage.setItem('pendingImages', JSON.stringify(savedImages));
-            
-            resolve({ success: true, path: imageData.path });
-        } catch (error) {
-            reject(error);
+                dataUrl: imageData.dataUrl
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            console.log('✅ Image uploaded successfully:', result.path);
+            showNotification(`Image "${result.filename}" uploaded!`, 'success');
+            return result;
+        } else {
+            throw new Error(result.error || 'Upload failed');
         }
-    });
+    } catch (error) {
+        console.error('❌ Error uploading image:', error);
+        showNotification(`Failed to upload image: ${error.message}`, 'error');
+        throw error;
+    }
 }
 
 // ============================================
@@ -425,74 +430,41 @@ window.editCard = function(sectionId, cardId) {
     // Open card edit modal
     openModal('cardEditModal');
     
-    // Populate card edit form
-    document.querySelector('#cardEditModal .modal-header h2').textContent = `Edit Card: ${currentEditingCard.title}`;
+    // Update modal title
+    document.querySelector('#cardEditModal .modal-header h2').textContent = `✏️ Edit Card: ${currentEditingCard.title}`;
     
-    const modalBody = document.querySelector('#cardEditModal .modal-body');
-    modalBody.innerHTML = `
-        <div class="form-group">
-            <label>Card ID</label>
-            <input type="text" id="cardId" value="${currentEditingCard.id}" readonly style="background: #f0f0f0;" />
-        </div>
-        
-        <div class="form-group">
-            <label>Title</label>
-            <input type="text" id="cardTitle" value="${currentEditingCard.title || ''}" />
-        </div>
-        
-        <div class="form-group">
-            <label>Description</label>
-            <textarea id="cardDescription" rows="3">${currentEditingCard.description || ''}</textarea>
-        </div>
-        
-        <div class="form-group">
-            <label>Card Images ${currentEditingCard.images.length > 1 ? `<span style="color: #0ea5e9; font-weight: 600;">(${currentEditingCard.images.length} images - Auto Carousel ✨)</span>` : ''}</label>
-            <p style="font-size: 13px; color: #64748b; margin-bottom: 15px;">
-                ${currentEditingCard.images.length > 0 ? 
-                    '📸 <strong>Drag</strong> images to reorder • <strong>Click 🗑️</strong> to remove' : 
-                    'Add multiple images to create an auto-rotating carousel with fade transitions'}
-            </p>
-            
-            <div class="images-list" id="imagesList">
-                <!-- Existing images will be rendered here -->
-            </div>
-            
-            <div class="image-upload-area" id="imageUploadArea">
-                <div class="upload-icon">📷</div>
-                <p class="upload-text">Drag & Drop images here</p>
-                <p class="upload-text-or">or</p>
-                <button type="button" class="btn-upload" onclick="document.getElementById('cardImageFile').click()">
-                    Add Images
-                </button>
-                <input type="file" id="cardImageFile" accept="image/*" multiple style="display: none;" onchange="handleMultipleImageUpload(event)">
-                <p style="font-size: 12px; color: #64748b; margin-top: 10px;">💡 Hold Ctrl/Cmd to select multiple images at once</p>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label>Link/URL</label>
-            <input type="text" id="cardLink" value="${currentEditingCard.link || ''}" placeholder="attractions.html#church" />
-        </div>
-        
-        ${currentEditingCard.date !== undefined ? `
-            <div class="form-group">
-                <label>Date (for events)</label>
-                <input type="text" id="cardDate" value="${currentEditingCard.date || ''}" placeholder="April 2026" />
-            </div>
-        ` : ''}
-        
-        ${currentEditingCard.icon !== undefined ? `
-            <div class="form-group">
-                <label>Icon (emoji)</label>
-                <input type="text" id="cardIcon" value="${currentEditingCard.icon || ''}" placeholder="📍" />
-            </div>
-        ` : ''}
-    `;
+    // Populate form fields
+    document.getElementById('cardTitle').value = currentEditingCard.title || '';
+    document.getElementById('cardDescription').value = currentEditingCard.description || '';
+    document.getElementById('cardLink').value = currentEditingCard.link || '';
+    document.getElementById('cardEnabled').checked = currentEditingCard.enabled !== false;
     
-    // Render existing images
+    // Show/hide optional fields based on card data
+    const dateGroup = document.getElementById('cardDateGroup');
+    const iconGroup = document.getElementById('cardIconGroup');
+    
+    if (currentEditingCard.date !== undefined) {
+        dateGroup.style.display = 'block';
+        document.getElementById('cardDate').value = currentEditingCard.date || '';
+    } else {
+        dateGroup.style.display = 'none';
+    }
+    
+    if (currentEditingCard.icon !== undefined) {
+        iconGroup.style.display = 'block';
+        document.getElementById('cardIcon').value = currentEditingCard.icon || '';
+    } else {
+        iconGroup.style.display = 'none';
+    }
+    
+    // Render images
     renderCardImages();
     
-    // Setup drag and drop for image upload
+    // Setup file input handler
+    const fileInput = document.getElementById('cardImageUpload');
+    fileInput.onchange = handleMultipleImageUpload;
+    
+    // Setup drag and drop
     setTimeout(() => {
         setupImageDragDrop();
     }, 100);
@@ -555,13 +527,30 @@ window.saveCardChanges = async function() {
     const cardIndex = currentEditingSection.cards.findIndex(c => c.id === currentEditingCard.id);
     if (cardIndex !== -1) {
         currentEditingSection.cards[cardIndex] = currentEditingCard;
+        
+        // CRITICAL: Also update in main currentContent to persist changes
+        const sectionIndex = currentContent.sections.findIndex(s => s.id === currentEditingSection.id);
+        if (sectionIndex !== -1) {
+            currentContent.sections[sectionIndex] = currentEditingSection;
+            console.log('✅ Card updated in currentContent:', currentEditingCard.title);
+        }
+        
         hasUnsavedChanges = true;
+        saveDraft(); // Save draft immediately
         
         closeModal('cardEditModal');
         renderCardList(currentEditingSection);
         
-        showNotification('Card updated!', 'success');
-        logActivity(`Updated card: ${currentEditingCard.title}`);
+        showNotification('Saving to server...', 'info');
+        
+        // AUTO-SAVE TO SERVER: No need to click Save button twice!
+        window.saveChanges().then(() => {
+            showNotification('Card saved successfully!', 'success');
+            logActivity(`Updated and saved card: ${currentEditingCard.title}`);
+        }).catch(error => {
+            console.error('Auto-save failed:', error);
+            showNotification('Card updated locally. Click Save to sync to server.', 'warning');
+        });
     }
     
     currentEditingCard = null;
@@ -667,10 +656,8 @@ window.openInNewTab = function() {
 };
 
 window.saveChanges = async function() {
-    if (!hasUnsavedChanges) {
-        showNotification('No changes to save', 'info');
-        return;
-    }
+    // REMOVED hasUnsavedChanges check to allow manual saves anytime
+    console.log('💾 Save triggered - saving current content...');
     
     showNotification('Saving homepage...', 'saving');
     
@@ -688,29 +675,52 @@ window.saveChanges = async function() {
         const backupKeys = allKeys.filter(key => key.startsWith('liliw_homepage_content_backup_')).sort().reverse();
         backupKeys.slice(5).forEach(key => localStorage.removeItem(key));
         
-        // Save to localStorage
+        // Save to server via API
         currentContent.lastUpdated = new Date().toISOString();
-        localStorage.setItem('liliw_homepage_content', JSON.stringify(currentContent));
         
-        // Clear draft
-        localStorage.removeItem('liliw_homepage_content_draft');
+        console.log('📤 Preparing to save to server...');
+        console.log('📊 Current content structure:', {
+            hasSite: !!currentContent.site,
+            hasSections: !!currentContent.sections,
+            sectionCount: currentContent.sections?.length || 0,
+            sectionIds: currentContent.sections?.map(s => s.id) || []
+        });
+        console.log('📦 Full data being saved:', JSON.stringify(currentContent).substring(0, 500) + '...');
         
-        // Update last backup time
-        localStorage.setItem('liliw_last_backup', new Date().toISOString());
+        const response = await fetch('/api/save?page=homepage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(currentContent)
+        });
         
-        hasUnsavedChanges = false;
+        const result = await response.json();
         
-        showNotification('Homepage saved successfully!', 'success');
-        logActivity('Saved homepage content');
-        
-        console.log('Homepage content saved:', currentContent);
-        
-        // Note: In production with Netlify, this would send data to serverless function
-        // which would commit to GitHub repository and trigger rebuild
+        if (result.success) {
+            console.log('✅ Saved to server:', result.file);
+            console.log('📦 Data saved:', currentContent);
+            
+            // Also save to localStorage as backup
+            localStorage.setItem('liliw_homepage_content', JSON.stringify(currentContent));
+            
+            // Clear draft
+            localStorage.removeItem('liliw_homepage_content_draft');
+            
+            // Update last backup time
+            localStorage.setItem('liliw_last_backup', new Date().toISOString());
+            
+            hasUnsavedChanges = false;
+            
+            showNotification('Homepage saved successfully!', 'success');
+            logActivity('Saved homepage content');
+        } else {
+            throw new Error(result.error || 'Save failed');
+        }
         
     } catch (error) {
         console.error('Save error:', error);
-        showNotification('Failed to save homepage', 'error');
+        showNotification(`Failed to save homepage: ${error.message}`, 'error');
     }
 };
 

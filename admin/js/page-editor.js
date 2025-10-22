@@ -39,16 +39,6 @@ function setupEventListeners() {
             e.returnValue = '';
         }
     });
-    
-    // Mobile menu toggle
-    const menuToggle = document.getElementById('menuToggle');
-    const sidebar = document.getElementById('sidebar');
-    
-    if (menuToggle && sidebar) {
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
-    }
 }
 
 // ============================================
@@ -245,10 +235,30 @@ function renderSections() {
 
 // Render individual item
 function renderItem(item, sectionIndex, itemIndex) {
+    // Get primary image (first in array or fallback to single image property)
+    let primaryImage = '';
+    if (item.images && Array.isArray(item.images) && item.images.length > 0) {
+        primaryImage = item.images[0];
+    } else if (item.image) {
+        primaryImage = item.image;
+    }
+    
+    // Count images
+    const imageCount = item.images && Array.isArray(item.images) ? item.images.length : (item.image ? 1 : 0);
+    const isEnabled = item.enabled !== false;
+    const hasDetails = item.details && item.details.enabled;
+    
     return `
-        <div class="item-card" data-section="${sectionIndex}" data-item="${itemIndex}">
+        <div class="item-card ${!isEnabled ? 'card-disabled' : ''}" data-section="${sectionIndex}" data-item="${itemIndex}">
             <div class="item-drag-handle">⋮⋮</div>
-            ${item.image ? `<img src="../${item.image}" alt="${item.title}" class="item-image" onerror="this.style.display='none'">` : ''}
+            ${primaryImage ? `
+                <div class="item-image-container">
+                    <img src="../${primaryImage}" alt="${item.title}" class="item-image" 
+                         onerror="this.src='../images/placeholder.png'">
+                    ${imageCount > 1 ? `<span class="image-count-badge">🖼️ ${imageCount}</span>` : ''}
+                    ${hasDetails ? `<span class="details-badge">📄 Details</span>` : ''}
+                </div>
+            ` : ''}
             <div class="item-content">
                 <h4 class="item-title">${item.title || 'Untitled'}</h4>
                 ${item.description ? `<p class="item-description">${truncate(item.description, 100)}</p>` : ''}
@@ -256,8 +266,12 @@ function renderItem(item, sectionIndex, itemIndex) {
                 ${item.location ? `<span class="item-badge">📍 ${item.location}</span>` : ''}
             </div>
             <div class="item-actions">
+                <button class="btn-icon-sm btn-secondary" onclick="editItemDetails(${sectionIndex}, ${itemIndex})" 
+                        title="Edit Details Page">
+                    📄
+                </button>
                 <label class="toggle-switch-sm" title="Enable/Disable">
-                    <input type="checkbox" ${item.enabled !== false ? 'checked' : ''} 
+                    <input type="checkbox" ${isEnabled ? 'checked' : ''} 
                            onchange="toggleItem(${sectionIndex}, ${itemIndex})">
                     <span class="toggle-slider-sm"></span>
                 </label>
@@ -427,21 +441,43 @@ function addItem(sectionIndex) {
     currentEditingSection = { index: sectionIndex };
     const config = getPageConfig(currentPage);
     
+    // Initialize empty images array
+    currentEditingItemImages = [];
+    window.pendingItemImageUploads = [];
+    
     const form = document.getElementById('itemAddForm');
     form.innerHTML = generateItemForm({
         title: '',
         description: '',
-        image: '',
+        images: [],
         enabled: true
     }, config);
     
     openModal('addItemModal');
+    
+    // Initialize empty images list
+    setTimeout(() => {
+        renderItemImages();
+    }, 100);
 }
 
-function saveNewItem() {
+async function saveNewItem() {
     if (!currentEditingSection) return;
     
     const sectionIndex = currentEditingSection.index;
+    
+    // Validate title
+    const title = document.getElementById('itemTitle').value.trim();
+    if (!title) {
+        showNotification('Please enter a title', 'error');
+        return;
+    }
+    
+    // Upload pending images first
+    showNotification('Uploading images...', 'info');
+    await uploadItemImages();
+    
+    // Get form data with images array
     const newItem = getItemFormData();
     
     if (!pageData.sections[sectionIndex].items) {
@@ -450,10 +486,22 @@ function saveNewItem() {
     
     pageData.sections[sectionIndex].items.push(newItem);
     hasUnsavedChanges = true;
-    renderSections();
+    
     closeModal('addItemModal');
-    showNotification('Item added successfully!', 'success');
+    renderSections();
+    showNotification('Item added! Saving to server...', 'success');
+    
+    // Auto-save to server
+    try {
+        await savePage();
+        showNotification('Item saved successfully!', 'success');
+    } catch (error) {
+        console.error('Auto-save failed:', error);
+        showNotification('Item added locally. Click Save to sync to server.', 'warning');
+    }
+    
     currentEditingSection = null;
+    currentEditingItemImages = [];
 }
 
 function editItem(sectionIndex, itemIndex) {
@@ -461,24 +509,68 @@ function editItem(sectionIndex, itemIndex) {
     const item = pageData.sections[sectionIndex].items[itemIndex];
     const config = getPageConfig(currentPage);
     
+    // Initialize images array for editing
+    if (item.images && Array.isArray(item.images)) {
+        currentEditingItemImages = [...item.images];
+    } else if (item.image) {
+        // Convert old single image to array
+        currentEditingItemImages = [item.image];
+    } else {
+        currentEditingItemImages = [];
+    }
+    
+    window.pendingItemImageUploads = [];
+    
     const form = document.getElementById('itemEditForm');
     form.innerHTML = generateItemForm(item, config);
     
     openModal('editItemModal');
+    
+    // Initialize images list after modal opens
+    setTimeout(() => {
+        renderItemImages();
+    }, 100);
 }
 
-function saveItemChanges() {
+async function saveItemChanges() {
     if (!currentEditingItem) return;
     
     const { sectionIndex, itemIndex } = currentEditingItem;
+    
+    // Validate title
+    const title = document.getElementById('itemTitle').value.trim();
+    if (!title) {
+        showNotification('Please enter a title', 'error');
+        return;
+    }
+    
+    // Upload pending images first
+    if (window.pendingItemImageUploads && window.pendingItemImageUploads.length > 0) {
+        showNotification('Uploading images...', 'info');
+        await uploadItemImages();
+    }
+    
+    // Get updated form data with images array
     const updatedItem = getItemFormData();
     
     pageData.sections[sectionIndex].items[itemIndex] = updatedItem;
     hasUnsavedChanges = true;
-    renderSections();
+    
     closeModal('editItemModal');
-    showNotification('Item updated!', 'success');
+    renderSections();
+    showNotification('Item updated! Saving to server...', 'success');
+    
+    // Auto-save to server
+    try {
+        await savePage();
+        showNotification('Changes saved successfully!', 'success');
+    } catch (error) {
+        console.error('Auto-save failed:', error);
+        showNotification('Item updated locally. Click Save to sync to server.', 'warning');
+    }
+    
     currentEditingItem = null;
+    currentEditingItemImages = [];
 }
 
 function toggleItem(sectionIndex, itemIndex) {
@@ -499,70 +591,340 @@ function deleteItem(sectionIndex, itemIndex) {
 }
 
 // ============================================
-// FORM GENERATION
+// FORM GENERATION - RICH CARD EDITOR
 // ============================================
 
 function generateItemForm(item, config) {
+    // Ensure images array exists
+    if (!item.images && item.image) {
+        // Convert old single image to array
+        item.images = [item.image];
+    } else if (!item.images) {
+        item.images = [];
+    }
+    
     return `
-        <div class="form-group">
-            <label>Title *</label>
-            <input type="text" id="itemTitle" value="${item.title || ''}" 
-                   placeholder="Enter ${config.itemName.toLowerCase()} title" class="form-control" required>
-        </div>
-        
-        <div class="form-group">
-            <label>Description</label>
-            <textarea id="itemDescription" rows="4" class="form-control" 
-                      placeholder="Enter description">${item.description || ''}</textarea>
-        </div>
-        
-        <div class="form-group">
-            <label>Image Path</label>
-            <input type="text" id="itemImage" value="${item.image || ''}" 
-                   placeholder="images/example.jpg" class="form-control">
-            <small class="form-hint">Use Image Manager to upload and get image paths</small>
-        </div>
-        
-        ${currentPage === 'events' ? `
-            <div class="form-group">
-                <label>Date</label>
-                <input type="text" id="itemDate" value="${item.date || ''}" 
-                       placeholder="April 2026" class="form-control">
+        <div class="card-edit-grid">
+            <!-- Left Column: Form Fields -->
+            <div class="card-edit-fields">
+                <div class="form-group">
+                    <label>Title *</label>
+                    <input type="text" id="itemTitle" value="${item.title || ''}" 
+                           placeholder="Enter ${config.itemName.toLowerCase()} title" 
+                           class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="itemDescription" rows="6" class="form-control" 
+                              placeholder="Enter a detailed description...">${item.description || ''}</textarea>
+                </div>
+                
+                ${currentPage === 'events' ? `
+                    <div class="form-group">
+                        <label>📅 Date</label>
+                        <input type="text" id="itemDate" value="${item.date || ''}" 
+                               placeholder="e.g., April 2026" class="form-control">
+                    </div>
+                ` : ''}
+                
+                ${['attractions', 'where-to-eat', 'where-to-stay'].includes(currentPage) ? `
+                    <div class="form-group">
+                        <label>📍 Location</label>
+                        <input type="text" id="itemLocation" value="${item.location || ''}" 
+                               placeholder="Address or location" class="form-control">
+                    </div>
+                ` : ''}
+                
+                <div class="form-group">
+                    <label>🔗 Link/URL (Optional)</label>
+                    <input type="text" id="itemLink" value="${item.link || ''}" 
+                           placeholder="https://example.com or #section" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="itemEnabled" ${item.enabled !== false ? 'checked' : ''}>
+                        <span>✅ Item Enabled (visible on website)</span>
+                    </label>
+                </div>
             </div>
-        ` : ''}
-        
-        ${['attractions', 'where-to-eat', 'where-to-stay'].includes(currentPage) ? `
-            <div class="form-group">
-                <label>Location</label>
-                <input type="text" id="itemLocation" value="${item.location || ''}" 
-                       placeholder="Address or location" class="form-control">
+            
+            <!-- Right Column: Image Management -->
+            <div class="card-edit-images">
+                <div class="images-section">
+                    <label class="section-label">
+                        <span>🖼️ Images</span>
+                        <span class="label-hint">Drag to reorder • First image is primary</span>
+                    </label>
+                    
+                    <!-- Images List (Sortable) -->
+                    <div id="imagesList" class="images-list">
+                        ${item.images.map((img, index) => `
+                            <div class="image-item" data-index="${index}">
+                                <div class="drag-handle-image">⋮⋮</div>
+                                <img src="../${img}" alt="Image ${index + 1}" 
+                                     onerror="this.src='../images/placeholder.png'">
+                                <div class="image-item-info">
+                                    <span class="image-order">#${index + 1}</span>
+                                    <span class="image-filename">${img.split('/').pop()}</span>
+                                </div>
+                                <button type="button" class="btn-remove-image-item" 
+                                        onclick="removeItemImage(${index})">
+                                    🗑️
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <!-- Upload Button -->
+                    <div class="image-upload-section">
+                        <input type="file" id="itemImageUpload" accept="image/*" 
+                               multiple onchange="handleItemImageUpload(event)" style="display: none;">
+                        <button type="button" class="btn btn-outline btn-upload" 
+                                onclick="document.getElementById('itemImageUpload').click()">
+                            📁 Upload Images
+                        </button>
+                        <small class="form-hint">Max 5MB per image • JPG, PNG, WebP</small>
+                    </div>
+                    
+                    ${item.images.length > 0 ? `
+                        <div class="image-preview-info">
+                            <strong>Primary Image:</strong> ${item.images[0].split('/').pop()}
+                        </div>
+                    ` : `
+                        <div class="image-preview-info warning">
+                            ⚠️ No images added yet
+                        </div>
+                    `}
+                </div>
             </div>
-        ` : ''}
-        
-        <div class="form-group">
-            <label>Link/URL (Optional)</label>
-            <input type="text" id="itemLink" value="${item.link || ''}" 
-                   placeholder="https://example.com or #section" class="form-control">
-        </div>
-        
-        <div class="form-group">
-            <label class="checkbox-label">
-                <input type="checkbox" id="itemEnabled" ${item.enabled !== false ? 'checked' : ''}>
-                <span>Item Enabled (visible on website)</span>
-            </label>
         </div>
     `;
 }
 
+// ============================================
+// IMAGE MANAGEMENT FUNCTIONS
+// ============================================
+
+// Global variable to track current editing item's images
+let currentEditingItemImages = [];
+
+// Handle multiple image uploads
+window.handleItemImageUpload = function(event) {
+    const files = Array.from(event.target.files);
+    if (files.length === 0) return;
+    
+    files.forEach(file => {
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            showNotification(`${file.name} is not a valid image file`, 'error');
+            return;
+        }
+        
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            showNotification(`${file.name} is too large (max 5MB)`, 'error');
+            return;
+        }
+        
+        // Read and add to images array
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imagePath = `images/${file.name}`;
+            
+            // Add to current editing images array
+            currentEditingItemImages.push(imagePath);
+            
+            // Store for upload
+            if (!window.pendingItemImageUploads) {
+                window.pendingItemImageUploads = [];
+            }
+            window.pendingItemImageUploads.push({
+                file: file,
+                path: imagePath,
+                dataUrl: e.target.result
+            });
+            
+            // Re-render images list
+            renderItemImages();
+            showNotification(`${file.name} ready to upload`, 'success');
+        };
+        reader.readAsDataURL(file);
+    });
+    
+    // Clear file input
+    event.target.value = '';
+};
+
+// Render item images list with drag-drop reordering
+function renderItemImages() {
+    const imagesList = document.getElementById('imagesList');
+    if (!imagesList) return;
+    
+    if (!currentEditingItemImages || currentEditingItemImages.length === 0) {
+        imagesList.innerHTML = '<div class="no-images">No images added yet</div>';
+        updateImagePreviewInfo();
+        return;
+    }
+    
+    const images = currentEditingItemImages;
+    
+    imagesList.innerHTML = images.map((img, index) => {
+        // Check if this is a pending upload (data URL) or existing file
+        let imageSrc = img;
+        if (window.pendingItemImageUploads) {
+            const pendingUpload = window.pendingItemImageUploads.find(upload => upload.path === img);
+            if (pendingUpload && pendingUpload.dataUrl) {
+                imageSrc = pendingUpload.dataUrl;
+            } else if (!img.startsWith('data:')) {
+                imageSrc = '../' + img;
+            }
+        } else if (!img.startsWith('data:')) {
+            imageSrc = '../' + img;
+        }
+        
+        return `
+        <div class="image-item" data-index="${index}">
+            <div class="drag-handle-image">⋮⋮</div>
+            <img src="${imageSrc}" alt="Image ${index + 1}" 
+                 onerror="this.src='../images/placeholder.png'">
+            <div class="image-item-info">
+                <span class="image-order">#${index + 1}</span>
+                <span class="image-filename">${img.split('/').pop()}</span>
+            </div>
+            <button type="button" class="btn-remove-image-item" 
+                    onclick="removeItemImage(${index})">
+                🗑️
+            </button>
+        </div>
+    `;
+    }).join('');
+    
+    // Initialize sortable for images
+    initializeImagesSortable();
+    updateImagePreviewInfo();
+}
+
+// Remove image from item
+window.removeItemImage = function(index) {
+    if (!currentEditingItemImages || currentEditingItemImages.length === 0) return;
+    
+    const filename = currentEditingItemImages[index].split('/').pop();
+    
+    if (confirm(`Remove ${filename}?`)) {
+        currentEditingItemImages.splice(index, 1);
+        
+        // Also remove from pending uploads if exists
+        if (window.pendingItemImageUploads) {
+            window.pendingItemImageUploads = window.pendingItemImageUploads.filter(
+                upload => upload.path !== `images/${filename}`
+            );
+        }
+        
+        renderItemImages();
+        showNotification('Image removed', 'success');
+    }
+};
+
+// Initialize drag-drop for images
+function initializeImagesSortable() {
+    const imagesList = document.getElementById('imagesList');
+    if (!imagesList || typeof Sortable === 'undefined') return;
+    
+    // Remove any existing sortable instance
+    if (imagesList.sortableInstance) {
+        imagesList.sortableInstance.destroy();
+    }
+    
+    imagesList.sortableInstance = new Sortable(imagesList, {
+        animation: 150,
+        handle: '.drag-handle-image',
+        ghostClass: 'sortable-ghost',
+        onEnd: function(evt) {
+            // Reorder the images array
+            const oldIndex = evt.oldIndex;
+            const newIndex = evt.newIndex;
+            
+            if (oldIndex !== newIndex) {
+                const movedImage = currentEditingItemImages.splice(oldIndex, 1)[0];
+                currentEditingItemImages.splice(newIndex, 0, movedImage);
+                
+                renderItemImages();
+                showNotification('Image order updated', 'info');
+            }
+        }
+    });
+}
+
+// Update image preview info
+function updateImagePreviewInfo() {
+    const infoDiv = document.querySelector('.image-preview-info');
+    if (!infoDiv) return;
+    
+    if (currentEditingItemImages.length > 0) {
+        infoDiv.className = 'image-preview-info';
+        infoDiv.innerHTML = `<strong>Primary Image:</strong> ${currentEditingItemImages[0].split('/').pop()}`;
+    } else {
+        infoDiv.className = 'image-preview-info warning';
+        infoDiv.innerHTML = '⚠️ No images added yet';
+    }
+}
+
+// Upload images to server
+async function uploadItemImages() {
+    if (!window.pendingItemImageUploads || window.pendingItemImageUploads.length === 0) {
+        return true; // No images to upload
+    }
+    
+    console.log('📤 Uploading images:', window.pendingItemImageUploads.length);
+    
+    for (const upload of window.pendingItemImageUploads) {
+        try {
+            const response = await fetch('/api/upload-image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    dataUrl: upload.dataUrl,
+                    filename: upload.file.name
+                })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                console.log('✅ Image uploaded:', result.path);
+            } else {
+                console.error('❌ Upload failed:', result.error);
+                showNotification(`Failed to upload ${upload.file.name}`, 'error');
+            }
+        } catch (error) {
+            console.error('Upload error:', error);
+            showNotification(`Error uploading ${upload.file.name}`, 'error');
+        }
+    }
+    
+    // Clear pending uploads
+    window.pendingItemImageUploads = [];
+    return true;
+}
+
 function getItemFormData() {
     const item = {
-        id: document.getElementById('itemId')?.value || 'item-' + Date.now(),
+        id: 'item-' + Date.now(),
         title: document.getElementById('itemTitle').value,
         description: document.getElementById('itemDescription').value,
-        image: document.getElementById('itemImage').value,
+        images: currentEditingItemImages.length > 0 ? [...currentEditingItemImages] : ['images/placeholder.png'],
         link: document.getElementById('itemLink').value,
         enabled: document.getElementById('itemEnabled').checked
     };
+    
+    // For backwards compatibility, also set single image property to first image
+    if (item.images && item.images.length > 0) {
+        item.image = item.images[0];
+    }
     
     // Add optional fields based on page type
     if (currentPage === 'events') {
@@ -581,26 +943,39 @@ function getItemFormData() {
 // ============================================
 
 async function savePage() {
-    if (!hasUnsavedChanges) {
-        showNotification('No changes to save', 'info');
-        return;
-    }
+    console.log('🔵 SAVE BUTTON CLICKED!');
+    console.log('🔵 Current page:', currentPage);
+    console.log('🔵 Page data:', pageData);
     
     try {
+        console.log('🔵 Starting save process...');
         showNotification('Saving page...', 'saving');
         
-        // Create backup first
-        await createBackup();
+        // Save to server via API
+        const response = await fetch(`/api/save?page=${currentPage}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(pageData)
+        });
         
-        // Save to localStorage (in production, this would save to server/GitHub)
-        const dataKey = `pageData_${currentPage}`;
-        localStorage.setItem(dataKey, JSON.stringify(pageData, null, 2));
+        const result = await response.json();
         
-        hasUnsavedChanges = false;
-        showNotification('Page saved successfully!', 'success');
+        if (result.success) {
+            console.log('✅ SUCCESSFULLY SAVED TO FILE!');
+            console.log('� File saved:', result.file);
+            console.log('� Data saved:', pageData);
+            
+            hasUnsavedChanges = false;
+            showNotification('Page saved successfully!', 'success');
+            
+            // Log activity
+            logActivity(`Saved ${getPageConfig(currentPage).title}`);
+        } else {
+            throw new Error(result.error || 'Save failed');
+        }
         
-        // Log activity
-        logActivity(`Saved ${getPageConfig(currentPage).title}`);
         
     } catch (error) {
         console.error('Save error:', error);
@@ -646,6 +1021,23 @@ function previewPage() {
     }
 }
 
+function openPreviewInNewTab() {
+    const pageFiles = {
+        'attractions': '../attractions.html',
+        'events': '../events.html',
+        'experiences': '../experiences.html',
+        'plan-trip': '../plan-your-trip.html',
+        'where-to-eat': '../where-to-eat.html',
+        'where-to-stay': '../where-to-stay.html',
+        'travel-tips': '../travel-tips.html'
+    };
+    
+    const previewUrl = pageFiles[currentPage];
+    if (previewUrl) {
+        window.open(previewUrl, '_blank');
+    }
+}
+
 // ============================================
 // UTILITY FUNCTIONS
 // ============================================
@@ -656,8 +1048,14 @@ function truncate(text, length) {
 }
 
 function showNotification(message, type = 'info') {
-    if (window.editorUtils && editorUtils.statusNotification) {
-        editorUtils.statusNotification[type](message);
+    console.log(`[Notification ${type}]:`, message);
+    
+    // Try to use the editor utils notification system
+    if (window.editorUtils && window.editorUtils.statusNotification) {
+        window.editorUtils.statusNotification.show(message, type);
+    } else {
+        // Fallback to console
+        console.log(`Notification (${type}): ${message}`);
     }
 }
 
@@ -670,6 +1068,161 @@ function logActivity(message) {
     });
     localStorage.setItem('recentActivities', JSON.stringify(activities.slice(0, 10)));
 }
+
+// ============================================
+// DETAIL PAGE EDITOR
+// ============================================
+
+let currentEditingDetail = null;
+
+window.editItemDetails = function(sectionIndex, itemIndex) {
+    currentEditingDetail = { sectionIndex, itemIndex };
+    const item = pageData.sections[sectionIndex].items[itemIndex];
+    const config = getPageConfig(currentPage);
+    
+    // Initialize details object if it doesn't exist
+    if (!item.details) {
+        item.details = {
+            enabled: false,
+            title: item.title,
+            subtitle: item.location || '',
+            heroImage: item.images && item.images[0] ? item.images[0] : (item.image || ''),
+            description: [item.description || ''],
+            relatedItems: []
+        };
+    }
+    
+    const form = document.getElementById('detailEditorForm');
+    form.innerHTML = `
+        <div class="detail-editor-container">
+            <div class="detail-editor-header">
+                <h3>📄 Detail Page for: ${item.title}</h3>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="detailsEnabled" ${item.details.enabled ? 'checked' : ''}>
+                    <span>✅ Enable "See More" button and detail page</span>
+                </label>
+            </div>
+            
+            <div class="form-group">
+                <label>Detail Page Title</label>
+                <input type="text" id="detailTitle" class="form-control" 
+                       value="${item.details.title || item.title}" 
+                       placeholder="Title for detail page">
+            </div>
+            
+            <div class="form-group">
+                <label>Subtitle / Category</label>
+                <input type="text" id="detailSubtitle" class="form-control" 
+                       value="${item.details.subtitle || ''}" 
+                       placeholder="e.g., Historical Heritage Site">
+            </div>
+            
+            <div class="form-group">
+                <label>Hero Image (Detail Page)</label>
+                <select id="detailHeroImage" class="form-control">
+                    ${(item.images || [item.image]).filter(img => img).map(img => `
+                        <option value="${img}" ${item.details.heroImage === img ? 'selected' : ''}>
+                            ${img.split('/').pop()}
+                        </option>
+                    `).join('')}
+                </select>
+                <small class="form-hint">Select which image to use as the hero image on the detail page</small>
+            </div>
+            
+            <div class="form-group">
+                <label>Description Paragraphs</label>
+                <div id="descriptionParagraphs">
+                    ${(item.details.description || ['']).map((para, index) => `
+                        <div class="paragraph-group">
+                            <textarea class="form-control description-para" rows="4" 
+                                      placeholder="Paragraph ${index + 1}">${para}</textarea>
+                            ${index > 0 ? `<button type="button" class="btn-remove-para" onclick="removeParagraph(${index})">🗑️</button>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+                <button type="button" class="btn btn-sm btn-outline" onclick="addParagraph()">
+                    ➕ Add Paragraph
+                </button>
+            </div>
+            
+            <div class="form-group">
+                <label>Related Items (Show at bottom)</label>
+                <p class="form-hint">Related items will be automatically populated from the same section</p>
+            </div>
+        </div>
+    `;
+    
+    openModal('detailEditorModal');
+};
+
+window.addParagraph = function() {
+    const container = document.getElementById('descriptionParagraphs');
+    const index = container.querySelectorAll('.paragraph-group').length;
+    
+    const div = document.createElement('div');
+    div.className = 'paragraph-group';
+    div.innerHTML = `
+        <textarea class="form-control description-para" rows="4" 
+                  placeholder="Paragraph ${index + 1}"></textarea>
+        <button type="button" class="btn-remove-para" onclick="removeParagraph(${index})">🗑️</button>
+    `;
+    container.appendChild(div);
+};
+
+window.removeParagraph = function(index) {
+    const container = document.getElementById('descriptionParagraphs');
+    const groups = container.querySelectorAll('.paragraph-group');
+    if (groups.length > 1 && groups[index]) {
+        groups[index].remove();
+    }
+};
+
+window.saveDetailChanges = async function() {
+    if (!currentEditingDetail) return;
+    
+    const { sectionIndex, itemIndex } = currentEditingDetail;
+    const item = pageData.sections[sectionIndex].items[itemIndex];
+    
+    // Gather paragraph data
+    const paragraphs = Array.from(document.querySelectorAll('.description-para'))
+        .map(textarea => textarea.value.trim())
+        .filter(text => text.length > 0);
+    
+    // Update details
+    item.details = {
+        enabled: document.getElementById('detailsEnabled').checked,
+        title: document.getElementById('detailTitle').value,
+        subtitle: document.getElementById('detailSubtitle').value,
+        heroImage: document.getElementById('detailHeroImage').value,
+        description: paragraphs,
+        relatedItems: [] // Will be populated dynamically
+    };
+    
+    // Auto-generate link if details are enabled
+    if (item.details.enabled) {
+        const slug = item.id || item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        item.link = `attraction-detail.html?id=${slug}&page=${currentPage}`;
+    } else {
+        item.link = '';
+    }
+    
+    hasUnsavedChanges = true;
+    
+    closeModal('detailEditorModal');
+    renderSections();
+    showNotification('Detail page updated! Saving to server...', 'success');
+    
+    // Auto-save to server
+    try {
+        await savePage();
+        showNotification('Details saved successfully!', 'success');
+    } catch (error) {
+        console.error('Auto-save failed:', error);
+        showNotification('Details updated locally. Click Save to sync to server.', 'warning');
+    }
+    
+    currentEditingDetail = null;
+};
 
 // ============================================
 // MODAL FUNCTIONS

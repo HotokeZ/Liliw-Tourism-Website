@@ -521,12 +521,45 @@ body {
 }
 
 @media (max-width: 768px) {
-    .sidebar {
-        transform: translateX(-100%);
+    /* Admin mobile overlay (mirrors user-side navigation pattern) */
+    .admin-menu-overlay {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0);
+        z-index: 2000;
+        visibility: hidden;
+        opacity: 0;
+        transition: background-color 0.3s ease, visibility 0s linear 0.3s, opacity 0.3s ease;
     }
 
-    .sidebar.active {
+    .admin-menu-overlay.active {
+        visibility: visible;
+        opacity: 1;
+        background-color: rgba(0, 0, 0, 0.6);
+        transition: background-color 0.3s ease, visibility 0s linear, opacity 0.3s ease;
+    }
+
+    /* When inside overlay, slide sidebar from the left */
+    .admin-menu-overlay .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: var(--sidebar-width);
+        max-width: 85vw;
+        z-index: 2001; /* above overlay backdrop */
+        transform: translateX(-100%);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 2px 0 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .admin-menu-overlay.active .sidebar {
         transform: translateX(0);
+    }
+
+    /* Ensure main content takes full width on mobile */
+    .main-content {
+        margin-left: 0;
     }
 
     .main-content {

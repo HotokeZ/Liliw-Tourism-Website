@@ -20,60 +20,9 @@
 
     <!-- Main Content -->
     <main class="experiences-content">
-        <h1 class="page-title">Events</h1>
-
-        <!-- Festival Events Section -->
-        <section class="category-section">
-            <h2 class="category-title">Festival Events</h2>
-            <div class="category-card" onclick="window.location.href='festival-events.html'">
-                <img src="images/placeholder.png" alt="Tsinelas Festival">
-                <div class="card-overlay">
-                    <h3>Tsinelas Festival</h3>
-                    <p>Experience the vibrant celebration of Liliw's footwear heritage</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Local Products Section -->
-        <section class="category-section">
-            <h2 class="category-title">Local Products</h2>
-                        <div class="products-grid">
-                <a href="local-products.html#footwear" class="product-card">
-                    <img src="images/placeholder.png" alt="Footwears">
-                    <div class="product-info">
-                        <h3>Footwears</h3>
-                        <p>Discover traditional and modern footwear crafted by local artisans</p>
-                    </div>
-                </a>
-                <a href="local-products.html#delicacies" class="product-card">
-                    <img src="images/placeholder.png" alt="Delicacies">
-                    <div class="product-info">
-                        <h3>Delicacies</h3>
-                        <p>Taste authentic local treats and sweets unique to Liliw</p>
-                    </div>
-                </a>
-                <a href="local-products.html#handicrafts" class="product-card">
-                    <img src="images/placeholder.png" alt="Handicrafts">
-                    <div class="product-info">
-                        <h3>Handicrafts</h3>
-                        <p>Browse beautiful handmade crafts and souvenirs</p>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <!-- Gallery Section -->
-        <section class="gallery-section">
-            <h2 class="section-title">Gallery</h2>
-            <div class="gallery-preview" onclick="window.location.href='gallery.html'">
-                <img src="images/placeholder.png" alt="Photo Gallery">
-                <div class="gallery-info">
-                    <h3>Photo & Video Gallery</h3>
-                    <p>Browse through beautiful photos and videos of Liliw's attractions, festivals, and local life</p>
-                </div>
-            </div>
-        </section>
-
+        <div class="experiences-container">
+            <!-- Content loaded from data/experiences.json -->
+        </div>
     </main>
 
     <!-- Footer -->
@@ -108,5 +57,6 @@
     <script src="js/include-nav.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/experiences.js"></script>
+    <script src="js/experiences-dynamic.js"></script>
 </body>
 </html>

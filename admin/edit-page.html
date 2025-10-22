@@ -104,67 +104,91 @@
     <!-- Edit Section Modal -->
     <div class="modal" id="editSectionModal">
         <div class="modal-overlay" onclick="closeModal('editSectionModal')"></div>
-        <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-content">
             <div class="modal-header">
                 <h2>Edit Section</h2>
-                <button class="modal-close" onclick="closeModal('editSectionModal')">✕</button>
+                <button class="modal-close" onclick="closeModal('editSectionModal')">×</button>
             </div>
             <div class="modal-body" id="sectionEditForm">
                 <!-- Form will be generated dynamically -->
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeModal('editSectionModal')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveSectionChanges()">Save Section</button>
+                <button class="btn btn-primary" onclick="saveSectionChanges()">Save</button>
             </div>
         </div>
     </div>
 
-    <!-- Add Item Modal -->
-    <div class="modal" id="addItemModal">
+    <!-- Add Item Modal (Rich Card Editor) -->
+    <div class="modal modal-large" id="addItemModal">
         <div class="modal-overlay" onclick="closeModal('addItemModal')"></div>
-        <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-content">
             <div class="modal-header">
-                <h2>Add New Item</h2>
-                <button class="modal-close" onclick="closeModal('addItemModal')">✕</button>
+                <h2>➕ Add New Item</h2>
+                <button class="modal-close" onclick="closeModal('addItemModal')">×</button>
             </div>
             <div class="modal-body" id="itemAddForm">
-                <!-- Form will be generated dynamically -->
+                <!-- Rich form will be generated dynamically -->
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeModal('addItemModal')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveNewItem()">Add Item</button>
+                <button class="btn btn-primary" onclick="saveNewItem()">➕ Add Item</button>
             </div>
         </div>
     </div>
 
-    <!-- Edit Item Modal -->
-    <div class="modal" id="editItemModal">
+    <!-- Edit Item Modal (Rich Card Editor) -->
+    <div class="modal modal-large" id="editItemModal">
         <div class="modal-overlay" onclick="closeModal('editItemModal')"></div>
-        <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-content">
             <div class="modal-header">
-                <h2>Edit Item</h2>
-                <button class="modal-close" onclick="closeModal('editItemModal')">✕</button>
+                <h2>✏️ Edit Item</h2>
+                <button class="modal-close" onclick="closeModal('editItemModal')">×</button>
             </div>
             <div class="modal-body" id="itemEditForm">
-                <!-- Form will be generated dynamically -->
+                <!-- Rich form will be generated dynamically -->
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeModal('editItemModal')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveItemChanges()">Save Changes</button>
+                <button class="btn btn-primary" onclick="saveItemChanges()">💾 Save Item</button>
             </div>
         </div>
     </div>
 
     <!-- Preview Modal -->
-    <div class="modal" id="previewModal">
+    <div class="modal modal-large" id="previewModal">
         <div class="modal-overlay" onclick="closeModal('previewModal')"></div>
-        <div class="modal-content" style="max-width: 1200px; height: 90vh;">
+        <div class="modal-content">
             <div class="modal-header">
-                <h2>🔍 Page Preview</h2>
-                <button class="modal-close" onclick="closeModal('previewModal')">✕</button>
+                <h2>Preview Page</h2>
+                <button class="modal-close" onclick="closeModal('previewModal')">×</button>
             </div>
-            <div class="modal-body" style="padding: 0; height: calc(90vh - 140px);">
-                <iframe id="previewFrame" style="width: 100%; height: 100%; border: none; border-radius: 0 0 20px 20px;"></iframe>
+            <div class="modal-body preview-body">
+                <iframe id="previewFrame" style="width: 100%; height: 100%; border: none;"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('previewModal')">Close</button>
+                <button class="btn btn-primary" onclick="openPreviewInNewTab()">
+                    🔗 Open in New Tab
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Page Editor Modal -->
+    <div class="modal modal-large" id="detailEditorModal">
+        <div class="modal-overlay" onclick="closeModal('detailEditorModal')"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📄 Edit Detail Page</h2>
+                <button class="modal-close" onclick="closeModal('detailEditorModal')">×</button>
+            </div>
+            <div class="modal-body" id="detailEditorForm">
+                <!-- Form will be generated dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('detailEditorModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveDetailChanges()">💾 Save Details</button>
             </div>
         </div>
     </div>
@@ -175,20 +199,21 @@
     
     <script>
         // Check authentication
-        if (!checkAuth()) {
+        if (!isAuthenticated || !isAuthenticated()) {
             window.location.href = 'index.html';
         }
 
         // Set active nav item based on page parameter
         const urlParams = new URLSearchParams(window.location.search);
-        const currentPage = urlParams.get('page');
-        if (currentPage) {
+        const pageName = urlParams.get('page');
+        if (pageName) {
             document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.dataset.page === currentPage) {
+                if (item.dataset.page === pageName) {
                     item.classList.add('active');
                 }
             });
         }
     </script>
+    <script src="js/mobile-menu.js"></script>
 </body>
 </html>
